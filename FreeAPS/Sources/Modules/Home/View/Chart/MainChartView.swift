@@ -173,7 +173,7 @@ struct MainChartView: View {
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
                 }.stroke(Color.loopYellow, lineWidth: 0.3)
             }
-            let range = glucoseYGange
+            //     let range = glucoseYGange    /// comment out Invalid redeclaration of 'range'
             let bottomstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
                 (CGFloat(range.maxValue) - Config.lowerTarget)
             if CGFloat(range.minValue) < Config.lowerTarget {
