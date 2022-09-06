@@ -90,6 +90,10 @@ public struct SensorData: Codable {
 
         return self.date.addingTimeInterval(TimeInterval(minutes: Double(self.minutesLeft)))
     }
+    
+    var sensorStartTime: Date? {
+            self.date.addingTimeInterval(-1*TimeInterval(minutes: Double(self.minutesSinceStart)))
+        }
 
     var sensorStartTime: Date? {
         self.date.addingTimeInterval(-1*TimeInterval(minutes: Double(self.minutesSinceStart)))
