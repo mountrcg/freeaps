@@ -90,6 +90,10 @@ public struct SensorData: Codable {
 
         return self.date.addingTimeInterval(TimeInterval(minutes: Double(self.minutesLeft)))
     }
+    
+    var sensorStartTime: Date? {
+            self.date.addingTimeInterval(-1*TimeInterval(minutes: Double(self.minutesSinceStart)))
+        }
 
     /// Sensor state (ready, failure, starting etc.)
     var state: SensorState {
@@ -201,12 +205,12 @@ public struct SensorData: Codable {
 
     var humanReadableSensorAge: String {
         let days = TimeInterval(minutesSinceStart * 60) / aday
-        return String(format: "%.2f", days) + " day(s)"
+        return String(format: "%.2f", days) + NSLocalizedString(" day(s)", comment: "Sensor day(s)")
     }
 
     var humanReadableTimeLeft: String {
         let days = TimeInterval(minutesLeft * 60) / aday
-        return String(format: "%.2f", days) + " day(s)"
+        return String(format: "%.2f", days) + NSLocalizedString(" day(s)", comment: "Sensor day(s)")
     }
 
     var toJson: String {

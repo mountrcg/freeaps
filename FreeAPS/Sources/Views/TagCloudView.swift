@@ -53,9 +53,11 @@ struct TagCloudView: View {
     private func item(for textTag: String) -> some View {
         var colorOfTag: Color {
             switch textTag {
-            case textTag where textTag.contains("Floating"):
+            case textTag where textTag.contains("Floating"),
+                 textTag where textTag.contains("enforced"):
                 return .loopYellow
             case "autoISF",
+                 textTag where textTag.contains("disabled"),
                  textTag where textTag.contains("final"):
                 return .loopRed
             case "SMB Delivery Ratio:":

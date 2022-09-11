@@ -23,15 +23,24 @@ extension PreferencesEditor {
                 self?.provider.migrateUnits()
             }
 
-            // MARK: - Sport fields
+            // MARK: - Quick fields
 
-            let sportFields = [
+            let quickPrefs = [
                 Field(
                     displayName: "Enable AutoISF",
                     type: .boolean(keypath: \.autoisf),
                     infoText: NSLocalizedString(
                         "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
                         comment: "Enable AutoISF"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "AutoISF IOB Threshold",
+                    type: .decimal(keypath: \.iobThreshold),
+                    infoText: NSLocalizedString(
+                        "Safety setting: Amount of IOB that if surpassed will prevent any further SMB's being administered. Default is 0, which disables the IOB threshold for SMB's. Advisable to set to 70% of maxIOB, can be meal dependant.",
+                        comment: "AutoISF IOB threshold"
                     ),
                     settable: self
                 ),
@@ -77,20 +86,11 @@ extension PreferencesEditor {
 
             let xpmToogles = [
                 Field(
-                    displayName: "Enable Floating Carbs",
-                    type: .boolean(keypath: \.floatingcarbs),
+                    displayName: "Temp targets toggle SMB",
+                    type: .boolean(keypath: \.autoISFtempSMB),
                     infoText: NSLocalizedString(
-                        "Defaults to false. If true, then dose slightly more aggressively by using all entered carbs for calculating COBpredBGs. This avoids backing off too quickly as COB decays. Even with this option, oref0 still switches gradually from using COBpredBGs to UAMpredBGs proportionally to how many carbs are left as COB. Summary: use all entered carbs in the future for predBGs & don't decay them as COB, only once they are actual.",
+                        "Defaults to false. If true, autoISF will block SMB's when odd TempTargets are used (lower boundary) and enforce SMB, when even Temp Targets are used.",
                         comment: "Floating Carbs"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: "Enable AutoISF with COB",
-                    type: .boolean(keypath: \.enableautoISFwithCOB),
-                    infoText: NSLocalizedString(
-                        "Enables autoISF not just for UAM, but also with COB\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2_dev_parabola",
-                        comment: "Enable autoISF with COB"
                     ),
                     settable: self
                 ),
@@ -120,6 +120,15 @@ extension PreferencesEditor {
                         comment: "AutoISF Min"
                     ),
                     settable: self
+                ),
+                Field(
+                    displayName: "Enable Floating Carbs",
+                    type: .boolean(keypath: \.floatingcarbs),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. If true, then dose slightly more aggressively by using all entered carbs for calculating COBpredBGs. This avoids backing off too quickly as COB decays. Even with this option, oref0 still switches gradually from using COBpredBGs to UAMpredBGs proportionally to how many carbs are left as COB. Summary: use all entered carbs in the future for predBGs & don't decay them as COB, only once they are actual.",
+                        comment: "Floating Carbs"
+                    ),
+                    settable: self
                 )
             ]
             let xpmDuraISF = [
@@ -129,6 +138,15 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "Defaults to false. Rate at which autoISF grows per hour assuming bg is twice target. When value = 1.0, ISF is reduced to 50% after 1 hour of BG at 2x target.",
                         comment: "AutoISF HourlyMaxChange"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Enable AutoISF with COB",
+                    type: .boolean(keypath: \.enableautoISFwithCOB),
+                    infoText: NSLocalizedString(
+                        "Enables autoISF not just for UAM, but also with COB\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2_dev_parabola",
+                        comment: "Enable autoISF with COB"
                     ),
                     settable: self
                 )
@@ -152,7 +170,9 @@ extension PreferencesEditor {
                         comment: "ISF low BG weight"
                     ),
                     settable: self
-                ),
+                )
+            ]
+            let xpmDeltaISF = [
                 Field(
                     displayName: "ISF weight for higher BG deltas",
                     type: .decimal(keypath: \.deltaISFrangeWeight),
@@ -393,15 +413,6 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Allow SMB With High Temptarget",
-                    type: .boolean(keypath: \.allowSMBWithHighTemptarget),
-                    infoText: NSLocalizedString(
-                        "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.",
-                        comment: "Allow SMB With High Temptarget"
-                    ),
-                    settable: self
-                ),
-                Field(
                     displayName: "Enable UAM",
                     type: .boolean(keypath: \.enableUAM),
                     infoText: NSLocalizedString(
@@ -437,7 +448,10 @@ extension PreferencesEditor {
                 Field(
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
-                    infoText: NSLocalizedString("Smallest possible bolus amount", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString(
+                        "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
+                        comment: "Bolus Increment"
+                    ),
                     settable: self
                 )
             ]
@@ -487,24 +501,6 @@ extension PreferencesEditor {
                     infoText: NSLocalizedString(
                         "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.",
                         comment: "Advanced Target Adjustments"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: "Exercise Mode",
-                    type: .boolean(keypath: \.exerciseMode),
-                    infoText: NSLocalizedString(
-                        "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity",
-                        comment: "Exercise Mode"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: "Half Basal Exercise Target",
-                    type: .decimal(keypath: \.halfBasalExerciseTarget),
-                    infoText: NSLocalizedString(
-                        "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
-                        comment: "Half Basal Exercise Target"
                     ),
                     settable: self
                 ),
@@ -625,8 +621,8 @@ extension PreferencesEditor {
 
             sections = [
                 FieldSection(
-                    displayName: NSLocalizedString("Sport relevant settings", comment: "Sport settings"),
-                    fields: sportFields
+                    displayName: NSLocalizedString("Quick Settings", comment: "Quick to reach settings"),
+                    fields: quickPrefs
                 ),
                 FieldSection(
                     displayName: NSLocalizedString(
@@ -648,6 +644,13 @@ extension PreferencesEditor {
                         comment: "Experimental settings for BG level based autoISF2.1"
                     ),
                     fields: xpmBGISF
+                ),
+                FieldSection(
+                    displayName: NSLocalizedString(
+                        "delta_ISF settings",
+                        comment: "Experimental settings for BG delta based autoISF2.1"
+                    ),
+                    fields: xpmDeltaISF
                 ),
                 FieldSection(
                     displayName: NSLocalizedString(

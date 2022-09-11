@@ -12,7 +12,6 @@ R.generated.swift
 *-old
 ProfileSwitching/setting*
 secret/
-middleware.js
 
 ## Various settings
 !default.mode1v3

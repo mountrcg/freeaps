@@ -51,17 +51,19 @@ struct Preferences: JSON {
     var smbDeliveryRatioBGrange: Decimal = 0
     var smbDeliveryRatioMin: Decimal = 0.5
     var smbDeliveryRatioMax: Decimal = 0.75
+    var iobThreshold: Decimal = 0
+    var autoISFtempSMB: Bool = false
     var enableautoISFwithCOB: Bool = false
     var higherISFrangeWeight: Decimal = 0
     var lowerISFrangeWeight: Decimal = 0
     var deltaISFrangeWeight: Decimal = 0
     var postMealISFweight: Decimal = 0
     var postMealISFduration: Decimal = 3
-    var postMealISFalways: Bool = true
-    var bgAccelISFweight: Decimal = 0.06
-    var bgBrakeISFweight: Decimal = 0.15
-    var enableBGacceleration: Bool = true
-    var maxDeltaBGthreshold: Decimal = 0.3
+    var postMealISFalways: Bool = false
+    var bgAccelISFweight: Decimal = 0
+    var bgBrakeISFweight: Decimal = 0
+    var enableBGacceleration: Bool = false
+    var maxDeltaBGthreshold: Decimal = 0.2
     var switchSportXPM: Bool = true
 }
 
@@ -113,6 +115,8 @@ extension Preferences {
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
         case floatingcarbs = "floating_carbs"
+        case iobThreshold = "iob_threshold"
+        case autoISFtempSMB = "autoisf_temp_smb"
         case smbDeliveryRatioBGrange = "smb_delivery_ratio_bg_range"
         case smbDeliveryRatioMin = "smb_delivery_ratio_min"
         case smbDeliveryRatioMax = "smb_delivery_ratio_max"
