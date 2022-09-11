@@ -382,6 +382,10 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 return
             }
             pumpExpiresAtDate.send(endTime)
+
+            if let startTime = omnipodBLE.state.podState?.activatedAt {
+                storage.save(startTime, as: OpenAPS.Monitor.podAge)
+            }
         }
     }
 
@@ -401,7 +405,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManager(
         _: PumpManager,
         hasNewPumpEvents events: [NewPumpEvent],
-        lastSync _: Date?,
+        lastReconciliation _: Date?,
         completion: @escaping (_ error: Error?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))

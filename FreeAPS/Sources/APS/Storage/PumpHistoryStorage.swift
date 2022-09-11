@@ -325,6 +325,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             default: return nil
             }
         }
+
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedPumphistory, as: [NigtscoutTreatment].self) ?? []
 
         let treatments = Array(Set([bolusesAndCarbs, temps, misc].flatMap { $0 }).subtracting(Set(uploaded)))
