@@ -83,7 +83,7 @@ You will loose most of your previous settings in FAX, all settings with pre-defi
 
 Autosens and autoISF both manipulate sensitivityRatios and ISF. It is currently setup that the stronger sensitivityRatios win. In order to not get duplicating effects or contradicting effects, it is suggested to switch Autosens off by setting `profile.autosens_max = 1` and `profile.autosens_min = 1`, which is an absolute must if no carbs are logged, running in UAM only mode.
 
-If you enter carbs and still want to have Autosens running alongside, at least *Sensitivity Raises Target* and *Resistance Lowers Targets* should to be switched off. For DynISF autosens needs to be active and be able to swing in you set boundaries, as DynISF manipulates the autosens result.
+If you enter carbs and still want to have Autosens running alongside, at least *Sensitivity Raises Target* and *Resistance Lowers Targets* should to be switched off.
 
 ## Known Issues
 
@@ -93,24 +93,19 @@ If you enter carbs and still want to have Autosens running alongside, at least *
 
 ## Sports & autoISF
 
-When exercising and raising sensitivity via *High TT Raises Sensitivity* or *Excercise Mode* you have to switch off autoISF , as it could send you in the opposite direction. It is easiest accomplished via middleware, that automatically sets autoISF to off
+When exercising and raising sensitivity via *High TT Raises Sensitivity* or *Excercise Mode* you have to switch off autoISF, as it could send you in the opposite direction. It is easiest accomplished via middleware, that automatically sets autoISF to off
 
 ``` js
-function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalProfile) {
+function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock) {
+	const high_temptarget_raises_sensitivity = profile.exercise_mode || profile.high_temptarget_raises_sensitivity;
+	var reasonSports = "nothing to do.";
 
-    // Turn off DynamicISF and AutoISF when using a temp target >= 110 and if an exercise setting is enabled.
-    const autoswitchoff = preferences.switchSportXPM;
-    const currentMinTarget = profile.min_bg;
-    var reasonSports  = "";
-    if ((profile.high_temptarget_raises_sensitivity == true || profile.exercise_mode == true) && autoswitchoff) {
-        exerciseSetting = true;
-    }
-    if (profile.temptargetSet && profile.min_bg > 109 && exerciseSetting == true) {
-        profile.use_autoisf = false;
-        reasonSports = "autoISF off due to Exercise Target. Current min target: " + currentMinTarget + "! ";
-    }
-    return `${reasonSports}`
- }
+	if (high_temptarget_raises_sensitivity && profile.temptargetSet && profile.min_bg > 110) {
+		profile.use_autoisf = false;
+		reasonSports = "autoISF off due to Exercise Target. ";
+	}
+	return reasonSports
+}
 ```
 
 ## Middleware
