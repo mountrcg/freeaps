@@ -38,6 +38,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>xdripswift</string>
+		<string>gcm-ciq</string>
 		<string>dexcomg6</string>
 		<string>dexcomcgm</string>
 		<string>diabox</string>
