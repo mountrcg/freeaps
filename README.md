@@ -1,10 +1,10 @@
-# FreeAPS X with aisf & Dash support
+# FreeAPS X with autoISF & Dash support and TDD calculations
 
 Ivan's tremendous effort with FreeAPS X - supplemented with an adapted oref1 algo that is based on Gerhards work with his German community, especialy Bernd who trials and tweaks all parameters for himself and documents his structured progress quite well. Gerhard's oref adation and lots of documents and simulation programs for Android can be found at: https://github.com/ga-zelle/autoISF The Team has created numerous very good documentations, that you must read before configuring autoISF, especially the [quick guide](https://github.com/ga-zelle/autoISF/blob/A3.0.0.1_ai2.2.6/autoISF2.2_Quick_Guide.pdf)
 
 I just tweaked this oref to work with FAX and JonB helped a lot getting all prefs sorted in FAX. The whole algorithm can be found in my oref repo: 
-* https://github.com/mountrcg/oref0/tree/autoISF2.2.6-DynISF1.0 or just with autoISF
-* https://github.com/mountrcg/oref0/tree/autoISF2.2.6
+* https://github.com/mountrcg/oref0/tree/dev_aisf_TDD with calculations of TDD in oref-code
+* https://github.com/mountrcg/oref0/tree/dev-aisf_noTDD without TDD calcs
  
 That will be more easy to review as the packeted js-files in FAX are not really readable. And I really suggest to look at the code.
 
