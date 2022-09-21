@@ -232,8 +232,40 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 
 - read all the stuff in this folder: https://github.com/mountrcg/freeaps/tree/dev-aisf/aisf
 
+# Dash implementation
 
-# Updated to include dashpod
+:warning: :warning: :warning: :warning:
+
+# Precaution 
+
+Please understand that these version are :
+- highly experimental
+- not approved for therapy
+
+WARNING 
+- The settings of your current FAX should not be re-init when you update to this version but check it before close loop 
+- The update MUST ONLY be done when you change of a pod. The previous pod would be not accessible. So, first, desactivate your current pod then compile and update your FAX on your phone and add a new pod with the dash pump menu.
+
+
+These version were tested by few developers with success. But...Don't hesitate to create issues if you find bugs or issues. 
+
+:warning: :warning: :warning: 
+
+
+# Documentation
+
+[freeAPS X original github](https://github.com/ivalkou/freeaps)
+
+[ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
+
+[Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
+
+[OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
+
+
+# Technical updates 
+
+## Updated to include dashpod
 
 - replace the Rileylink package to the Loop version of 2 august 2022
 - replace the Loopkit package to the Loop version of 2 august 2022
@@ -243,16 +275,7 @@ _ modify the order of compilation for CGMBLEKit (header before compilation)
  
  ## Changes in package 
  
- The only change required is the public access to managedIdentifier for omnipod, medtronic et  dash. Loop doesn't use it but FAX requires it. 
-
-
-    //public let managerIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
-    
-    public static let managerIdentifier = "Omnipod-Dash"
-    
-    public var managerIdentifier: String {
-        return OmniBLEPumpManager.managerIdentifier
-    }
+No change 😁. Use extension in FAX to include the managerIdentifier
 
  
  ## Changes in freeapsx
