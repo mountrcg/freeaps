@@ -135,7 +135,8 @@ extension Home {
                 closedLoop: $state.closedLoop,
                 timerDate: $state.timerDate,
                 isLooping: $state.isLooping,
-                lastLoopDate: $state.lastLoopDate
+                lastLoopDate: $state.lastLoopDate,
+                manualTempBasal: $state.manualTempBasal
             ).onTapGesture {
                 isStatusPopupPresented = true
             }.onLongPressGesture {
