@@ -155,6 +155,12 @@ extension Home {
                         )
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
                         .padding(.leading, 8)
+                        Text(
+                            "AS " +
+                                (numberFormatter.string(from: (state.suggestion?.sensitivityRatio ?? 0) as NSNumber) ?? "0")
+                        )
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                        .padding(.leading, 4)
                     }
                 }
 
