@@ -688,7 +688,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     var avg7d = Decimal()
                     if count7d > 0 {
                         var calcAvg = total7d / count7d
-                        NSDecimalRound(&avg7d, &calcAvg, 2, .bankers)
+                        NSDecimalRound(&avg7d, &calcAvg, 1, .bankers)
 
                         let avgtdd = TDD_avg(
                             avgTDD7d: avg7d,
