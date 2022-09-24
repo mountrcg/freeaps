@@ -19,18 +19,21 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let screenHours = 5
+        static let screenHours = 6
         static let basalHeight: CGFloat = 80
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
-        static let maxGlucose = 450
-        static let minGlucose = 70
+        static let maxGlucose = 250
+        static let minGlucose = 50
         static let yLinesCount = 5
+        static let glucoseScale: CGFloat = 2 // default 2
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
         static let carbsScale: CGFloat = 0.3
+        static let upperTarget: CGFloat = 180
+        static let lowerTarget: CGFloat = 70
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -151,14 +154,35 @@ struct MainChartView: View {
     }
 
     private func yGridView(fullSize: CGSize) -> some View {
-        Path { path in
+        ZStack {
+            Path { path in
+                let range = glucoseYGange
+                let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
+                for line in 0 ... Config.yLinesCount {
+                    path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
+                }
+            }.stroke(Color.secondary, lineWidth: 0.2)
+            // horizontal limits
             let range = glucoseYGange
-            let step = (range.maxY - range.minY) / CGFloat(Config.yLinesCount)
-            for line in 0 ... Config.yLinesCount {
-                path.move(to: CGPoint(x: 0, y: range.minY + CGFloat(line) * step))
-                path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + CGFloat(line) * step))
+            let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
+                (CGFloat(range.maxValue) - Config.upperTarget)
+            if CGFloat(range.maxValue) > Config.upperTarget {
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: range.minY + topstep))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
+                }.stroke(Color.loopYellow, lineWidth: 0.5)
             }
-        }.stroke(Color.secondary, lineWidth: 0.2)
+            let yrange = glucoseYGange
+            let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
+                (CGFloat(yrange.maxValue) - Config.lowerTarget)
+            if CGFloat(yrange.minValue) < Config.lowerTarget {
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
+                }.stroke(Color.loopRed, lineWidth: 0.5)
+            }
+        }
     }
 
     private func glucoseLabelsView(fullSize: CGSize) -> some View {
@@ -869,7 +893,13 @@ extension MainChartView {
             minValue = Config.minGlucose
             maxValue = Config.maxGlucose
         }
-
+        // fix the grah y-axis as long as the min and max BG values are within set borders
+        if minValue > Config.minGlucose {
+            minValue = Config.minGlucose
+        }
+        if maxValue < Config.maxGlucose {
+            maxValue = Config.maxGlucose
+        }
         return (min: minValue, max: maxValue)
     }
 
