@@ -231,12 +231,12 @@ extension Home {
 
         var legendPanal: some View {
             HStack(alignment: .center) {
-                Group {
-                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                        .padding(.leading, 8)
-                    Text("BG")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                }
+//                Group {
+//                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+//                        .padding(.leading, 8)
+//                    Text("BG")
+//                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+//                }
                 Group {
                     Circle().fill(Color.insulin).frame(width: 8, height: 8)
                         .padding(.leading, 8)
@@ -261,11 +261,18 @@ extension Home {
                     Text("UAM")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
                 }
-                Text(
-                    "TDD " + (numberFormatter.string(from: (state.suggestion?.tdd ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString("U", comment: "Insulin unit")
-                )
-                .font(.system(size: 12, weight: .regular)).foregroundColor(.insulin).padding(.leading, 8)
+                Group {
+                    Text(
+                        "TDD " + (numberFormatter.string(from: (state.suggestion?.tdd ?? 0) as NSNumber) ?? "0")
+                    ).font(.system(size: 12, weight: .bold)).foregroundColor(.insulin).padding(.leading, 8)
+                    Text(
+                        "ytd. " + (numberFormatter.string(from: (state.suggestion?.tddytd ?? 0) as NSNumber) ?? "0")
+                    ).font(.system(size: 12, weight: .regular)).foregroundColor(.insulin)
+//                    Text(
+//                        numberFormatter.string(from: (state.suggestion?.tdd7d ?? 0) as NSNumber) ?? "0"
+//                    )
+//                    .font(.system(size: 12, weight: .regular)).foregroundColor(.insulin)
+                }
 //                if let eventualBG = state.eventualBG {
 //                    Text(
 //                        "⇢ " + numberFormatter.string(
