@@ -20,7 +20,7 @@ struct MainChartView: View {
     private enum Config {
         static let endID = "End"
         static let screenHours = 5
-        static let basalHeight: CGFloat = 70
+        static let basalHeight: CGFloat = 80
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 50
         static let minAdditionalWidth: CGFloat = 150
@@ -178,11 +178,13 @@ struct MainChartView: View {
 
     private func basalView(fullSize: CGSize) -> some View {
         ZStack {
-            tempBasalPath.fill(Color.tempBasal)
-            tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
-            suspensionsPath.fill(Color.loopGray)
-            regularBasalPath.stroke(Color.basal, lineWidth: 1)
+            tempBasalPath.fill(Color.basal.opacity(0.5))
+            tempBasalPath.stroke(Color.insulin, lineWidth: 1)
+            regularBasalPath.stroke(Color.insulin, style: StrokeStyle(lineWidth: 0.7, dash: [4]))
+            suspensionsPath.stroke(Color.loopGray.opacity(0.7), style: StrokeStyle(lineWidth: 0.7)).scaleEffect(x: 1, y: -1)
+            suspensionsPath.fill(Color.loopGray.opacity(0.2)).scaleEffect(x: 1, y: -1)
         }
+        .scaleEffect(x: 1, y: -1)
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
         .background(Color.secondary.opacity(0.1))
@@ -219,6 +221,8 @@ struct MainChartView: View {
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
     }
 
+    @Environment(\.colorScheme) var colorScheme
+
     private func xGridView(fullSize: CGSize) -> some View {
         ZStack {
             Path { path in
@@ -232,12 +236,15 @@ struct MainChartView: View {
             }
             .stroke(Color.secondary, lineWidth: 0.2)
 
-            Path { path in
+            Path { path in // vertical timeline
                 let x = timeToXCoordinate(timerDate.timeIntervalSince1970, fullSize: fullSize)
                 path.move(to: CGPoint(x: x, y: 0))
                 path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
             }
-            .stroke(Color.secondary, style: StrokeStyle(lineWidth: 0.5, dash: [5]))
+            .stroke(
+                colorScheme == .dark ? Color.white : Color.black,
+                style: StrokeStyle(lineWidth: 0.5, dash: [5])
+            )
         }
     }
 
@@ -324,6 +331,8 @@ struct MainChartView: View {
         ZStack {
             tempTargetsPath
                 .fill(Color.tempBasal.opacity(0.5))
+            tempTargetsPath
+                .stroke(Color.basal.opacity(0.5), lineWidth: 1)
         }
         .onChange(of: glucose) { _ in
             calculateTempTargetsRects(fullSize: fullSize)
@@ -549,7 +558,7 @@ extension MainChartView {
                 guard window[0].type == .pumpSuspend, window[1].type == .pumpResume else { return nil }
                 let x0 = self.timeToXCoordinate(window[0].timestamp.timeIntervalSince1970, fullSize: fullSize)
                 let x1 = self.timeToXCoordinate(window[1].timestamp.timeIntervalSince1970, fullSize: fullSize)
-                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
+                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight * 0.7)
             }
 
             let firstRec = self.suspensions.first.flatMap { event -> CGRect? in
@@ -564,7 +573,7 @@ extension MainChartView {
                     x: x0,
                     y: 0,
                     width: x1 - x0,
-                    height: Config.basalHeight
+                    height: Config.basalHeight * 0.7
                 )
             }
 
@@ -577,7 +586,7 @@ extension MainChartView {
                 let x1 = tbrTimeX ?? self.fullGlucoseWidth(viewWidth: fullSize.width) + self
                     .additionalWidth(viewWidth: fullSize.width)
 
-                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
+                return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight * 0.7)
             }
             rects.append(firstRec)
             rects.append(lastRec)
