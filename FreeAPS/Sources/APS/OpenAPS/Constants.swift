@@ -57,6 +57,7 @@ extension OpenAPS {
         static let tdd = "monitor/tdd.json"
         static let tdd_daily = "monitor/tdd_daily.json"
         static let tdd_avg = "monitor/tdd_avg.json"
+        static let alertHistory = "monitor/alerthistory.json"
     }
 
     enum Enact {
