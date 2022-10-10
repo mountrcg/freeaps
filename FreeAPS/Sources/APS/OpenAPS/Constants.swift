@@ -54,6 +54,7 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
         static let podAge = "monitor/pod-age.json"
+        static let alertHistory = "monitor/alerthistory.json"
         static let tdd = "monitor/tdd.json"
         static let tdd_daily = "monitor/tdd_daily.json"
         static let tdd_avg = "monitor/tdd_avg.json"
