@@ -18,6 +18,8 @@ struct Suggestion: JSON, Equatable {
     let reservoir: Decimal?
     let isf: Decimal?
     let tdd: Decimal?
+    let tddytd: Decimal?
+    let tdd7d: Decimal?
     var timestamp: Date?
     var recieved: Bool?
 }
@@ -50,6 +52,8 @@ extension Suggestion {
         case recieved
         case isf = "ISF"
         case tdd = "TDD"
+        case tddytd = "TDDytd"
+        case tdd7d = "TDD7d"
     }
 }
 
