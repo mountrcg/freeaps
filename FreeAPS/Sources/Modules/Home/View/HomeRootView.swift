@@ -230,11 +230,11 @@ extension Home {
 
         var legendPanal: some View {
             HStack(alignment: .center) {
-                Group {
-                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                    Text("BG")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                }
+//                Group {
+//                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+//                    Text("BG")
+//                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+//                }
                 Group {
                     Circle().fill(Color.insulin).frame(width: 8, height: 8)
                         .padding(.leading, 8)

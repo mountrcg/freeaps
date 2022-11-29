@@ -52,7 +52,7 @@ struct Preferences: JSON {
     var smbDeliveryRatioMin: Decimal = 0.5
     var smbDeliveryRatioMax: Decimal = 0.75
     var iobThreshold: Decimal = 0
-    var autoISFtempSMB: Bool = false
+    var enableSMBEvenOnOddOff: Bool = false
     var enableautoISFwithCOB: Bool = false
     var higherISFrangeWeight: Decimal = 0
     var lowerISFrangeWeight: Decimal = 0
@@ -116,7 +116,7 @@ extension Preferences {
         case smbMaxRangeExtension = "smb_max_range_extension"
         case floatingcarbs = "floating_carbs"
         case iobThreshold = "iob_threshold"
-        case autoISFtempSMB = "autoisf_temp_smb"
+        case enableSMBEvenOnOddOff = "enableSMB_EvenOn_OddOff"
         case smbDeliveryRatioBGrange = "smb_delivery_ratio_bg_range"
         case smbDeliveryRatioMin = "smb_delivery_ratio_min"
         case smbDeliveryRatioMax = "smb_delivery_ratio_max"

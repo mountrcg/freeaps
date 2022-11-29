@@ -87,7 +87,7 @@ extension PreferencesEditor {
             let xpmToogles = [
                 Field(
                     displayName: "Temp targets toggle SMB",
-                    type: .boolean(keypath: \.autoISFtempSMB),
+                    type: .boolean(keypath: \.enableSMBEvenOnOddOff),
                     infoText: NSLocalizedString(
                         "Defaults to false. If true, autoISF will block SMB's when odd TempTargets are used (lower boundary) and enforce SMB, when even Temp Targets are used.",
                         comment: "Floating Carbs"
