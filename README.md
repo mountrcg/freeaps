@@ -108,6 +108,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 	return reasonSports
 }
 ```
+However, this above is old and no middleware is needed anymore. Some changes have been made. In above mentioned scenario autoISF will now not adjust the ISF from the profile, but the ISF already adjusted by *High TT Raises Sensitivity* or *Excercise Mode*. SMB's are either disabled if you have set *allowSMB_with_high_temptarget* to false. You can also disable SMB by setting an odd TempTarget. For this to take effect enable the toggle *enableSMB_EvenOn_OddOff*
+Also you can switch off autoISF completely if exercising by setting *autoISF_off_Sport* to true. Exercising means you have *High TT Raises Sensitivity* or *Excercise Mode* enabled and have set a High TempTarget.
 
 ## Middleware
 
