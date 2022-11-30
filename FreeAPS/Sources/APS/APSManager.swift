@@ -665,12 +665,11 @@ final class BaseAPSManager: APSManager, Injectable {
         let file = OpenAPS.Monitor.tdd
         let tdd = TDD(
             TDD: currentTDD,
-            timestamp: Date(),
-            id: UUID().uuidString
+            timestamp: Date()
         )
         var uniqEvents: [TDD] = []
         storage.transaction { storage in
-            storage.append(tdd, to: file, uniqBy: \.id)
+            storage.append(tdd, to: file, uniqBy: \.timestamp)
             uniqEvents = storage.retrieve(file, as: [TDD].self)?
                 .filter { $0.timestamp.addingTimeInterval(12.hours.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp } ?? []
