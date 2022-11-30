@@ -993,7 +993,6 @@
 			children = (
 				3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */,
 				3811DE2925C9D49500A708ED /* HomeProvider.swift */,
-				3811DE2825C9D49500A708ED /* HomeStateModel.swift */,
 				3811DE2C25C9D49500A708ED /* View */,
 			);
 			path = Home;
@@ -1317,15 +1316,15 @@
 				383948D925CD64D500E91849 /* Glucose.swift */,
 				E0D4F80427513ECF00BDF1FE /* HealthKitSample.swift */,
 				382C133625F13A1E00715CE1 /* InsulinSensitivities.swift */,
+				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				38887CCD25F5725200944304 /* IOBEntry.swift */,
 				492A2DD329360BAD00600A12 /* LoopStats.swift */,
 				385CEA8125F23DFD002D6D5B /* NightscoutStatus.swift */,
 				389442CA25F65F7100FA1F27 /* NightscoutTreatment.swift */,
+				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
 				3895E4C525B9E00D00214B37 /* Preferences.swift */,
-				38A13D3125E28B4B00EAA382 /* PumpHistoryEvent.swift */,
 				3883583325EEB38000E024B2 /* PumpSettings.swift */,
 				38E989DC25F5021400C0CED0 /* PumpStatus.swift */,
-				38BF021C25E7E3AF00579895 /* Reservoir.swift */,
 				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
 				492A2DCF2936084500600A12 /* TDD_averages.swift */,
 				49BC0C142864445B0010164A /* TDD_avg.swift */,
@@ -1885,6 +1884,7 @@
 		F75CB57ED6971B46F8756083 /* CGM */ = {
 			isa = PBXGroup;
 			children = (
+				3811DE2825C9D49500A708ED /* HomeStateModel.swift */,
 				B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */,
 				38FEF3FD2738083E00574A46 /* CGMProvider.swift */,
 				5C018D1680307A31C9ED7120 /* CGMStateModel.swift */,
