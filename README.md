@@ -1,4 +1,4 @@
-# FreeAPS X with autoISF & Dash support and TDD calculations
+# FreeAPS X with autoISF & Dash support and TDD calculations and Statistics summary json
 
 Ivan's tremendous effort with FreeAPS X - supplemented with an adapted oref1 algo that is based on Gerhards work with his German community, especialy Bernd who trials and tweaks all parameters for himself and documents his structured progress quite well. Gerhard's oref adation and lots of documents and simulation programs for Android can be found at: https://github.com/ga-zelle/autoISF The Team has created numerous very good documentations, that you must read before configuring autoISF, especially the [quick guide](https://github.com/ga-zelle/autoISF/blob/A3.0.0.1_ai2.2.6/autoISF2.2_Quick_Guide.pdf)
 
@@ -10,7 +10,7 @@ That will be more easy to review as the packeted js-files in FAX are not really 
 
 ## Important updates
 
-autoISF remains stable in v2.2.6 However I have added [Jons](https://github.com/Jon-b-m) implementation of calculating TDD's for DynamicISF. DynISF is not included in this latest commit. 
+autoISF v 2.2.7 with some tweaks that will enter 2.2.8 soon. I have added [Jons](https://github.com/Jon-b-m) implementation of calculating TDD's and summarizing some statistics. DynISF is not included in this latest commit. 
 
 AutoISF with TDD in pop-up and in legend (bottom right corner)
 
@@ -67,6 +67,7 @@ There needed to be some changes to the UI. I tried to keep them minimal.
 - show ISF as the key parameter in this oref adaption in the header near current BG
 - move the Enacted popup a bit further down to review Header info simultaneously
 - make space for this and the eventual BG up there as well, so COB and IOB are small icons
+- show TDD 24hr rolling and from yesterday
 - colors harmonized
 
 ![view FAX](screen-FAXaisf.png)
