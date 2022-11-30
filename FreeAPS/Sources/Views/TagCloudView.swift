@@ -54,7 +54,8 @@ struct TagCloudView: View {
         var colorOfTag: Color {
             switch textTag {
             case textTag where textTag.contains("Floating"),
-                 textTag where textTag.contains("enforced"):
+                 textTag where textTag.contains("enforced"),
+                 textTag where textTag.contains("enabled"):
                 return .loopYellow
             case "autoISF",
                  textTag where textTag.contains("disabled"),
