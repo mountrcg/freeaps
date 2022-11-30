@@ -2,16 +2,16 @@ import Foundation
 
 struct Preferences: JSON {
     var maxIOB: Decimal = 9
-    var maxDailySafetyMultiplier: Decimal = 5
-    var currentBasalSafetyMultiplier: Decimal = 6
+    var maxDailySafetyMultiplier: Decimal = 6
+    var currentBasalSafetyMultiplier: Decimal = 7
     var autosensMax: Decimal = 2
-    var autosensMin: Decimal = 0.7
-    var autoisf: Bool = true
+    var autosensMin: Decimal = 0.5
     var autoISFhourlyChange: Decimal = 0.6
     var autoISFmax: Decimal = 2
     var autoISFmin: Decimal = 0.5
-    var smbDeliveryRatio: Decimal = 0.5
+    var smbDeliveryRatio: Decimal = 0.85
     var smbMaxRangeExtension: Decimal = 3
+    var autoisf: Bool = true
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
     var lowTemptargetLowersSensitivity: Bool = false
@@ -48,23 +48,23 @@ struct Preferences: JSON {
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
     var floatingcarbs: Bool = false
-    var smbDeliveryRatioBGrange: Decimal = 100
+    var smbDeliveryRatioBGrange: Decimal = 90
     var smbDeliveryRatioMin: Decimal = 0.65
-    var smbDeliveryRatioMax: Decimal = 0.8
+    var smbDeliveryRatioMax: Decimal = 0.80
     var enableautoISFwithCOB: Bool = true
-    var higherISFrangeWeight: Decimal = 0.1
-    var lowerISFrangeWeight: Decimal = 0.1
+    var higherISFrangeWeight: Decimal = 0.3
+    var lowerISFrangeWeight: Decimal = 0.7
     var deltaISFrangeWeight: Decimal = 0.6
     var postMealISFweight: Decimal = 0.02
-    var postMealISFduration: Decimal = 5
+    var postMealISFduration: Decimal = 3
     var postMealISFalways: Bool = true
-    var bgAccelISFweight: Decimal = 0.06
+    var bgAccelISFweight: Decimal = 0.1
     var bgBrakeISFweight: Decimal = 0.15
     var enableBGacceleration: Bool = true
-    var iobThreshold: Decimal = 0
-    var enableSMBEvenOnOddOff: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.3
+    var iobThreshold: Decimal = 0
     var autoISFoffSport: Bool = true
+    var enableSMBEvenOnOddOff: Bool = true
 }
 
 extension Preferences {
