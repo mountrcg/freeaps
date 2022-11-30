@@ -64,7 +64,7 @@ struct Preferences: JSON {
     var bgBrakeISFweight: Decimal = 0
     var enableBGacceleration: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.2
-    var switchSportXPM: Bool = true
+    var autoISFoffSport: Bool = true
 }
 
 extension Preferences {
@@ -131,7 +131,7 @@ extension Preferences {
         case bgBrakeISFweight = "bgBrake_ISF_weight"
         case enableBGacceleration = "enable_BG_acceleration"
         case maxDeltaBGthreshold = "maxDelta_bg_threshold"
-        case switchSportXPM
+        case autoISFoffSport = "autoISF_off_Sport"
     }
 }
 
