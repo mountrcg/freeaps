@@ -27,20 +27,20 @@ extension PreferencesEditor {
 
             let quickPrefs = [
                 Field(
-                    displayName: "Enable AutoISF",
+                    displayName: "Enable autoISF",
                     type: .boolean(keypath: \.autoisf),
                     infoText: NSLocalizedString(
                         "Defaults to false. Adapt ISF when glucose is stuck at high levels, only works without COB.\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2",
-                        comment: "Enable AutoISF"
+                        comment: "Enable autoISF"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: "AutoISF IOB Threshold",
+                    displayName: "autoISF IOB Threshold",
                     type: .decimal(keypath: \.iobThreshold),
                     infoText: NSLocalizedString(
                         "Safety setting: Amount of IOB that if surpassed will prevent any further SMB's being administered. Default is 0, which disables the IOB threshold for SMB's. Advisable to set to 70% of maxIOB, can be meal dependant.",
-                        comment: "AutoISF IOB threshold"
+                        comment: "autoISF IOB threshold"
                     ),
                     settable: self
                 ),
@@ -72,10 +72,19 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Excercise toggles all ISF adjustments off",
-                    type: .boolean(keypath: \.switchSportXPM),
+                    displayName: "Temp Targets toggle SMB",
+                    type: .boolean(keypath: \.enableSMBEvenOnOddOff),
                     infoText: NSLocalizedString(
-                        "Defaults to true. When true, switches off autoISF during excercise. Done in middleware.",
+                        "Defaults to false. If true, autoISF will block SMB's when odd TempTargets are used (lower boundary) and enforce SMB, when even TempTargets are used. autoISF is still active and adjusting ISF's. In case of exercise_mode or high_temptarget_raises_sensitivity being true and any High TT being active, it adjusts the oref calculataed ISF, not profile ISF.",
+                        comment: "Odd TT disable SMB"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Excercise toggles all ISF adjustments off",
+                    type: .boolean(keypath: \.autoISFoffSport),
+                    infoText: NSLocalizedString(
+                        "Defaults to true. When true, switches off complete autoISF during high TT in excercise mode.",
                         comment: "Switch off autoISF with exercise"
                     ),
                     settable: self
@@ -86,16 +95,7 @@ extension PreferencesEditor {
 
             let xpmToogles = [
                 Field(
-                    displayName: "Temp targets toggle SMB",
-                    type: .boolean(keypath: \.enableSMBEvenOnOddOff),
-                    infoText: NSLocalizedString(
-                        "Defaults to false. If true, autoISF will block SMB's when odd TempTargets are used (lower boundary) and enforce SMB, when even Temp Targets are used.",
-                        comment: "Floating Carbs"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: "Enable BG acceleration in AutoISF2.2",
+                    displayName: "Enable BG acceleration",
                     type: .boolean(keypath: \.enableBGacceleration),
                     infoText: NSLocalizedString(
                         "Enables the BG acceleration adaptiions for autoISF\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2dev_ai2.2",
@@ -104,20 +104,20 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "AutoISF Max",
+                    displayName: "autoISF Max",
                     type: .decimal(keypath: \.autoISFmax),
                     infoText: NSLocalizedString(
                         "Multiplier cap on how high the autoISF ratio can be and therefore how low it can adjust ISF.",
-                        comment: "AutoISF Max"
+                        comment: "autoISF Max"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: "AutoISF Min",
+                    displayName: "autoISF Min",
                     type: .decimal(keypath: \.autoISFmin),
                     infoText: NSLocalizedString(
                         "This is a multiplier cap for autoISF to set a limit on how low the autoISF ratio can be, which in turn determines how high it can adjust ISF.",
-                        comment: "AutoISF Min"
+                        comment: "autoISF Min"
                     ),
                     settable: self
                 ),
@@ -133,16 +133,16 @@ extension PreferencesEditor {
             ]
             let xpmDuraISF = [
                 Field(
-                    displayName: "AutoISF HourlyMaxChange",
+                    displayName: "autoISF HourlyMaxChange",
                     type: .decimal(keypath: \.autoISFhourlyChange),
                     infoText: NSLocalizedString(
                         "Defaults to false. Rate at which autoISF grows per hour assuming bg is twice target. When value = 1.0, ISF is reduced to 50% after 1 hour of BG at 2x target.",
-                        comment: "AutoISF HourlyMaxChange"
+                        comment: "autoISF HourlyMaxChange"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable AutoISF with COB",
+                    displayName: "Enable autoISF with COB",
                     type: .boolean(keypath: \.enableautoISFwithCOB),
                     infoText: NSLocalizedString(
                         "Enables autoISF not just for UAM, but also with COB\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2_dev_parabola",
