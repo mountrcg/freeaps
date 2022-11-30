@@ -61,8 +61,8 @@ struct TagCloudView: View {
                  textTag where textTag.contains("disabled"),
                  textTag where textTag.contains("final"):
                 return .loopRed
-            case "SMB Delivery Ratio:":
-                return .loopOrange
+            case "SMB Ratio:":
+                return .insulin
             case "Parabolic Fit",
                  textTag where textTag.contains("acce-ISF"):
                 return .zt
