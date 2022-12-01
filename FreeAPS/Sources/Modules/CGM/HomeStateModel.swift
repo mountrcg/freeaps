@@ -13,6 +13,8 @@ extension Home {
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
+        @Published var statistics: DailyStats?
+        @Published var loops: LoopCycles?
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
@@ -63,6 +65,7 @@ extension Home {
             setupReservoir()
 
             suggestion = provider.suggestion
+            statistics = provider.statistics
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -281,7 +284,7 @@ extension Home {
                 statusTitle = "No suggestion"
                 return
             }
-
+            let statistics = statistics
             let dateFormatter = DateFormatter()
             dateFormatter.timeStyle = .short
             if closedLoop,
@@ -298,6 +301,7 @@ extension Home {
 
             eventualBG = suggestion.eventualBG
             isf = suggestion.isf
+            loops = statistics![0, "LoopStats"] as! LoopCycles
         }
 
         private func setupReservoir() {

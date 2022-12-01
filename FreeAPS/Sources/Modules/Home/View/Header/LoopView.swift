@@ -14,6 +14,7 @@ struct LoopView: View {
     @Binding var isLooping: Bool
     @Binding var lastLoopDate: Date
     @Binding var manualTempBasal: Bool
+    @Binding var loopRatio: Decimal
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -38,7 +39,7 @@ struct LoopView: View {
             } else if manualTempBasal {
                 Text("Manual").font(.caption2)
             } else if actualSuggestion?.timestamp != nil {
-                Text(timeString).font(.caption2)
+                Text(timeString + loopRatioString).font(.caption2)
                     .foregroundColor(.secondary)
             } else {
                 Text("--").font(.caption2).foregroundColor(.secondary)
@@ -51,7 +52,12 @@ struct LoopView: View {
         if minAgo > 1440 {
             return "--"
         }
-        return "\(minAgo) " + NSLocalizedString("min ago", comment: "Minutes ago since last loop")
+        return "\(minAgo) " + NSLocalizedString("m", comment: "Minutes ago since last loop")
+    }
+
+    private var loopRatioString: String {
+        let ratio = loopRatio * 100
+        return "\(ratio) " + NSLocalizedString("%", comment: "Successful Loops last 24hrs")
     }
 
     private var color: Color {

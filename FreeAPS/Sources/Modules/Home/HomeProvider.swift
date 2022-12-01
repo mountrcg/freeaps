@@ -10,6 +10,10 @@ extension Home {
         @Injected() var tempTargetsStorage: TempTargetsStorage!
         @Injected() var carbsStorage: CarbsStorage!
 
+        var statistics: DailyStats? {
+            storage.retrieve(OpenAPS.Monitor.dailyStats, as: DailyStats.self)
+        }
+
         var suggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
