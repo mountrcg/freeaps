@@ -14,7 +14,7 @@ autoISF v 2.2.7 with some tweaks that will enter 2.2.8 soon. I have added [Jons]
 
 AutoISF with TDD in pop-up and in legend (bottom right corner)
 
-![view FAX-TDD](screen-FAX_aisf2.3_dynisf1.0.png) ![view watch-TDD](screenWatch_TDD.png)
+![view FAX-TDD](autoISF-regular.png) ![view watch-TDD](screenWatch_TDD.png)
 
 
 ## Java changes in oref for FAX
@@ -110,6 +110,11 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 ```
 However, this above is old and no middleware is needed anymore. Some changes have been made. In above mentioned scenario autoISF will now not adjust the ISF from the profile, but the ISF already adjusted by *High TT Raises Sensitivity* or *Excercise Mode*. SMB's are either disabled if you have set *allowSMB_with_high_temptarget* to false. You can also disable SMB by setting an odd TempTarget. For this to take effect enable the toggle *enableSMB_EvenOn_OddOff*
 Also you can switch off autoISF completely if exercising by setting *autoISF_off_Sport* to true. Exercising means you have *High TT Raises Sensitivity* or *Excercise Mode* enabled and have set a High TempTarget.
+
+Here the status when EatingSoon target is active with the result that a higher SMB delivery ratio is choosen. The SMB Ratio settings are also shown. 
+![view EatingSoon](EatingSoon_SMBRatio.png)
+
+![view EatingSoonSettings](EatingSoon_SMBRatioSettings.png) ![view EatingSoonToggles](EatingSoon_Toggles.png) 
 
 ## Middleware
 
