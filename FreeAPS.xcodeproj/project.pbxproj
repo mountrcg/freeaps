@@ -994,6 +994,7 @@
 		3811DE2725C9D49500A708ED /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				3811DE2825C9D49500A708ED /* HomeStateModel.swift */,
 				3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */,
 				3811DE2925C9D49500A708ED /* HomeProvider.swift */,
 				3811DE2C25C9D49500A708ED /* View */,
@@ -1888,7 +1889,6 @@
 		F75CB57ED6971B46F8756083 /* CGM */ = {
 			isa = PBXGroup;
 			children = (
-				3811DE2825C9D49500A708ED /* HomeStateModel.swift */,
 				B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */,
 				38FEF3FD2738083E00574A46 /* CGMProvider.swift */,
 				5C018D1680307A31C9ED7120 /* CGMStateModel.swift */,
