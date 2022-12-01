@@ -8,6 +8,8 @@ I just tweaked this oref to work with FAX and JonB helped a lot getting all pref
  
 That will be more easy to review as the packeted js-files in FAX are not really readable. And I really suggest to look at the code.
 
+You can discuss autoISF at [Discord](https://discord.gg/8v3E6PqF43)!
+
 ## Important updates
 
 autoISF v 2.2.7 with some tweaks that will enter 2.2.8 soon. I have added [Jons](https://github.com/Jon-b-m) implementation of calculating TDD's and summarizing some statistics. DynISF is not included in this latest commit. 
@@ -111,7 +113,14 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
 However, this above is old and no middleware is needed anymore. Some changes have been made. In above mentioned scenario autoISF will now not adjust the ISF from the profile, but the ISF already adjusted by *High TT Raises Sensitivity* or *Excercise Mode*. SMB's are either disabled if you have set *allowSMB_with_high_temptarget* to false. You can also disable SMB by setting an odd TempTarget. For this to take effect enable the toggle *enableSMB_EvenOn_OddOff*
 Also you can switch off autoISF completely if exercising by setting *autoISF_off_Sport* to true. Exercising means you have *High TT Raises Sensitivity* or *Excercise Mode* enabled and have set a High TempTarget.
 
-Here the status when EatingSoon target is active with the result that a higher SMB delivery ratio is choosen. The SMB Ratio settings are also shown. 
+![view Exercise1](autoISF-ExerciseToggle-ON.png) <- ![view ExerciseToggleON](ExerciseToggles.png)
+
+![view Exercise2](autoISF-ExerciseToggle-Off.png) ![view Exercise3](autoISF-ExerciseToggle-Off_oddTT.png) <- ![view ExerciseToggleOFF](EatingSoon_Toggles.png)
+
+## Eating Soon with higher SMB delivery Ratio
+
+Here the status when EatingSoon target is active with the result that a higher SMB delivery ratio is choosen. The SMB Ratio settings are also shown.
+
 ![view EatingSoon](EatingSoon_SMBRatio.png)
 
 ![view EatingSoonSettings](EatingSoon_SMBRatioSettings.png) ![view EatingSoonToggles](EatingSoon_Toggles.png) 
