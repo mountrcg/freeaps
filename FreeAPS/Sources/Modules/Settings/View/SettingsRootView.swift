@@ -26,14 +26,14 @@ extension Settings {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
+                    Text("Statistics")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dailyStats), from: self)
                     Text("Middleware")
                         .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                 }
 
                 Section(header: Text("Configuration")) {
                     Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
-                    Text("Middleware")
-                        .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
@@ -119,8 +119,6 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd_daily), from: self)
                             Text("TDD Average")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd_avg), from: self)
-                            Text("Statistics")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dailyStats), from: self)
                             Text("Loop Cycles")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
                             Text("Edit settings json")
