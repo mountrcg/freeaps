@@ -4,12 +4,12 @@ struct Preferences: JSON {
     var maxIOB: Decimal = 0
     var maxDailySafetyMultiplier: Decimal = 3
     var currentBasalSafetyMultiplier: Decimal = 4
-    var autosensMax: Decimal = 1.2
+    var autosensMax: Decimal = 1.3
     var autosensMin: Decimal = 0.7
     var autoisf: Bool = false
     var autoISFhourlyChange: Decimal = 0.25
     var autoISFmax: Decimal = 1.3
-    var autoISFmin: Decimal = 1
+    var autoISFmin: Decimal = 0.7
     var smbDeliveryRatio: Decimal = 0.5
     var smbMaxRangeExtension: Decimal = 1
     var rewindResetsAutosens: Bool = true
@@ -50,10 +50,8 @@ struct Preferences: JSON {
     var floatingcarbs: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
     var smbDeliveryRatioMin: Decimal = 0.5
-    var smbDeliveryRatioMax: Decimal = 0.75
-    var iobThreshold: Decimal = 0
-    var enableSMBEvenOnOddOff: Bool = false
-    var enableautoISFwithCOB: Bool = false
+    var smbDeliveryRatioMax: Decimal = 0.5
+    var enableautoISFwithCOB: Bool = true
     var higherISFrangeWeight: Decimal = 0
     var lowerISFrangeWeight: Decimal = 0
     var deltaISFrangeWeight: Decimal = 0
@@ -63,8 +61,10 @@ struct Preferences: JSON {
     var bgAccelISFweight: Decimal = 0
     var bgBrakeISFweight: Decimal = 0
     var enableBGacceleration: Bool = false
+    var iobThreshold: Decimal = 0
+    var enableSMBEvenOnOddOff: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.2
-    var autoISFoffSport: Bool = true
+    var autoISFoffSport: Bool = false
 }
 
 extension Preferences {
