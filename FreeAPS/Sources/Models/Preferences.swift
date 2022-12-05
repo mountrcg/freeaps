@@ -6,12 +6,6 @@ struct Preferences: JSON {
     var currentBasalSafetyMultiplier: Decimal = 7
     var autosensMax: Decimal = 2
     var autosensMin: Decimal = 0.5
-    var autoISFhourlyChange: Decimal = 0.6
-    var autoISFmax: Decimal = 2
-    var autoISFmin: Decimal = 0.5
-    var smbDeliveryRatio: Decimal = 0.85
-    var smbMaxRangeExtension: Decimal = 3
-    var autoisf: Bool = true
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
     var lowTemptargetLowersSensitivity: Bool = false
@@ -47,20 +41,27 @@ struct Preferences: JSON {
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
+    // start autoISF config
     var floatingcarbs: Bool = false
+    var autoisf: Bool = true
+    var autoISFmax: Decimal = 2
+    var autoISFmin: Decimal = 0.5
+    var smbDeliveryRatio: Decimal = 0.85
+    var smbMaxRangeExtension: Decimal = 3
     var smbDeliveryRatioBGrange: Decimal = 90
     var smbDeliveryRatioMin: Decimal = 0.65
     var smbDeliveryRatioMax: Decimal = 0.80
     var enableautoISFwithCOB: Bool = true
+    var autoISFhourlyChange: Decimal = 0.6
     var higherISFrangeWeight: Decimal = 0.3
     var lowerISFrangeWeight: Decimal = 0.7
     var deltaISFrangeWeight: Decimal = 0.6
+    var postMealISFalways: Bool = true
     var postMealISFweight: Decimal = 0.02
     var postMealISFduration: Decimal = 3
-    var postMealISFalways: Bool = true
+    var enableBGacceleration: Bool = true
     var bgAccelISFweight: Decimal = 0.1
     var bgBrakeISFweight: Decimal = 0.15
-    var enableBGacceleration: Bool = true
     var maxDeltaBGthreshold: Decimal = 0.3
     var iobThreshold: Decimal = 0
     var autoISFoffSport: Bool = true
@@ -108,6 +109,7 @@ extension Preferences {
         case carbsReqThreshold
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
+        // start autoISF config for oref variables
         case autoisf = "use_autoisf"
         case autoISFhourlyChange = "dura_ISF_weight"
         case autoISFmax = "autoISF_max"
