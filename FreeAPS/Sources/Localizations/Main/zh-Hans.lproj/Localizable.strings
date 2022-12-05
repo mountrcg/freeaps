@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* " min" in Treatments list */
 " min" = " 分钟";
 
+/* */
+"Unable to change anything" = "Unable to change anything";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
@@ -693,7 +696,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "高级选项";
 
 /* */
-"Alarms" = "报警";
+"Alarms" = "提醒";
 
 /* */
 "Glucose Settings" = "血糖设置";
@@ -888,16 +891,19 @@ Enact a temp Basal or a temp target */
 "Temp Target" = "临时目标";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "恢复";
 
 /* */
 "Suspend" = "暂停";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "动态背景";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = "天";
+
+/* Option to show HR in Watch app*/
+"Display HR on Watch" = "Display HR on Watch";
 
 
 /* Headers for settings ----------------------- */
@@ -916,7 +922,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "蓝牙状态已恢复(APS 重启?) 找到 %d 个蓝牙，并连接到 %@ 标识符为 %@ 的设备";
 
 /* Shared app group */
-"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "将连接瞬感1+发射器及直连瞬感 2 的第三方应用与 FreeAPS X 通过 AppGroup 方式共享数据";
 
 /* Native G6 app */
 "Native G6 app" = "官方G6 App";
@@ -931,7 +937,7 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "简单模拟器";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "直连Libre2或者Libre1发射器组合";
 
 /* Online or internal server */
 "Online or internal server" = "在线或内部服务器";
@@ -948,8 +954,171 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "在您在 Health App中创建血糖记录后，请打开 FreeAPS X，以帮助我们保证传输数据已更改";
-/* --------------------------------------------
 
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "信息";
+
+/* Warning title */
+"Warning" = "警告";
+
+/* Error title */
+"Error" = "错误";
+
+/* Manual temp basal mode */
+"Manual" = "Manual";
+
+/* Status highlight when manual temp basal is running. */
+"Manual Basal" = "Manual Basal";
+
+/* Current Manual Temp basal */
+" -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
+
+/* Total AT / Scheduled basal insulin */
+" U/day" = " U/day";
+
+/* Total AT / Scheduled basal insulin */
+"Total" = "Total";
+
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Attach Pod";
+
+"Deactivate Pod" = "解除Pod";
+
+/* */
+"Deactivating..." = "Deactivating...";
+
+"Pair Pod" = "Pair Pod";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Previous Pod Information";
+
+/* Text for confidence reminders navigation link */
+"Confidence Reminders" = "Confidence Reminders";
+
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
+
+/* button title for saving low reservoir reminder while saving */
+"Saving..." = "正在保存...";
+
+/* button title for saving low reservoir reminder */
+"Save" = "保存​​";
+
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+
+/* */
+"No Error" = "No Error";
+
+/* description label for active time pod details row */
+"Active Time" = "Pod启动时间";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Disabled";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "已启用";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Extended";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "No confidence reminders are used.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Expiration Reminder Default";
+
+/* */
+"Expiration Reminder" = "Pod到期提醒";
+
+/* */
+"Low Reservoir" = "Low Reservoir";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "No Reminder";
+
+/* */
+"Scheduled Reminder" = "Scheduled Reminder";
+
+/* */
+"Low Reservoir Reminder" = "Low Reservoir Reminder";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "输注率";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%1$@ for %2$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Set Temporary Basal";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Temporary Basal";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Temporary Basal Failed";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Missing Config";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+
+/* description label for active time pod details row */
+"Active Time" = "Pod启动时间";
+
+/* description label for total delivery pod details row */
+"Total Delivery" = "Total Delivery";
+
+/* */
+"Add Omnipod Dash" = "Add Omnipod Dash";
+
+/* */
+"Insert Cannula" = "植入Pod";
+
+/* */
+"Check Cannula" = "Check Cannula";
+
+/* */
+"Setup Complete" = "Setup Complete";
+
+/* */
+"Insulin Suspended" = "Insulin Suspended";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Suspending insulin delivery...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Resume Insulin Delivery";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Resuming insulin delivery...";
+
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+
+/* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
@@ -1058,7 +1227,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "两次自动大剂量的最短时间";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = " oref0中SMB最小增量，美敦力为 0.1U, Omnipod 为 0.05U，默认值为 0.1";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "胰岛素的最大降血糖作用，以分钟为单位";

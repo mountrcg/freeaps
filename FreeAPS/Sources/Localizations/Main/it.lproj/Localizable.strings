@@ -131,7 +131,7 @@
 "Top target" = "Target alto";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "per";
 
 /*  Temp target set for ... minutes */
 "min" = "min";
@@ -417,13 +417,16 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Obiettivi Temporanei";
 
 /* Delete carbs from Treatments list*/
-"Delete carbs?" = "Delete carbs?";
+"Delete carbs?" = "Elimina carboidrati?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Trattamenti";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " minuti";
+
+/* */
+"Unable to change anything" = "Unable to change anything";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -624,7 +627,7 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "Ultima misurazione";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Somma di controllo del piè di pagina del sensore";
 
 /* */
 "Last Blood Sugar prediction" = "Ultima previsione di Zucchero nel Sangue";
@@ -660,7 +663,7 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Stato di Connessione";
+"Connection State" = "Stato Connessione";
 
 /* */
 "Transmitter Type" = "Tipo di Trasmettitore";
@@ -693,7 +696,7 @@ Enact a temp Basal or a temp target */
 "Advanced" = "Avanzate";
 
 /* */
-"Alarms" = "Sveglie";
+"Alarms" = "Allarmi";
 
 /* */
 "Glucose Settings" = "Impostazioni di Glucose";
@@ -822,82 +825,85 @@ Enact a temp Basal or a temp target */
 "Found devices: %d" = "Dispositivi trovati: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Opzioni di riempimento";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Il riempimento dalla tendenza non è attualmente ben supportato da Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Riempi dalla cronologia";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Riempimento dalla tendenza";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Opzioni di Debug";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Aggiunge molti dati al Rapporto Problemi ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Persistere i dati del sensore";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Batteria";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Aggiungi anche informazioni sorgente";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Soglia carboidrati necessari";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Carboidrati necessari %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "Per evitare glicemia BASSA servono %d g di carboidrati";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X not active";
+"FreeAPS X not active" = "FreeAPS X non attivo";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more then %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Mostra il glucosio sul badge dell'app";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Riempi glicemia";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Informazioni su questa fonte";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Bolo fallito";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolo fallito o impreciso. Controlla la cronologia del microinfusore prima di ripetere.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Carboidrati";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Basale temporanea";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Target Temporaneo";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Riprendi";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Sospendi";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Sfondo Animato";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = " giorno/i";
+
+/* Option to show HR in Watch app*/
+"Display HR on Watch" = "Display HR on Watch";
 
 
 /* Headers for settings ----------------------- */
@@ -913,43 +919,206 @@ Enact a temp Basal or a temp target */
 "Glucose Simulator" = "Glucose Simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Stato Bluetooth ripristinato (APS riavviato?). Trovato %d periferiche e collegato a %@ con identificatore %@";
 
 /* Shared app group */
-"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Shared app group for direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Gruppo di app condiviso per il collegamento diretto con trasmettitori Libre 1 o sensori Europei Libre 2";
 
 /* Native G6 app */
-"Native G6 app" = "Native G6 app";
+"Native G6 app" = "App nativa G6";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "App nativa G5";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Trasmettitore Minilink";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "Simulatore semplice";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Collegamento diretto con trasmettitori Libre 1 o sensori Europei Libre 2";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Server online o interno";
 
 /* HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "Connetti con Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Per scrivere dati su Apple Health devi dare il permesso in Impostazioni > Salute > Accesso dati";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data";
-/* --------------------------------------------
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Dopo aver creato record glicemici nell'app Salute, apri FreeAPS X per aiutarci a trasferire i dati modificati";
 
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
+
+/* Warning title */
+"Warning" = "Avvertimento";
+
+/* Error title */
+"Error" = "Errore";
+
+/* Manual temp basal mode */
+"Manual" = "Manual";
+
+/* Status highlight when manual temp basal is running. */
+"Manual Basal" = "Manual Basal";
+
+/* Current Manual Temp basal */
+" -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
+
+/* Total AT / Scheduled basal insulin */
+" U/day" = " U/day";
+
+/* Total AT / Scheduled basal insulin */
+"Total" = "Total";
+
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Attach Pod";
+
+"Deactivate Pod" = "Disattiva Pod";
+
+/* */
+"Deactivating..." = "Deactivating...";
+
+"Pair Pod" = "Pair Pod";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Previous Pod Information";
+
+/* Text for confidence reminders navigation link */
+"Confidence Reminders" = "Confidence Reminders";
+
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands.";
+
+/* button title for saving low reservoir reminder while saving */
+"Saving..." = "Sto salvando...";
+
+/* button title for saving low reservoir reminder */
+"Save" = "Salva";
+
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+
+/* */
+"No Error" = "No Error";
+
+/* description label for active time pod details row */
+"Active Time" = "Tempo di attività";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Disabled";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "Abilitato";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Extended";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "No confidence reminders are used.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Expiration Reminder Default";
+
+/* */
+"Expiration Reminder" = "Promemoria di scadenza";
+
+/* */
+"Low Reservoir" = "Low Reservoir";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "No Reminder";
+
+/* */
+"Scheduled Reminder" = "Scheduled Reminder";
+
+/* */
+"Low Reservoir Reminder" = "Low Reservoir Reminder";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "Valore";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%1$@ for %2$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Set Temporary Basal";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Temporary Basal";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Temporary Basal Failed";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Missing Config";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+
+/* description label for active time pod details row */
+"Active Time" = "Tempo di attività";
+
+/* description label for total delivery pod details row */
+"Total Delivery" = "Total Delivery";
+
+/* */
+"Add Omnipod Dash" = "Add Omnipod Dash";
+
+/* */
+"Insert Cannula" = "Inserisci cannula";
+
+/* */
+"Check Cannula" = "Check Cannula";
+
+/* */
+"Setup Complete" = "Setup Complete";
+
+/* */
+"Insulin Suspended" = "Insulin Suspended";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Suspending insulin delivery...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Resume Insulin Delivery";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Resuming insulin delivery...";
+
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+
+/* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
@@ -1056,7 +1225,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Durata minima in minuti tra due SMB sommimistrati";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Incremento SMB / SMB più piccolo in oref0. La quantità minima per microinfusore Medtronic è 0.1 U, mentre per Omnipod è 0.05 U. Il valore predefinito è 0.1.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Tempo del massimo effetto dell'insulina di riduzione del glucosio nel sangue, in minuti. Attenzione: Oref presume le curve ultra rapide (Lyumjev) e ad azione rapida (Fiasp) minime (35 e 50 min) e massime (100 e 120 min) degli insulinPeakTimes applicabili. Usare un insulinPeakTime personalizzato al di fuori di questi limiti risulterà in problemi con FreeAPS-X, calcoli ciclici più lunghi e possibili cicli rossi.";

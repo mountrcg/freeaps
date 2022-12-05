@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* " min" in Treatments list */
 " min" = " min";
 
+/* */
+"Unable to change anything" = "Keine Änderungen möglich";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
@@ -899,6 +902,9 @@ Enact a temp Basal or a temp target */
 /* Sensor day(s) */
 " day(s)" = " Tag(e)";
 
+/* Option to show HR in Watch app*/
+"Display HR on Watch" = "Herzfrequenz statt BZ auf Watch anzeigen";
+
 
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS Haupteinstellungen";
@@ -948,8 +954,171 @@ Enact a temp Basal or a temp target */
 
 /* */
 "After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Nachdem Sie Glukosedatensätze in der Health App erstellt oder gelöscht haben, öffnen Sie bitte FreeAPS X, um die Übertragung der geänderten Daten sicher zu gewährleisten";
-/* --------------------------------------------
 
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
+
+/* Warning title */
+"Warning" = "Warnung";
+
+/* Error title */
+"Error" = "Fehler";
+
+/* Manual temp basal mode */
+"Manual" = "manuell";
+
+/* Status highlight when manual temp basal is running. */
+"Manual Basal" = "Manuelle Temporäre Basalrate";
+
+/* Current Manual Temp basal */
+" -  Manual Basal ⚠️" = " -  Manuelle Basalrate ⚠️";
+
+/* Total AT / Scheduled basal insulin */
+" U/day" = " iE/Tag";
+
+/* Total AT / Scheduled basal insulin */
+"Total" = "Gesamt";
+
+/* ---------------------------------------
+  DASH strings
+*/
+"Attach Pod" = "Pod anlegen";
+
+"Deactivate Pod" = "Pod deaktivieren";
+
+/* */
+"Deactivating..." = "Deaktivierung...";
+
+"Pair Pod" = "POD verbinden";
+
+/* Text for previous pod information row */
+"Previous Pod Information" = "Informationen zum vorherigen Pod";
+
+/* Text for confidence reminders navigation link */
+"Confidence Reminders" = "Pumpe Bestätigungstöne";
+
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bestätigungshinweise sind Pieptöne des Pods, die zur Quittierung ausgewählter Befehle aktiviert werden können.";
+
+/* button title for saving low reservoir reminder while saving */
+"Saving..." = "Speichern...";
+
+/* button title for saving low reservoir reminder */
+"Save" = "Speichern";
+
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Die Aktualisierung der Erinnerungseinstellungen ist fehlgeschlagen.";
+
+/* */
+"No Error" = "Kein Fehler";
+
+/* description label for active time pod details row */
+"Active Time" = "Laufzeit";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Deaktiviert";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "Aktiviert";
+
+/* Title string for BeepPreference.extended */
+"Extended" = "Verlängert";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
+
+/* Label text for expiration reminder default row */
+"Expiration Reminder Default" = "Standard Ablauf-Erinnerung";
+
+/* */
+"Expiration Reminder" = "Erinnerung an den Ablauf der Nutzungsdauer";
+
+/* */
+"Low Reservoir" = "Niedriger Reservoirstand";
+
+/* Value text for no expiration reminder */
+"No Reminder" = "Keine Erinnerung";
+
+/* */
+"Scheduled Reminder" = "Erinnerungen festlegen";
+
+/* */
+"Low Reservoir Reminder" = "Erinnerung bei niedrigem Füllstand";
+
+/* The action string on pod status page when pod data is stale */
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Vergewissere dich, dass sich dein iPhone und Pod in unmittelbarer Nähe zueinander befinden. Wenn die Kommunikationsprobleme fortbestehen, dann wechsle den Standort.";
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Wechsle jetzt den Pod! Die Insulinabgabe wird in %1$@ unterbrochen, spätestens wenn kein Insulin mehr vorhanden ist.";
+
+/* Label text for temporary basal rate summary */
+"Rate" = "BR";
+
+/* Summary string for temporary basal rate configuration page */
+"%1$@ for %2$@" = "%1$@ für %2$@";
+
+/* Description text on manual temp basal action sheet */
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop passt deine Insulinabgabe nicht automatisch an, bis die temporäre Basalrate beendet oder abgebrochen wird.";
+/* Button text for setting manual temporary basal rate*/
+"Set Temporary Basal" = "Temporäre Basalrate festlegen";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Temporäre Basalrate";
+
+/* Alert title for a failure to set temporary basal */
+"Temporary Basal Failed" = "Temporäre Basalrate fehlgeschlagen";
+
+/* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Konnte keine temporäre Basalrate festlegen: %1$@\n\n%2$@";
+
+/* Alert format string for a failure to set temporary basal. (1: error description) */
+"Unable to set a temporary basal rate: %1$@" = "Konnte keine temporäre Basalrate festlegen: %1$@";
+
+/* Alert title for missing temp basal configuration */
+"Missing Config" = "Fehlende Konfiguration";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Dieser PumpManager wurde nicht mit einer maximalen Basalrate konfiguriert, da er hinzugefügt wurde, bevor es die Funktion \"manuelle temporäre Basalrate\" gab. Bitte gehe zum Menü Therapieeinstellungen -> Verabreichungsgrenzen und lege eine neue maximale Basalrate fest.";
+
+/* description label for active time pod details row */
+"Active Time" = "Laufzeit";
+
+/* description label for total delivery pod details row */
+"Total Delivery" = "gesamte Abgabe";
+
+/* */
+"Add Omnipod Dash" = "Omnipod Dash hinzufügen";
+
+/* */
+"Insert Cannula" = "Kanüle einsetzen";
+
+/* */
+"Check Cannula" = "Kanüle prüfen";
+
+/* */
+"Setup Complete" = "Setup vollständig";
+
+/* */
+"Insulin Suspended" = "Insulin ausgesetzt";
+
+/* Text for suspend resume button when insulin delivery is suspending */
+"Suspending insulin delivery..." = "Insulinabgabe unterbrechen...";
+
+/* Text for suspend resume button when insulin delivery is suspended */
+"Resume Insulin Delivery" = "Insulinabgabe fortsetzen";
+
+/* Text for suspend resume button when insulin delivery is resuming */
+"Resuming insulin delivery..." = "Insulinabgabe fortsetzen...";
+
+/* Alert title for suspend error */
+"Failed to Suspend Insulin Delivery" = "Unterbrechung Insulinagabe fehlgeschlagen";
+
+/* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
@@ -1056,7 +1225,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes between two enacted SMBs" = "Minimaler Abstand (in Minuten), der zwischen zwei SMBs liegen muss";
 
 /* "Bolus Increment" */
-"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Kleinstmögliche SMB-Menge in oref0. Für Medtronic ist der kleinstmögliche Betrag 0,1 U. Für Omnipod ist der kleinstmögliche Betrag 0,5 U.";
+"Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Kleinstmögliche SMB-Menge in oref0. Für Medtronic ist der kleinstmögliche Betrag 0,1 U, für Omnipod 0,05 U. Der Standardwert ist 0,1.";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Benutzerspezifische Zeit des maximalen Wirkungshochs des Insulins. Achtung: Oref wendet für die ultra-rapid (Lyumjev) & rapid-acting (Fiasp) Insulinwirkungs-Kurven Unter- (35 & 50 min) und Obergrenzen (100 & 120 min) an. Falls das benutzerdefinierte Wirkungshoch außerhalb dieser Grenzen liegt, kann es zu Komplikationen mit FreeAPS-X kommen, langen Loop-Berechnungszeiten und \"red loops\".";
