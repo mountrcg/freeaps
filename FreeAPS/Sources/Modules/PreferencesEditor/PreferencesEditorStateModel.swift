@@ -189,7 +189,7 @@ extension PreferencesEditor {
                     displayName: "ISF weight while BG accelerates",
                     type: .decimal(keypath: \.bgAccelISFweight),
                     infoText: NSLocalizedString(
-                        "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.15 might be a good starting point.",
+                        "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!",
                         comment: "ISF acceleration weight"
                     ),
                     settable: self
@@ -198,7 +198,7 @@ extension PreferencesEditor {
                     displayName: "ISF weight while BG decelerates",
                     type: .decimal(keypath: \.bgBrakeISFweight),
                     infoText: NSLocalizedString(
-                        "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.15 might be a good starting point.",
+                        "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point.",
                         comment: "ISF decceleration weight"
                     ),
                     settable: self
@@ -219,7 +219,7 @@ extension PreferencesEditor {
                     displayName: "ISF weight for postprandial BG rise",
                     type: .decimal(keypath: \.postMealISFweight),
                     infoText: NSLocalizedString(
-                        "Default value: 0 This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled.",
+                        "Default value: 0 This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!",
                         comment: "ISF postprandial weight"
                     ),
                     settable: self
