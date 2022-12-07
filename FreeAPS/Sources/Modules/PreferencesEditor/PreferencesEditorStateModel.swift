@@ -72,16 +72,16 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Temp Targets toggle SMB",
+                    displayName: "Temp Targets toggle SMB for autoISF",
                     type: .boolean(keypath: \.enableSMBEvenOnOddOff),
                     infoText: NSLocalizedString(
-                        "Defaults to false. If true, autoISF will block SMB's when odd TempTargets are used (lower boundary) and enforce SMB, when even TempTargets are used. autoISF is still active and adjusting ISF's. In case of exercise_mode or high_temptarget_raises_sensitivity being true and any High TT being active, it adjusts the oref calculataed ISF, not profile ISF.",
+                        "Defaults to false. If true, autoISF will block SMB's when odd TempTargets are used (lower boundary) and enforce SMB, when even TempTargets are used. autoISF is still active and adjusting ISF's. In case of exercise_mode or high_temptarget_raises_sensitivity being true and any High TT being active, it adjusts the oref calculataed ISF, not profile ISF. Only appliccable if autoISF is enabled.",
                         comment: "Odd TT disable SMB"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: "Excercise toggles all ISF adjustments off",
+                    displayName: "Excercise toggles all autoISF adjustments off",
                     type: .boolean(keypath: \.autoISFoffSport),
                     infoText: NSLocalizedString(
                         "Defaults to true. When true, switches off complete autoISF during high TT in excercise mode.",
