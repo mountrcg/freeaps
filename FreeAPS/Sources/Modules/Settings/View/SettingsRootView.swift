@@ -26,7 +26,9 @@ extension Settings {
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
                     Text("Statistics")
-                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dailyStats), from: self)
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
+                    Text("Loop Cycles")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
                     Text("Middleware")
                         .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                 }
@@ -83,7 +85,6 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
                             Text("Glucose")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
-
                             Text("Carbs")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
                             Text("Suggested")
@@ -110,16 +111,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Current Temp")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
-                            Text("TDDs 24h")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd), from: self)
-                            Text("TDDs daily")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd_daily), from: self)
-                            Text("TDD Average")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tdd_avg), from: self)
-                            Text("Loop Cycles")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
+                            Text("Glucose Data used for statistics")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose_data), from: self)
                             Text("Edit settings json")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }
