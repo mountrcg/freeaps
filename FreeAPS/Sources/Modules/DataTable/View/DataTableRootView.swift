@@ -70,7 +70,12 @@ extension DataTable {
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
-                Image(systemName: "circle.fill").foregroundColor(item.color)
+                ZStack {
+                    Image(systemName: "circle.fill").foregroundColor(item.color)
+                    if item
+                        .type == .tempTarget
+                    { Image(systemName: "circle").foregroundColor(Color.basal.opacity(0.8))
+                    }}
                 Text(dateFormatter.string(from: item.date))
                     .moveDisabled(true)
                 Text(item.type.name)
