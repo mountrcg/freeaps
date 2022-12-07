@@ -12,14 +12,22 @@ extension UIDevice {
 
         func mapToDevice(identifier: String) -> String {
             switch identifier {
+            case "iPhone10,4":
+                return "iPhone 8"
+            case "iPhone10,5":
+                return "iPhone 8 Plus"
             case "iPhone10,6":
                 return "iPhone X"
 
+            case "iPhone11,2":
+                return "iPhone Xs"
             case "iPhone11,8":
                 return "iPhone XR"
 
             case "iPhone12,1":
                 return "iPhone 11"
+            case "iPhone12,5":
+                return "iPhone 11 Pro Max"
             case "iPhone12,8":
                 return "iPhone SE (2nd Gen)"
 
@@ -34,6 +42,8 @@ extension UIDevice {
 
             case "iPhone14,2":
                 return "iPhone 13 Pro"
+            case "iPhone14,3":
+                return "iPhone 13 Pro Max"
             case "iPhone14,4":
                 return "iPhone 13 mini"
             case "iPhone14,5":
@@ -42,9 +52,13 @@ extension UIDevice {
                 return "iPhone SE (3rd Gen)"
             case "iPhone14,7":
                 return "iPhone 14"
+            case "iPhone14,8":
+                return "iPhone 14 Plus"
 
             case "iPhone15,2":
                 return "iPhone 14 Pro"
+            case "iPhone15,3":
+                return "iPhone 14 Pro Max"
 
             default:
                 return identifier
