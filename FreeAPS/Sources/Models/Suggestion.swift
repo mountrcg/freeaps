@@ -22,6 +22,12 @@ struct Suggestion: JSON, Equatable {
     let tdd7d: Decimal?
     var timestamp: Date?
     var recieved: Bool?
+    var duraISFratio: Decimal?
+    var bgISFratio: Decimal?
+    var deltaISFratio: Decimal?
+    var ppISFratio: Decimal?
+    var acceISFratio: Decimal?
+    var autoISFratio: Decimal?
 }
 
 struct Predictions: JSON, Equatable {
@@ -54,6 +60,12 @@ extension Suggestion {
         case tdd = "TDD"
         case tddytd = "TDDytd"
         case tdd7d = "TDD7d"
+        case duraISFratio = "dura_ISFratio"
+        case bgISFratio = "bg_ISFratio"
+        case deltaISFratio = "delta_ISFratio"
+        case ppISFratio = "pp_ISFratio"
+        case acceISFratio = "acce_ISFratio"
+        case autoISFratio = "auto_ISFratio"
     }
 }
 
