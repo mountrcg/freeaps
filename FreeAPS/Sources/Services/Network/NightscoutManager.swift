@@ -10,6 +10,8 @@ protocol NightscoutManager: GlucoseSource {
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date)
     func uploadStatus()
+    func uploadStatistics(dailystat: Statistics)
+    func uploadPreferences()
     func uploadGlucose()
     func uploadProfile()
     var cgmURL: URL? { get }
@@ -178,6 +180,52 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .store(in: &lifetime)
     }
 
+    func uploadStatistics(dailystat: Statistics) {
+        let stats = NightscoutStatistics(
+            dailystats: dailystat
+        )
+
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        processQueue.async {
+            nightscout.uploadStats(stats)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Statistics uploaded")
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
+    func uploadPreferences() {
+        let prefs = NightscoutPreferences(
+            preferences: settingsManager.preferences
+        )
+
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        processQueue.async {
+            nightscout.uploadPrefs(prefs)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Preferences uploaded")
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
     func uploadStatus() {
         let iob = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
         var suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -189,51 +237,48 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             suggested?.predictions = nil
         }
 
-        let openapsStatus = OpenAPSStatus(
-            iob: iob?.first,
-            suggested: suggested,
-            enacted: enacted,
-            version: "0.7.0"
-        )
+        let loopIsClosed = settingsManager.settings.closedLoop
 
-        let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
-        var reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
+        var openapsStatus: OpenAPSStatus
+
+        // Only upload suggested in Open Loop Mode. Only upload enacted in Closed Loop Mode.
+        if loopIsClosed {
+            openapsStatus = OpenAPSStatus(
+                iob: iob?.first,
+                suggested: suggested,
+                enacted: enacted,
+                version: "0.7.1"
+            )
+        } else {
+            openapsStatus = OpenAPSStatus(
+                iob: iob?.first,
+                suggested: suggested,
+                enacted: nil,
+                version: "0.7.1"
+            )
+        }
+
+        // let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
+        var reservoir = Decimal(round((Double(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0") ?? 0) * 10.0)) / 10
         if reservoir == 0xDEAD_BEEF {
-            reservoir = nil
+            reservoir = 0
         }
         let pumpStatus = storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
 
-        let pump = NSPumpStatus(clock: Date(), battery: battery, reservoir: reservoir, status: pumpStatus)
+        let pump = NSPumpStatus(clock: Date(), reservoir: reservoir, status: pumpStatus)
 
-        let preferences = settingsManager.preferences
+        // let device = UIDevice.current
 
-        let device = UIDevice.current
+        // let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
-        let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
+        var status: NightscoutStatus
 
-        let dailyStats = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self) ?? []
-
-        let status: NightscoutStatus
-
-        if !dailyStats.isEmpty {
-            status = NightscoutStatus(
-                device: NigtscoutTreatment.local,
-                openaps: openapsStatus,
-                pump: pump,
-                preferences: preferences,
-                uploader: uploader,
-                dailystats: dailyStats[0]
-            )
-        } else {
-            status = NightscoutStatus(
-                device: NigtscoutTreatment.local,
-                openaps: openapsStatus,
-                pump: pump,
-                preferences: preferences,
-                uploader: uploader,
-                dailystats: nil
-            )
-        }
+        status = NightscoutStatus(
+            device: NigtscoutTreatment.local,
+            openaps: openapsStatus,
+            pump: pump
+            // uploader: uploader
+        )
 
         storage.save(status, as: OpenAPS.Upload.nsStatus)
 

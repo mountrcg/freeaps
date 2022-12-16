@@ -108,42 +108,27 @@ struct Averages: JSON, Equatable {
 }
 
 struct Average: JSON, Equatable {
-    var oneDay_mmol: Decimal
-    var oneDay: Decimal
-    var sevenDays_mmol: Decimal
-    var sevenDays: Decimal
-    var thirtyDays_mmol: Decimal
-    var thirtyDays: Decimal
-    var ninetyDays_mmol: Decimal
+    var day: Decimal
+    var week: Decimal
+    var month: Decimal
     var ninetyDays: Decimal
-    var totalDays_mmol: Decimal
-    var totalDays: Decimal
+    var total: Decimal
 }
 
 struct Median: JSON, Equatable {
-    var oneDay_mmol: Decimal
-    var oneDay: Decimal
-    var sevenDays_mmol: Decimal
-    var sevenDays: Decimal
-    var thirtyDays_mmol: Decimal
-    var thirtyDays: Decimal
-    var ninetyDays_mmol: Decimal
+    var day: Decimal
+    var week: Decimal
+    var month: Decimal
     var ninetyDays: Decimal
-    var totalDays_mmol: Decimal
-    var totalDays: Decimal
+    var total: Decimal
 }
 
 struct Hbs: JSON, Equatable {
-    var oneDay_mmolMol: Decimal
-    var oneDay: Decimal
-    var sevenDays_mmolMol: Decimal
-    var sevenDays: Decimal
-    var thirtyDays_mmolMol: Decimal
-    var thirtyDays: Decimal
-    var ninetyDays_mmolMol: Decimal
+    var day: Decimal
+    var week: Decimal
+    var month: Decimal
     var ninetyDays: Decimal
-    var totalDays_mmolMol: Decimal
-    var totalDays: Decimal
+    var total: Decimal
 }
 
 struct TIRs: JSON, Equatable {
@@ -153,27 +138,27 @@ struct TIRs: JSON, Equatable {
 }
 
 struct TIR: JSON, Equatable {
-    var oneDay: Decimal
-    var sevenDays: Decimal
-    var thirtyDays: Decimal
+    var day: Decimal
+    var week: Decimal
+    var month: Decimal
     var ninetyDays: Decimal
-    var totalDays: Decimal
+    var total: Decimal
 }
 
 struct Hypos: JSON, Equatable {
-    var oneDay: Decimal
-    var sevenDays: Decimal
-    var thirtyDays: Decimal
+    var day: Decimal
+    var week: Decimal
+    var month: Decimal
     var ninetyDays: Decimal
-    var totalDays: Decimal
+    var total: Decimal
 }
 
 struct Hypers: JSON, Equatable {
-    var oneDay: Decimal
-    var sevenDays: Decimal
-    var thirtyDays: Decimal
+    var day: Decimal
+    var week: Decimal
+    var month: Decimal
     var ninetyDays: Decimal
-    var totalDays: Decimal
+    var total: Decimal
 }
 
 struct Stats: JSON, Equatable {
@@ -206,33 +191,33 @@ extension Averages {
     }
 }
 
+extension Average {
+    private enum CodingKeys: String, CodingKey {
+        case day
+        case week
+        case month
+        case ninetyDays
+        case total
+    }
+}
+
 extension Median {
     private enum CodingKeys: String, CodingKey {
-        case oneDay_mmol
-        case oneDay
-        case sevenDays_mmol
-        case sevenDays
-        case thirtyDays_mmol
-        case thirtyDays
-        case ninetyDays_mmol
+        case day
+        case week
+        case month
         case ninetyDays
-        case totalDays_mmol
-        case totalDays
+        case total
     }
 }
 
 extension Hbs {
     private enum CodingKeys: String, CodingKey {
-        case oneDay_mmolMol
-        case oneDay
-        case sevenDays_mmolMol
-        case sevenDays
-        case thirtyDays_mmolMol
-        case thirtyDays
-        case ninetyDays_mmolMol
+        case day
+        case week
+        case month
         case ninetyDays
-        case totalDays_mmolMol
-        case totalDays
+        case total
     }
 }
 
@@ -246,21 +231,21 @@ extension TIRs {
 
 extension Hypos {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
-        case sevenDays
-        case thirtyDays
+        case day
+        case week
+        case month
         case ninetyDays
-        case totalDays
+        case total
     }
 }
 
 extension Hypers {
     private enum CodingKeys: String, CodingKey {
-        case oneDay
-        case sevenDays
-        case thirtyDays
+        case day
+        case week
+        case month
         case ninetyDays
-        case totalDays
+        case total
     }
 }
 
