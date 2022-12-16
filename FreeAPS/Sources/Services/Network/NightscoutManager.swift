@@ -267,7 +267,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let pump = NSPumpStatus(clock: Date(), reservoir: reservoir, status: pumpStatus)
 
-        let device = UIDevice.current
+        // let device = UIDevice.current
 
         // let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
@@ -276,8 +276,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         status = NightscoutStatus(
             device: NigtscoutTreatment.local,
             openaps: openapsStatus,
-            pump: pump,
-            uploader: uploader
+            pump: pump
+            // uploader: uploader
         )
 
         storage.save(status, as: OpenAPS.Upload.nsStatus)

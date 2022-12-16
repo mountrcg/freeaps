@@ -4,7 +4,7 @@ struct NightscoutStatus: JSON {
     let device: String
     let openaps: OpenAPSStatus
     let pump: NSPumpStatus
-    let uploader: Uploader
+    // let uploader: Uploader
 }
 
 struct OpenAPSStatus: JSON {
