@@ -28,6 +28,9 @@ struct Suggestion: JSON, Equatable {
     var ppISFratio: Decimal?
     var acceISFratio: Decimal?
     var autoISFratio: Decimal?
+//    var tick: Int?
+    var target_bg: Decimal?
+    var SMBratio: Decimal?
 }
 
 struct Predictions: JSON, Equatable {
@@ -66,6 +69,9 @@ extension Suggestion {
         case ppISFratio = "pp_ISFratio"
         case acceISFratio = "acce_ISFratio"
         case autoISFratio = "auto_ISFratio"
+//        case tick
+        case target_bg
+        case SMBratio
     }
 }
 
