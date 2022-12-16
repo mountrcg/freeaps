@@ -259,7 +259,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         // let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
-        var reservoir = Decimal(round((Double(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0") ?? 0) * 10.0)) / 10
+        var reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
         if reservoir == 0xDEAD_BEEF {
             reservoir = 0
         }
