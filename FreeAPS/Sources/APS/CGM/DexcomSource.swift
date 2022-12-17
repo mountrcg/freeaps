@@ -59,7 +59,7 @@ extension DexcomSource: TransmitterManagerDelegate {
                 glucose: value,
                 type: "sgv",
                 activationDate: glucose.activationDate,
-                sessionStartDate: glucose.sessionStartDate,
+                // sessionStartDate: glucose.sessionStartDate,   not needed done by Shortcut for restarts
                 transmitterID: glucose.transmitterID
             )
         }
