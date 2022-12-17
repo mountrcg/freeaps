@@ -54,7 +54,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Half Basal Exercise Target",
+                    displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
                     type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
@@ -63,7 +63,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Allow SMB With High Temptarget",
+                    displayName: NSLocalizedString("Allow SMB With High Temptarget", comment: "Allow SMB With High Temptarget"),
                     type: .boolean(keypath: \.allowSMBWithHighTemptarget),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets.",
@@ -293,7 +293,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Use Custom Peak Time",
+                    displayName: NSLocalizedString("Use Custom Peak Time", comment: "Use Custom Peak Time"),
                     type: .boolean(keypath: \.useCustomPeakTime),
                     infoText: NSLocalizedString(
                         "Defaults to false. Setting to true allows changing insulinPeakTime", comment: "Use Custom Peak Time"
@@ -301,7 +301,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Insulin Peak Time",
+                    displayName: NSLocalizedString("Insulin Peak Time", comment: "Insulin Peak Time"),
                     type: .decimal(keypath: \.insulinPeakTime),
                     infoText: NSLocalizedString(
                         "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.",
@@ -310,7 +310,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max IOB",
+                    displayName: NSLocalizedString("Max IOB", comment: "Max IOB"),
                     type: .decimal(keypath: \.maxIOB),
                     infoText: NSLocalizedString(
                         "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop).",
@@ -377,7 +377,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Max Delta-BG Threshold SMB",
+                    displayName: NSLocalizedString("Max Delta-BG Threshold SMB", comment: "Max Delta-BG Threshold SMB"),
                     type: .decimal(keypath: \.maxDeltaBGthreshold),
                     infoText: NSLocalizedString(
                         "Defaults to 0.2 (20%). Maximum positiv %change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).",
@@ -386,7 +386,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB With COB",
+                    displayName: NSLocalizedString("Enable SMB With COB", comment: "Enable SMB With COB"),
                     type: .boolean(keypath: \.enableSMBWithCOB),
                     infoText: NSLocalizedString(
                         "This enables supermicrobolus (SMB) while carbs on board (COB) are positive.",
@@ -413,7 +413,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable UAM",
+                    displayName: NSLocalizedString("Enable UAM", comment: "Enable UAM"),
                     type: .boolean(keypath: \.enableUAM),
                     infoText: NSLocalizedString(
                         "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.",
@@ -440,7 +440,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("SMB Interval",comment: "SMB Interval"),
+                    displayName: NSLocalizedString("SMB Interval", comment: "SMB Interval"),
                     type: .decimal(keypath: \.smbInterval),
                     infoText: NSLocalizedString("Minimum duration in minutes between two enacted SMBs", comment: "SMB Interval"),
                     settable: self
@@ -511,7 +511,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Wide BG Target Range",
+                    displayName: NSLocalizedString("Wide BG Target Range", comment: "Wide BG Target Range"),
                     type: .boolean(keypath: \.wideBGTargetRange),
                     infoText: NSLocalizedString(
                         "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs.",
