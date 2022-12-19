@@ -1021,7 +1021,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 } else {
                     lastIndex = true
                 }
-                if array[i].bg_ < 72.0, !lastIndex {
+                if array[i].bg_ < 70.0, !lastIndex {
                     timeInHypo += (currentTime - previousTime).timeInterval
                 } else if array[i].bg_ > 180, !lastIndex {
                     timeInHyper += (currentTime - previousTime).timeInterval
