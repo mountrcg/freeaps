@@ -47,9 +47,9 @@ struct CurrentGlucoseView: View {
         else { return .loopYellow }
 
         switch recentBG {
-        case 55 ... 74:
+        case 55 ... 69:
             return .loopOrange
-        case 75 ... 140:
+        case 70 ... 140:
             return .loopGreen
         case 141 ... 180:
             return .loopYellow

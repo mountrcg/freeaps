@@ -21,7 +21,7 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         }
 
     // Turn SMBs off at night
-    if (SMBoff=1) {
+    if (SMBoff == 1) {
         if (currentHour >= 0 && currentHour <= 7) {
             profile.enableSMB_always = false;
             profile.enableUAM = false;
