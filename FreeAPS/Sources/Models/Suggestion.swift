@@ -31,6 +31,7 @@ struct Suggestion: JSON, Equatable {
     var tick: Decimal?
     var target_bg: Decimal?
     var SMBratio: Decimal?
+    let insulin: Insulin?
 }
 
 struct Predictions: JSON, Equatable {
@@ -38,6 +39,13 @@ struct Predictions: JSON, Equatable {
     let zt: [Int]?
     let cob: [Int]?
     let uam: [Int]?
+}
+
+struct Insulin: JSON, Equatable {
+    let TDD: Decimal?
+    let bolus: Decimal?
+    let temp_basal: Decimal?
+    let scheduled_basal: Decimal?
 }
 
 extension Suggestion {
@@ -72,6 +80,7 @@ extension Suggestion {
         case tick
         case target_bg
         case SMBratio
+        case insulin
     }
 }
 
@@ -81,6 +90,15 @@ extension Predictions {
         case zt = "ZT"
         case cob = "COB"
         case uam = "UAM"
+    }
+}
+
+extension Insulin {
+    private enum CodingKeys: String, CodingKey {
+        case TDD
+        case bolus
+        case temp_basal
+        case scheduled_basal
     }
 }
 

@@ -769,7 +769,6 @@ final class BaseAPSManager: APSManager, Injectable {
         guard !array.isEmpty else {
             return 0
         }
-        let units = settingsManager.settings.units
         let sorted = array.sorted()
         let length = array.count
 
@@ -1008,7 +1007,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 } else {
                     lastIndex = true
                 }
-                if array[i].bg_ < 72.0, !lastIndex {
+                if array[i].bg_ < 70.0, !lastIndex {
                     timeInHypo += (currentTime - previousTime).timeInterval
                 } else if array[i].bg_ > 180, !lastIndex {
                     timeInHyper += (currentTime - previousTime).timeInterval
@@ -1186,6 +1185,15 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let avg = Averages(Average: [avgs], Median: [median])
 
+        let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+
+        let insulin = Ins(
+            TDD: roundDecimal(currentTDD, 2),
+            bolus: suggestion?.insulin?.bolus ?? 0,
+            temp_basal: suggestion?.insulin?.temp_basal ?? 0,
+            scheduled_basal: suggestion?.insulin?.scheduled_basal ?? 0
+        )
+
         let dailystat = Statistics(
             createdAt: Date(),
             iPhone: UIDevice.current.getDeviceId,
@@ -1200,11 +1208,15 @@ final class BaseAPSManager: APSManager, Injectable {
             CGM: cgm.rawValue,
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
-            TDD: roundDecimal(currentTDD, 2),
             Carbs_24h: carbTotal,
             GlucoseStorage_Days: Decimal(daysBG),
-            Statistics: Stats(Distribution: [TimeInRange], Glucose: [avg], HbA1c: [hbs], LoopCycles: [loopstat])
-            // LoopStats: [loopstat]
+            Statistics: Stats(
+                Distribution: [TimeInRange],
+                Glucose: [avg],
+                HbA1c: [hbs],
+                LoopCycles: [loopstat],
+                Insulin: [insulin]
+            )
         )
 
         storage.transaction { storage in
