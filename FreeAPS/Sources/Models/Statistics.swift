@@ -215,53 +215,6 @@ extension Median {
     }
 }
 
-extension Hbs {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
-extension TIRs {
-    private enum CodingKeys: String, CodingKey {
-        case TIR
-        case Hypos
-        case Hypers
-    }
-}
-
-extension Hypos {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
-extension Hypers {
-    private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
-    }
-}
-
-extension Ins {
-    private enum CodingKeys: String, CodingKey {
-        case TDD
-        case bolus
-        case temp_basal
-        case scheduled_basal
-    }
-}
-
 extension Stats {
     private enum CodingKeys: String, CodingKey {
         case Distribution
