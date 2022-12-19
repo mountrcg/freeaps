@@ -23,12 +23,17 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
             }
         }
 
-    // Turn off DynamicISF and AutoISF when using a temp target >= 110 and if an exercise setting is enabled.
-    const autoswitchoff = preferences.switchSportXPM;
-    const currentMinTarget = profile.min_bg;
-    var reasonSports  = "";
-    if ((profile.high_temptarget_raises_sensitivity == true || profile.exercise_mode == true) && autoswitchoff) {
-        exerciseSetting = true;
+    // Turn SMBs off at night
+    if (SMBoff == 1) {
+        if (currentHour >= 0 && currentHour <= 7) {
+            profile.enableSMB_always = false;
+            profile.enableUAM = false;
+            reasonSMBswitch = "SMBs disabled due to nighttime " + currentHour + ":00."
+        }else{
+            profile.enableSMB_always = true;
+            profile.enableUAM = true;
+            reasonSMBswitch = "SMBs enabled due to daytime " + currentHour + ":00."
+        }
     }
     if (profile.temptargetSet && profile.min_bg > 109 && exerciseSetting == true) {
         profile.use_autoisf = false;
