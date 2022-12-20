@@ -1423,7 +1423,7 @@ Enact a temp Basal or a temp target */
 "Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
 
 /* Max Delta-BG Threshold SMB */
-"Defaults to 0.2 (20%). Maximum positiv percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positiv percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
+"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
 "... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
@@ -1441,4 +1441,7 @@ Enact a temp Basal or a temp target */
 "Dynamic settings" = "Dynamic settings";
 
 /* Insulin curve */
-"Insulin curve" = "Insulin curve";"
+"Insulin curve" = "Insulin curve";
+
+/* Headline "Adjustment Factor" */
+"Adjustment Factor" = "Adjustment Factor";
