@@ -4,8 +4,8 @@ struct Preferences: JSON {
     var maxIOB: Decimal = 0
     var maxDailySafetyMultiplier: Decimal = 3
     var currentBasalSafetyMultiplier: Decimal = 4
-    var autosensMax: Decimal = 1.3
-    var autosensMin: Decimal = 0.7
+    var autosensMax: Decimal = 1
+    var autosensMin: Decimal = 1
     var autoisf: Bool = false
     var autoISFhourlyChange: Decimal = 0.25
     var autoISFmax: Decimal = 1.3
@@ -63,6 +63,7 @@ struct Preferences: JSON {
     var enableBGacceleration: Bool = false
     var iobThreshold: Decimal = 0
     var enableSMBEvenOnOddOff: Bool = false
+    var enableSMBEvenOnOddOffalways: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.2
     var autoISFoffSport: Bool = false
 }
@@ -117,6 +118,7 @@ extension Preferences {
         case floatingcarbs = "floating_carbs"
         case iobThreshold = "iob_threshold"
         case enableSMBEvenOnOddOff = "enableSMB_EvenOn_OddOff"
+        case enableSMBEvenOnOddOffalways = "enableSMB_EvenOn_OddOff_always"
         case smbDeliveryRatioBGrange = "smb_delivery_ratio_bg_range"
         case smbDeliveryRatioMin = "smb_delivery_ratio_min"
         case smbDeliveryRatioMax = "smb_delivery_ratio_max"

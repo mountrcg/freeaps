@@ -81,6 +81,15 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Odd Profile Target disables SMB for autoISF",
+                    type: .boolean(keypath: \.enableSMBEvenOnOddOffalways),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. If true, autoISF will block SMB's when odd ProfileTargets are used (lower boundary = upper boundary)",
+                        comment: "Odd Target disable SMB"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: "Excercise toggles all autoISF adjustments off",
                     type: .boolean(keypath: \.autoISFoffSport),
                     infoText: NSLocalizedString(
@@ -344,13 +353,15 @@ extension PreferencesEditor {
                         comment: "Current Basal Safety Multiplier"
                     ),
                     settable: self
-                ),
+                )
+            ]
 
+            let autosensFields = [
                 Field(
                     displayName: "Autosens Max",
                     type: .decimal(keypath: \.autosensMax),
                     infoText: NSLocalizedString(
-                        "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.",
+                        "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target. With autoISF you have to disable autosens by setting this value to 1.",
                         comment: "Autosens Max"
                     ),
                     settable: self
@@ -359,8 +370,17 @@ extension PreferencesEditor {
                     displayName: "Autosens Min",
                     type: .decimal(keypath: \.autosensMin),
                     infoText: NSLocalizedString(
-                        "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.",
+                        "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets. With autoISF you have to disable autosens by setting this value to 1.",
                         comment: "Autosens Min"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Rewind Resets Autosens",
+                    type: .boolean(keypath: \.rewindResetsAutosens),
+                    infoText: NSLocalizedString(
+                        "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.",
+                        comment: "Rewind Resets Autosens"
                     ),
                     settable: self
                 )
@@ -518,16 +538,7 @@ extension PreferencesEditor {
             // MARK: - Other fields
 
             let otherSettings = [
-                Field(
-                    displayName: "Rewind Resets Autosens",
-                    type: .boolean(keypath: \.rewindResetsAutosens),
-                    infoText: NSLocalizedString(
-                        "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.",
-                        comment: "Rewind Resets Autosens"
-                    ),
-                    settable: self
-                ),
-//                Field(
+                //                Field(
 //                    displayName: "Carbs Req Threshold",
 //                    type: .decimal(keypath: \.carbsReqThreshold),
 //                    infoText: NSLocalizedString(
@@ -680,6 +691,10 @@ extension PreferencesEditor {
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS SMB settings", comment: "OpenAPS SMB settings"),
                     fields: smbFields
+                ),
+                FieldSection(
+                    displayName: NSLocalizedString("OpenAPS Autosens settings", comment: "OpenAPS Autosens settings"),
+                    fields: autosensFields
                 ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS targets settings", comment: "OpenAPS targets settings"),
