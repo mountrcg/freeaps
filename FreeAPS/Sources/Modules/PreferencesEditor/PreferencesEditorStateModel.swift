@@ -258,7 +258,7 @@ extension PreferencesEditor {
                     displayName: "SMB DeliveryRatio",
                     type: .decimal(keypath: \.smbDeliveryRatio),
                     infoText: NSLocalizedString(
-                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution.",
+                        "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. This is to prevent people from getting into dangerous territory by setting SMB requests from the caregivers phone at the same time. Increase this experimental value slowly and with caution. YOu can use that with autoISF to increase the SMB DR immediatly indpendant of BG if you use an Eating Soon TT (even and below 100). This SMB DR will than be used, independantly of the 3 following options, that normally superceed his setting.",
                         comment: "SMB DeliveryRatio"
                     ),
                     settable: self
