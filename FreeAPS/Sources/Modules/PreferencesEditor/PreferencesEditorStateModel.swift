@@ -81,6 +81,15 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Odd Profile Target disables SMB for autoISF",
+                    type: .boolean(keypath: \.enableSMBEvenOnOddOffalways),
+                    infoText: NSLocalizedString(
+                        "Defaults to false. If true, autoISF will block SMB's when odd ProfileTargets are used (lower boundary = upper boundary)",
+                        comment: "Odd Target disable SMB"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: "Excercise toggles all autoISF adjustments off",
                     type: .boolean(keypath: \.autoISFoffSport),
                     infoText: NSLocalizedString(
@@ -287,7 +296,7 @@ extension PreferencesEditor {
 
             let mainFields = [
                 Field(
-                    displayName: NSLocalizedString("Insulin curve", comment: "Insulin curve"),
+                    displayName: "Insulin curve",
                     type: .insulinCurve(keypath: \.curve),
                     infoText: "Insulin curve info",
                     settable: self
@@ -319,7 +328,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Max COB", comment: "Max COB"),
+                    displayName: "Max COB",
                     type: .decimal(keypath: \.maxCOB),
                     infoText: NSLocalizedString(
                         "This defaults maxCOB to 120 because that’s the most a typical body can absorb over 4 hours. (If someone enters more carbs or stacks more; OpenAPS will just truncate dosing based on 120. Essentially, this just limits AMA as a safety cap against weird COB calculations due to fluky data.)",
@@ -328,7 +337,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Max Daily Safety Multiplier", comment: "Max Daily Safety Multiplier"),
+                    displayName: "Max Daily Safety Multiplier",
                     type: .decimal(keypath: \.maxDailySafetyMultiplier),
                     infoText: NSLocalizedString(
                         "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.",
@@ -337,30 +346,41 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Current Basal Safety Multiplier", comment: "Current Basal Safety Multiplier"),
+                    displayName: "Current Basal Safety Multiplier",
                     type: .decimal(keypath: \.currentBasalSafetyMultiplier),
                     infoText: NSLocalizedString(
                         "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune.",
                         comment: "Current Basal Safety Multiplier"
                     ),
                     settable: self
-                ),
+                )
+            ]
 
+            let autosensFields = [
                 Field(
-                    displayName: NSLocalizedString("Autosens Max", comment: "Autosens Max"),
+                    displayName: "Autosens Max",
                     type: .decimal(keypath: \.autosensMax),
                     infoText: NSLocalizedString(
-                        "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.",
+                        "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target. With autoISF you have to disable autosens by setting this value to 1.",
                         comment: "Autosens Max"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Autosens Min", comment: "Autosens Min"),
+                    displayName: "Autosens Min",
                     type: .decimal(keypath: \.autosensMin),
                     infoText: NSLocalizedString(
-                        "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.",
+                        "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets. With autoISF you have to disable autosens by setting this value to 1.",
                         comment: "Autosens Min"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Rewind Resets Autosens",
+                    type: .boolean(keypath: \.rewindResetsAutosens),
+                    infoText: NSLocalizedString(
+                        "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.",
+                        comment: "Rewind Resets Autosens"
                     ),
                     settable: self
                 )
@@ -368,7 +388,7 @@ extension PreferencesEditor {
 
             let smbFields = [
                 Field(
-                    displayName: NSLocalizedString("Enable SMB Always", comment: "Enable SMB Always"),
+                    displayName: "Enable SMB Always",
                     type: .boolean(keypath: \.enableSMBAlways),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget).",
@@ -395,7 +415,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Enable SMB With Temptarget", comment: "Enable SMB With Temptarget"),
+                    displayName: "Enable SMB With Temptarget",
                     type: .boolean(keypath: \.enableSMBWithTemptarget),
                     infoText: NSLocalizedString(
                         "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB.",
@@ -404,7 +424,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Enable SMB After Carbs", comment: "Enable SMB After Carbs"),
+                    displayName: "Enable SMB After Carbs",
                     type: .boolean(keypath: \.enableSMBAfterCarbs),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB).",
@@ -422,7 +442,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Max SMB Basal Minutes", comment: "Max SMB Basal Minutes"),
+                    displayName: "Max SMB Basal Minutes",
                     type: .decimal(keypath: \.maxSMBBasalMinutes),
                     infoText: NSLocalizedString(
                         "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.",
@@ -431,7 +451,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Max UAM SMB Basal Minutes", comment: "Max UAM SMB Basal Minutes"),
+                    displayName: "Max UAM SMB Basal Minutes",
                     type: .decimal(keypath: \.maxUAMSMBBasalMinutes),
                     infoText: NSLocalizedString(
                         "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs.",
@@ -446,7 +466,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Bolus Increment", comment: "Bolus Increment"),
+                    displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
                     infoText: NSLocalizedString(
                         "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
@@ -460,10 +480,7 @@ extension PreferencesEditor {
 
             let targetSettings = [
                 Field(
-                    displayName: NSLocalizedString(
-                        "High Temptarget Raises Sensitivity",
-                        comment: "High Temptarget Raises Sensitivity"
-                    ),
+                    displayName: "High Temptarget Raises Sensitivity",
                     type: .boolean(keypath: \.highTemptargetRaisesSensitivity),
                     infoText: NSLocalizedString(
                         "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
@@ -472,10 +489,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString(
-                        "Low Temptarget Lowers Sensitivity",
-                        comment: "Low Temptarget Lowers Sensitivity"
-                    ),
+                    displayName: "Low Temptarget Lowers Sensitivity",
                     type: .boolean(keypath: \.lowTemptargetLowersSensitivity),
                     infoText: NSLocalizedString(
                         "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
@@ -484,7 +498,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Sensitivity Raises Target", comment: "Sensitivity Raises Target"),
+                    displayName: "Sensitivity Raises Target",
                     type: .boolean(keypath: \.sensitivityRaisesTarget),
                     infoText: NSLocalizedString(
                         "When true, raises BG target when autosens detects sensitivity",
@@ -493,7 +507,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Resistance Lowers Target", comment: "Resistance Lowers Target"),
+                    displayName: "Resistance Lowers Target",
                     type: .boolean(keypath: \.resistanceLowersTarget),
                     infoText: NSLocalizedString(
                         "Defaults to false. When true, will lower BG target when autosens detects resistance",
@@ -502,7 +516,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Advanced Target Adjustments", comment: "Advanced Target Adjustments"),
+                    displayName: "Advanced Target Adjustments",
                     type: .boolean(keypath: \.advTargetAdjustments),
                     infoText: NSLocalizedString(
                         "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone.",
@@ -524,16 +538,7 @@ extension PreferencesEditor {
             // MARK: - Other fields
 
             let otherSettings = [
-                Field(
-                    displayName: NSLocalizedString("Rewind Resets Autosens", comment: "Rewind Resets Autosens"),
-                    type: .boolean(keypath: \.rewindResetsAutosens),
-                    infoText: NSLocalizedString(
-                        "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.",
-                        comment: "Rewind Resets Autosens"
-                    ),
-                    settable: self
-                ),
-//                Field(
+                //                Field(
 //                    displayName: "Carbs Req Threshold",
 //                    type: .decimal(keypath: \.carbsReqThreshold),
 //                    infoText: NSLocalizedString(
@@ -543,7 +548,7 @@ extension PreferencesEditor {
 //                    settable: self
 //                ),
                 Field(
-                    displayName: NSLocalizedString("Skip Neutral Temps", comment: "Skip Neutral Temps"),
+                    displayName: "Skip Neutral Temps",
                     type: .boolean(keypath: \.skipNeutralTemps),
                     infoText: NSLocalizedString(
                         "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night.",
@@ -552,7 +557,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Unsuspend If No Temp", comment: "Unsuspend If No Temp"),
+                    displayName: "Unsuspend If No Temp",
                     type: .boolean(keypath: \.unsuspendIfNoTemp),
                     infoText: NSLocalizedString(
                         "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended.",
@@ -561,7 +566,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Suspend Zeros IOB", comment: "Suspend Zeros IOB"),
+                    displayName: "Suspend Zeros IOB",
                     type: .boolean(keypath: \.suspendZerosIOB),
                     infoText: NSLocalizedString(
                         "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added.",
@@ -570,7 +575,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Bolus Snooze DIA Divisor", comment: "Bolus Snooze DIA Divisor"),
+                    displayName: "Bolus Snooze DIA Divisor",
                     type: .decimal(keypath: \.bolusSnoozeDIADivisor),
                     infoText: NSLocalizedString(
                         "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).",
@@ -579,7 +584,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Min 5m Carbimpact", comment: "Min 5m Carbimpact"),
+                    displayName: "Min 5m Carbimpact",
                     type: .decimal(keypath: \.min5mCarbimpact),
                     infoText: NSLocalizedString(
                         "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g.",
@@ -588,10 +593,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString(
-                        "Autotune ISF Adjustment Fraction",
-                        comment: "Autotune ISF Adjustment Fraction"
-                    ),
+                    displayName: "Autotune ISF Adjustment Fraction",
                     type: .decimal(keypath: \.autotuneISFAdjustmentFraction),
                     infoText: NSLocalizedString(
                         "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF.",
@@ -600,7 +602,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Remaining Carbs Fraction", comment: "Remaining Carbs Fraction"),
+                    displayName: "Remaining Carbs Fraction",
                     type: .decimal(keypath: \.remainingCarbsFraction),
                     infoText: NSLocalizedString(
                         "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.",
@@ -609,7 +611,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Remaining Carbs Cap", comment: "Remaining Carbs Cap"),
+                    displayName: "Remaining Carbs Cap",
                     type: .decimal(keypath: \.remainingCarbsCap),
                     infoText: NSLocalizedString(
                         "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption.",
@@ -618,7 +620,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Noisy CGM Target Multiplier", comment: "Noisy CGM Target Multiplier"),
+                    displayName: "Noisy CGM Target Multiplier",
                     type: .decimal(keypath: \.noisyCGMTargetMultiplier),
                     infoText: NSLocalizedString(
                         "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data",
@@ -689,6 +691,10 @@ extension PreferencesEditor {
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS SMB settings", comment: "OpenAPS SMB settings"),
                     fields: smbFields
+                ),
+                FieldSection(
+                    displayName: NSLocalizedString("OpenAPS Autosens settings", comment: "OpenAPS Autosens settings"),
+                    fields: autosensFields
                 ),
                 FieldSection(
                     displayName: NSLocalizedString("OpenAPS targets settings", comment: "OpenAPS targets settings"),

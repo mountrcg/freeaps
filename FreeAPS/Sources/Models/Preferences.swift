@@ -4,15 +4,15 @@ struct Preferences: JSON {
     var maxIOB: Decimal = 9
     var maxDailySafetyMultiplier: Decimal = 6
     var currentBasalSafetyMultiplier: Decimal = 7
-    var autosensMax: Decimal = 2
-    var autosensMin: Decimal = 0.5
+    var autosensMax: Decimal = 1
+    var autosensMin: Decimal = 1
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
     var lowTemptargetLowersSensitivity: Bool = false
     var sensitivityRaisesTarget: Bool = false
     var resistanceLowersTarget: Bool = false
     var advTargetAdjustments: Bool = false
-    var exerciseMode: Bool = false
+    var exerciseMode: Bool = true
     var halfBasalExerciseTarget: Decimal = 160
     var maxCOB: Decimal = 120
     var wideBGTargetRange: Bool = false
@@ -23,17 +23,17 @@ struct Preferences: JSON {
     var autotuneISFAdjustmentFraction: Decimal = 1.0
     var remainingCarbsFraction: Decimal = 1.0
     var remainingCarbsCap: Decimal = 90
-    var enableUAM: Bool = false
+    var enableUAM: Bool = true
     var a52RiskEnable: Bool = false
-    var enableSMBWithCOB: Bool = false
-    var enableSMBWithTemptarget: Bool = false
-    var enableSMBAlways: Bool = false
-    var enableSMBAfterCarbs: Bool = false
+    var enableSMBWithCOB: Bool = true
+    var enableSMBWithTemptarget: Bool = true
+    var enableSMBAlways: Bool = true
+    var enableSMBAfterCarbs: Bool = true
     var allowSMBWithHighTemptarget: Bool = false
-    var maxSMBBasalMinutes: Decimal = 30
-    var maxUAMSMBBasalMinutes: Decimal = 30
-    var smbInterval: Decimal = 3
-    var bolusIncrement: Decimal = 0.1
+    var maxSMBBasalMinutes: Decimal = 120
+    var maxUAMSMBBasalMinutes: Decimal = 120
+    var smbInterval: Decimal = 2
+    var bolusIncrement: Decimal = 0.05
     var curve: InsulinCurve = .rapidActing
     var useCustomPeakTime: Bool = false
     var insulinPeakTime: Decimal = 75
@@ -64,8 +64,9 @@ struct Preferences: JSON {
     var bgBrakeISFweight: Decimal = 0.15
     var maxDeltaBGthreshold: Decimal = 0.3
     var iobThreshold: Decimal = 0
-    var autoISFoffSport: Bool = true
     var enableSMBEvenOnOddOff: Bool = true
+    var enableSMBEvenOnOddOffalways: Bool = true
+    var autoISFoffSport: Bool = true
 }
 
 extension Preferences {
@@ -119,6 +120,7 @@ extension Preferences {
         case floatingcarbs = "floating_carbs"
         case iobThreshold = "iob_threshold"
         case enableSMBEvenOnOddOff = "enableSMB_EvenOn_OddOff"
+        case enableSMBEvenOnOddOffalways = "enableSMB_EvenOn_OddOff_always"
         case smbDeliveryRatioBGrange = "smb_delivery_ratio_bg_range"
         case smbDeliveryRatioMin = "smb_delivery_ratio_min"
         case smbDeliveryRatioMax = "smb_delivery_ratio_max"
