@@ -1187,7 +1187,7 @@ final class BaseAPSManager: APSManager, Injectable {
             total: Decimal(totalDays_.hypers)
         )
 
-        let TimeInRange = TIRs(TIR: [tir], Hypos: [hypo], Hypers: [hyper])
+        let TimeInRange = TIRs(TIR: tir, Hypos: hypo, Hypers: hyper)
 
         let avgs = Average(
             day: roundDecimal(bg_1, 1),
@@ -1197,7 +1197,7 @@ final class BaseAPSManager: APSManager, Injectable {
             total: roundDecimal(bg_total, 1)
         )
 
-        let avg = Averages(Average: [avgs], Median: [median])
+        let avg = Averages(Average: avgs, Median: median)
 
         let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
@@ -1225,11 +1225,11 @@ final class BaseAPSManager: APSManager, Injectable {
             Carbs_24h: carbTotal,
             GlucoseStorage_Days: Decimal(daysBG),
             Statistics: Stats(
-                Distribution: [TimeInRange],
-                Glucose: [avg],
-                HbA1c: [hbs],
-                LoopCycles: [loopstat],
-                Insulin: [insulin]
+                Distribution: TimeInRange,
+                Glucose: avg,
+                HbA1c: hbs,
+                LoopCycles: loopstat,
+                Insulin: insulin
             )
         )
 
