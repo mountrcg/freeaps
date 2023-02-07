@@ -36,6 +36,14 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
+    private var timaAgoFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.negativePrefix = ""
+        return formatter
+    }
+
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short

@@ -66,6 +66,11 @@ struct Preferences: JSON {
     var enableSMBEvenOnOddOffalways: Bool = false
     var maxDeltaBGthreshold: Decimal = 0.2
     var autoISFoffSport: Bool = false
+    var displayLoops: Bool = false
+    var updateInterval: Decimal = 30
+    var high: Decimal = 180
+    var low: Decimal = 70
+    var overrideHbA1cUnit: Bool = false
 }
 
 extension Preferences {
@@ -134,6 +139,11 @@ extension Preferences {
         case enableBGacceleration = "enable_BG_acceleration"
         case maxDeltaBGthreshold = "maxDelta_bg_threshold"
         case autoISFoffSport = "autoISF_off_Sport"
+        case displayLoops
+        case updateInterval
+        case high
+        case low
+        case overrideHbA1cUnit
     }
 }
 

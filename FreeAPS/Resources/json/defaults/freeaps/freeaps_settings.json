@@ -15,9 +15,10 @@
     "glucoseNotificationsAlways": false,
     "useAlarmSound": false,
     "addSourceInfoToGlucoseNotifications": false,
-    "lowGlucose": 72,
-    "highGlucose": 270,
+    "lowGlucose": 70,
+    "highGlucose": 180,
     "carbsRequiredThreshold": 10,
     "useAppleHealth": false,
     "animatedBackground": false
+    "displayStatistics":false
 }

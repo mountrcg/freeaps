@@ -13,6 +13,9 @@ extension Home {
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
+        @Published var statistics: Statistics?
+        @Published var displayStatistics = false
+        @Published var displaySD = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
@@ -41,13 +44,17 @@ extension Home {
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
         @Published var eventualBG: Int?
-        @Published var isf: Decimal?
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
-        @Published var units: GlucoseUnits = .mmolL
+        @Published var units: GlucoseUnits = .mgdL
+        @Published var low: Decimal = 70
+        @Published var high: Decimal = 180
+        @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
+        @Published var manualTempBasal = false
+        @Published var isf: Decimal?
 
         override func subscribe() {
             setupGlucose()
@@ -60,8 +67,14 @@ extension Home {
             setupCarbs()
             setupBattery()
             setupReservoir()
+            setupStatistics()
 
             suggestion = provider.suggestion
+            statistics = provider.statistics
+            displayStatistics = settingsManager.settings.displayStatistics
+            low = settingsManager.preferences.low
+            high = settingsManager.preferences.high
+            displayLoops = settingsManager.preferences.displayLoops
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
             allowManualTemp = !settingsManager.settings.closedLoop
@@ -69,7 +82,7 @@ extension Home {
             lastLoopDate = apsManager.lastLoopDate
             carbsRequired = suggestion?.carbsReq
             alarm = provider.glucoseStorage.alarm
-
+            manualTempBasal = apsManager.isManualTempBasal
             setStatusTitle()
             setupCurrentTempTarget()
 
@@ -198,6 +211,7 @@ extension Home {
         private func setupBasals() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.manualTempBasal = self.apsManager.isManualTempBasal
                 self.tempBasals = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .tempBasal || $0.type == .tempBasalDuration
                 }
@@ -261,6 +275,7 @@ extension Home {
         private func setupTempTargets() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.manualTempBasal = self.apsManager.isManualTempBasal
                 self.tempTargets = self.provider.tempTargets(hours: self.filteredHours)
             }
         }
@@ -291,15 +306,21 @@ extension Home {
             } else {
                 statusTitle = "Suggested"
             }
-
-            eventualBG = suggestion.eventualBG
             isf = suggestion.isf
+            eventualBG = suggestion.eventualBG
         }
 
         private func setupReservoir() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.reservoir = self.provider.pumpReservoir()
+            }
+        }
+
+        private func setupStatistics() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.statistics = self.provider.statistics
             }
         }
 
@@ -346,6 +367,7 @@ extension Home.StateModel:
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
+        setupStatistics()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
@@ -356,10 +378,16 @@ extension Home.StateModel:
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
+        displayStatistics = settingsManager.settings.displayStatistics
         closedLoop = settingsManager.settings.closedLoop
+        low = settingsManager.preferences.low
+        high = settingsManager.preferences.high
+        displayLoops = settingsManager.preferences.displayLoops
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
+        manualTempBasal = apsManager.isManualTempBasal
         setupGlucose()
+        setupStatistics()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -387,6 +415,7 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
+        setupStatistics()
     }
 
     func pumpBatteryDidChange(_: Battery) {

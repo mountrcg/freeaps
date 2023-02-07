@@ -7,6 +7,7 @@ struct Statistics: JSON, Equatable {
     var Build_Version: String
     var Build_Number: String
     var Branch: String
+    var CopyRightNotice: String
     var Build_Date: Date
     var Algorithm: String
     var AdjustmentFactor: Decimal
@@ -25,6 +26,7 @@ struct Statistics: JSON, Equatable {
         Build_Version: String,
         Build_Number: String,
         Branch: String,
+        CopyRightNotice: String,
         Build_Date: Date,
         Algorithm: String,
         AdjustmentFactor: Decimal,
@@ -42,6 +44,7 @@ struct Statistics: JSON, Equatable {
         self.Build_Version = Build_Version
         self.Build_Number = Build_Number
         self.Branch = Branch
+        self.CopyRightNotice = CopyRightNotice
         self.Build_Date = Build_Date
         self.Algorithm = Algorithm
         self.AdjustmentFactor = AdjustmentFactor
@@ -71,6 +74,7 @@ extension Statistics {
         case Build_Version
         case Build_Number
         case Branch
+        case CopyRightNotice
         case Build_Date
         case Algorithm
         case AdjustmentFactor
@@ -87,6 +91,7 @@ extension Statistics {
 struct LoopCycles: JSON, Equatable {
     var loops: Int
     var errors: Int
+    var readings: Int
     var success_rate: Decimal
     var avg_interval: Decimal
     var median_interval: Decimal
@@ -99,62 +104,21 @@ struct LoopCycles: JSON, Equatable {
 }
 
 struct Averages: JSON, Equatable {
-    var Average: Average
-    var Median: Median
+    var Average: Durations
+    var Median: Durations
 }
 
-struct Average: JSON, Equatable {
+struct Durations: JSON, Equatable {
     var day: Decimal
     var week: Decimal
     var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Median: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Hbs: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
     var total: Decimal
 }
 
 struct TIRs: JSON, Equatable {
-    var TIR: TIR
-    var Hypos: Hypos
-    var Hypers: Hypers
-}
-
-struct TIR: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Hypos: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
-}
-
-struct Hypers: JSON, Equatable {
-    var day: Decimal
-    var week: Decimal
-    var month: Decimal
-    var ninetyDays: Decimal
-    var total: Decimal
+    var TIR: Durations
+    var Hypos: Durations
+    var Hypers: Durations
 }
 
 struct Ins: JSON, Equatable {
@@ -164,18 +128,25 @@ struct Ins: JSON, Equatable {
     let scheduled_basal: Decimal?
 }
 
+struct Variance: JSON, Equatable {
+    var SD: Durations
+    var CV: Durations
+}
+
 struct Stats: JSON, Equatable {
     var Distribution: TIRs
     var Glucose: Averages
-    var HbA1c: Hbs
+    var HbA1c: Durations
     var LoopCycles: LoopCycles
     var Insulin: Ins
+    var Variance: Variance
 }
 
 extension LoopCycles {
     private enum CodingKeys: String, CodingKey {
         case loops
         case errors
+        case readings
         case success_rate
         case avg_interval
         case median_interval
@@ -195,23 +166,27 @@ extension Averages {
     }
 }
 
-extension Average {
+extension TIRs {
     private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
+        case TIR
+        case Hypos
+        case Hypers
     }
 }
 
-extension Median {
+extension Ins {
     private enum CodingKeys: String, CodingKey {
-        case day
-        case week
-        case month
-        case ninetyDays
-        case total
+        case TDD
+        case bolus
+        case temp_basal
+        case scheduled_basal
+    }
+}
+
+extension Variance {
+    private enum CodingKeys: String, CodingKey {
+        case SD
+        case CV
     }
 }
 
@@ -222,5 +197,6 @@ extension Stats {
         case HbA1c
         case LoopCycles
         case Insulin
+        case Variance
     }
 }
