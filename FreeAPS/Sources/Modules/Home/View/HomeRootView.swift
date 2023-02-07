@@ -574,7 +574,8 @@ extension Home {
                 MainChartView(
                     glucose: $state.glucose,
                     suggestion: $state.suggestion,
-                    statistics: $state.statistics,
+                    high: .constant(state.high),
+                    low: .constant(state.low),
                     tempBasals: $state.tempBasals,
                     boluses: $state.boluses,
                     suspensions: $state.suspensions,
@@ -668,8 +669,8 @@ extension Home {
                     mainChart
                     legendPanel
                         .background(Color.secondary.opacity(0.05))
-                    Divider().background(Color.gray)
                     statPanel()
+                    Divider().background(Color.gray)
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)

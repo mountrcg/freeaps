@@ -38,7 +38,8 @@ struct MainChartView: View {
 
     @Binding var glucose: [BloodGlucose]
     @Binding var suggestion: Suggestion?
-    @Binding var statistics: Statistics?
+    @Binding var high: Decimal?
+    @Binding var low: Decimal?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
     @Binding var suspensions: [PumpHistoryEvent]
@@ -166,18 +167,20 @@ struct MainChartView: View {
             }.stroke(Color.secondary, lineWidth: 0.2)
             // horizontal limits
             let range = glucoseYGange
+            let topline = CGFloat(high!) / CGFloat(units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
             let topstep = (range.maxY - range.minY) / CGFloat(range.maxValue - range.minValue) *
-                (CGFloat(range.maxValue) - Config.upperTarget)
-            if CGFloat(range.maxValue) > Config.upperTarget {
+                (CGFloat(range.maxValue) - topline)
+            if CGFloat(range.maxValue) > topline {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: range.minY + topstep))
                     path.addLine(to: CGPoint(x: fullSize.width, y: range.minY + topstep))
                 }.stroke(Color.loopYellow, lineWidth: 0.5)
             }
             let yrange = glucoseYGange
+            let bottomline = CGFloat(low!) / CGFloat(units == .mmolL ? Double(GlucoseUnits.exchangeRate) : 1)
             let bottomstep = (yrange.maxY - yrange.minY) / CGFloat(yrange.maxValue - yrange.minValue) *
-                (CGFloat(yrange.maxValue) - Config.lowerTarget)
-            if CGFloat(yrange.minValue) < Config.lowerTarget {
+                (CGFloat(yrange.maxValue) - bottomline)
+            if CGFloat(yrange.minValue) < bottomline {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yrange.minY + bottomstep))
                     path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
