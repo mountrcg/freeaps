@@ -67,8 +67,8 @@ struct Preferences: JSON {
     var enableSMBEvenOnOddOff: Bool = true
     var enableSMBEvenOnOddOffalways: Bool = true
     var autoISFoffSport: Bool = true
-    var displayLoops: Bool = false
-    var updateInterval: Decimal = 30
+    var displayLoops: Bool = true
+    var updateInterval: Decimal = 60
     var high: Decimal = 180
     var low: Decimal = 70
     var overrideHbA1cUnit: Bool = false
