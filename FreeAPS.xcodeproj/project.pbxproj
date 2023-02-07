@@ -35,7 +35,6 @@
 		3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1C25C9D48300A708ED /* MainProvider.swift */; };
 		3811DE2325C9D48300A708ED /* MainDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1D25C9D48300A708ED /* MainDataFlow.swift */; };
 		3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2025C9D48300A708ED /* MainRootView.swift */; };
-		3811DE3025C9D49500A708ED /* HomeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2825C9D49500A708ED /* HomeStateModel.swift */; };
 		3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2925C9D49500A708ED /* HomeProvider.swift */; };
 		3811DE3225C9D49500A708ED /* HomeDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */; };
 		3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE2E25C9D49500A708ED /* HomeRootView.swift */; };
@@ -245,6 +244,8 @@
 		492A2DD02936084500600A12 /* TDD_averages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492A2DCF2936084500600A12 /* TDD_averages.swift */; };
 		492A2DD429360BAD00600A12 /* LoopStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492A2DD329360BAD00600A12 /* LoopStats.swift */; };
 		492A2DDA29360F4100600A12 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492A2DD929360F4100600A12 /* UIDevice+Extensions.swift */; };
+		4942A4662992966B00A4F812 /* DurationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942A4652992966B00A4F812 /* DurationButton.swift */; };
+		4956B38C2992714200AEB989 /* HomeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4956B38B2992714200AEB989 /* HomeStateModel.swift */; };
 		4989A60B285CB71600B5A0CE /* TDD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4989A60A285CB71600B5A0CE /* TDD.swift */; };
 		49BC0C152864445B0010164A /* TDD_avg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BC0C142864445B0010164A /* TDD_avg.swift */; };
 		49D2A6FA286346CE00BA9064 /* TDD_daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D2A6F9286346CE00BA9064 /* TDD_daily.swift */; };
@@ -485,7 +486,6 @@
 		3811DE1C25C9D48300A708ED /* MainProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProvider.swift; sourceTree = "<group>"; };
 		3811DE1D25C9D48300A708ED /* MainDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainDataFlow.swift; sourceTree = "<group>"; };
 		3811DE2025C9D48300A708ED /* MainRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRootView.swift; sourceTree = "<group>"; };
-		3811DE2825C9D49500A708ED /* HomeStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStateModel.swift; sourceTree = "<group>"; };
 		3811DE2925C9D49500A708ED /* HomeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeProvider.swift; sourceTree = "<group>"; };
 		3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDataFlow.swift; sourceTree = "<group>"; };
 		3811DE2E25C9D49500A708ED /* HomeRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRootView.swift; sourceTree = "<group>"; };
@@ -685,6 +685,8 @@
 		492A2DCF2936084500600A12 /* TDD_averages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD_averages.swift; sourceTree = "<group>"; };
 		492A2DD329360BAD00600A12 /* LoopStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopStats.swift; sourceTree = "<group>"; };
 		492A2DD929360F4100600A12 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
+		4942A4652992966B00A4F812 /* DurationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationButton.swift; sourceTree = "<group>"; };
+		4956B38B2992714200AEB989 /* HomeStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStateModel.swift; sourceTree = "<group>"; };
 		4989A60A285CB71600B5A0CE /* TDD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD.swift; sourceTree = "<group>"; };
 		49BC0C142864445B0010164A /* TDD_avg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD_avg.swift; sourceTree = "<group>"; };
 		49D2A6F9286346CE00BA9064 /* TDD_daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD_daily.swift; sourceTree = "<group>"; };
@@ -999,6 +1001,8 @@
 		3811DE2725C9D49500A708ED /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				4942A4652992966B00A4F812 /* DurationButton.swift */,
+				4956B38B2992714200AEB989 /* HomeStateModel.swift */,
 				3811DE2A25C9D49500A708ED /* HomeDataFlow.swift */,
 				3811DE2925C9D49500A708ED /* HomeProvider.swift */,
 				3811DE2C25C9D49500A708ED /* View */,
@@ -1896,7 +1900,6 @@
 		F75CB57ED6971B46F8756083 /* CGM */ = {
 			isa = PBXGroup;
 			children = (
-				3811DE2825C9D49500A708ED /* HomeStateModel.swift */,
 				B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */,
 				38FEF3FD2738083E00574A46 /* CGMProvider.swift */,
 				5C018D1680307A31C9ED7120 /* CGMStateModel.swift */,
@@ -2188,7 +2191,6 @@
 				38DF1786276A73D400B3528F /* TagCloudView.swift in Sources */,
 				38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */,
 				383420D925FFEB3F002D46C1 /* Popup.swift in Sources */,
-				3811DE3025C9D49500A708ED /* HomeStateModel.swift in Sources */,
 				38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */,
 				38F3B2EF25ED8E2A005C48AA /* TempTargetsStorage.swift in Sources */,
 				19B0EF2128F6D66200069496 /* Statistics.swift in Sources */,
@@ -2326,6 +2328,7 @@
 				385CEA8225F23DFD002D6D5B /* NightscoutStatus.swift in Sources */,
 				F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */,
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
+				4942A4662992966B00A4F812 /* DurationButton.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */,
@@ -2350,6 +2353,7 @@
 				E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */,
 				9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */,
 				38E8754F275556FA00975559 /* WatchManager.swift in Sources */,
+				4956B38C2992714200AEB989 /* HomeStateModel.swift in Sources */,
 				A228DF96647338139F152B15 /* PreferencesEditorDataFlow.swift in Sources */,
 				4989A60B285CB71600B5A0CE /* TDD.swift in Sources */,
 				389ECE052601144100D86C4F /* ConcurrentMap.swift in Sources */,
