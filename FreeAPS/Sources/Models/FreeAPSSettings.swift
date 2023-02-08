@@ -19,8 +19,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var glucoseNotificationsAlways: Bool = false
     var useAlarmSound: Bool = false
     var addSourceInfoToGlucoseNotifications: Bool = false
-    var lowGlucose: Decimal = 72
-    var highGlucose: Decimal = 270
+    var lowGlucose: Decimal = 65
+    var highGlucose: Decimal = 210
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var displayStatistics: Bool = false

@@ -3,9 +3,9 @@ import SwiftUI
 
 extension PreferencesEditor {
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
-        @Published var unitsIndex = 1
+        @Published var unitsIndex = 0
         @Published var allowAnnouncements = false
-        @Published var insulinReqFraction: Decimal = 0.7
+        @Published var insulinReqFraction: Decimal = 1.7
         @Published var skipBolusScreenAfterCarbs = false
         // @Published var displayHR = false
         @Published var displayStatistics = false
@@ -16,10 +16,9 @@ extension PreferencesEditor {
 
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
+            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             // subscribeSetting(\.displayHR, on: $displayHR) { displayHR = $0 }
             subscribeSetting(\.displayStatistics, on: $displayStatistics) { displayStatistics = $0 }
-            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
-
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
                 unitsIndex = $0 == .mgdL ? 0 : 1
             } didSet: { [weak self] _ in
