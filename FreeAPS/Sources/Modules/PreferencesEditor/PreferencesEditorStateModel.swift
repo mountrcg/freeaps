@@ -29,32 +29,6 @@ extension PreferencesEditor {
             let statFields = [
                 Field(
                     displayName: NSLocalizedString(
-                        "Low Glucose Limit",
-                        comment: "Display As Low Glucose Percantage Under This Value"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.low),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Under This Value Will Added To And Displayed as Low Glucose Percantage",
-                        comment: "Description for Low Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
-                        "High Glucose Limit",
-                        comment: "Limit For High Glucose in Statistics View"
-                    ) + " (\(settingsManager.settings.units.rawValue))",
-
-                    type: .decimal(keypath: \.high),
-                    infoText: NSLocalizedString(
-                        "Blood Glucoses Over This Value Will Added To And Displaved as High Glucose Percantage",
-                        comment: "High Glucose Limit"
-                    ),
-                    settable: self
-                ),
-                Field(
-                    displayName: NSLocalizedString(
                         "Update every number of minutes:",
                         comment: "How often to update the statistics"
                     ),
@@ -95,6 +69,32 @@ extension PreferencesEditor {
             // MARK: - Quick fields
 
             let quickPrefs = [
+                Field(
+                    displayName: NSLocalizedString(
+                        "Low Glucose Limit",
+                        comment: "Limit for Low Glucose in Statistics & Graph View"
+                    ) + " (\(settingsManager.settings.units.rawValue))",
+
+                    type: .decimal(keypath: \.low),
+                    infoText: NSLocalizedString(
+                        "Used for Time in Range (TIR) calculations and bottom target line in graph. BG values below this will count and be displayed as Low Glucose.",
+                        comment: "Description for Low Glucose Limit"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: NSLocalizedString(
+                        "High Glucose Limit",
+                        comment: "Limit For High Glucose in Statistics & Graph View"
+                    ) + " (\(settingsManager.settings.units.rawValue))",
+
+                    type: .decimal(keypath: \.high),
+                    infoText: NSLocalizedString(
+                        "Used for Time in Range (TIR) calculations and top target line in graph. BG values above this will count and be displayed as High Glucose.",
+                        comment: "High Glucose Limit"
+                    ),
+                    settable: self
+                ),
                 Field(
                     displayName: "Enable autoISF",
                     type: .boolean(keypath: \.autoisf),
