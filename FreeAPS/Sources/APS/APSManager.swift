@@ -240,7 +240,8 @@ final class BaseAPSManager: APSManager, Injectable {
         loopStats(loopStatRecord: loopStatRecord)
 
         // Create a statistics.json only if App in foreground
-        if settings.displayStatistics, UIApplication.shared.applicationState != .background {
+        if settings.displayStatistics {
+            // if settings.displayStatistics, UIApplication.shared.applicationState != .background {
             statistics() }
 
         if settings.closedLoop {
@@ -662,8 +663,8 @@ final class BaseAPSManager: APSManager, Injectable {
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
             // Create a tdd.json
-            if UIApplication.shared.applicationState != .background {
-                tdd(enacted_: enacted) }
+            // if UIApplication.shared.applicationState != .background {}
+            tdd(enacted_: enacted)
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
@@ -677,7 +678,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func tdd(enacted_: Suggestion) {
         // Add to tdd.json:
-        let preferences = settingsManager.preferences
+        // let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
         let file = OpenAPS.Monitor.tdd
         let tdd = TDD(
