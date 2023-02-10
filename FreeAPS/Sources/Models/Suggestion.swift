@@ -17,9 +17,20 @@ struct Suggestion: JSON, Equatable {
     let bg: Decimal?
     let reservoir: Decimal?
     let isf: Decimal?
+    let tdd: Decimal?
+    let tddytd: Decimal?
+    let tdd7d: Decimal?
     var timestamp: Date?
     var recieved: Bool?
-    let tdd: Decimal?
+    var duraISFratio: Decimal?
+    var bgISFratio: Decimal?
+    var deltaISFratio: Decimal?
+    var ppISFratio: Decimal?
+    var acceISFratio: Decimal?
+    var autoISFratio: Decimal?
+    var tick: Decimal?
+    var target_bg: Decimal?
+    var SMBratio: Decimal?
     let insulin: Insulin?
 }
 
@@ -58,6 +69,17 @@ extension Suggestion {
         case recieved
         case isf = "ISF"
         case tdd = "TDD"
+        case tddytd = "TDDytd"
+        case tdd7d = "TDD7d"
+        case duraISFratio = "dura_ISFratio"
+        case bgISFratio = "bg_ISFratio"
+        case deltaISFratio = "delta_ISFratio"
+        case ppISFratio = "pp_ISFratio"
+        case acceISFratio = "acce_ISFratio"
+        case autoISFratio = "auto_ISFratio"
+        case tick
+        case target_bg
+        case SMBratio
         case insulin
     }
 }

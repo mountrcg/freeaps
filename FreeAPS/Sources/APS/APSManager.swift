@@ -189,9 +189,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         debug(.apsManager, "Starting loop")
 
-        lastStartLoopDate = Date()
         var loopStatRecord = LoopStats(
-            start: lastStartLoopDate,
+            start: Date(),
             loopStatus: "Starting"
         )
 
@@ -247,10 +246,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         loopStats(loopStatRecord: loopStatRecord)
 
-        // Create a statistics.json. Don't run in backgound
-        if settings.displayStatistics, UIApplication.shared.applicationState != .background {
-            statistics()
-        }
+        // Create a statistics.json only if App in foreground
+        if settings.displayStatistics {
+            // if settings.displayStatistics, UIApplication.shared.applicationState != .background {
+            statistics() }
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -671,6 +670,7 @@ final class BaseAPSManager: APSManager, Injectable {
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
             // Create a tdd.json
+            // if UIApplication.shared.applicationState != .background {}
             tdd(enacted_: enacted)
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
@@ -685,20 +685,60 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func tdd(enacted_: Suggestion) {
         // Add to tdd.json:
-        let preferences = settingsManager.preferences
+        // let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
         let file = OpenAPS.Monitor.tdd
         let tdd = TDD(
             TDD: currentTDD,
-            timestamp: Date(),
-            id: UUID().uuidString
+            timestamp: Date()
         )
         var uniqEvents: [TDD] = []
         storage.transaction { storage in
-            storage.append(tdd, to: file, uniqBy: \.id)
+            storage.append(tdd, to: file, uniqBy: \.timestamp)
             uniqEvents = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(14.days.timeInterval) > Date() }
+                .filter { $0.timestamp.addingTimeInterval(12.hours.timeInterval) > Date() }
                 .sorted { $0.timestamp > $1.timestamp } ?? []
+            // store last daily TDD
+            var calendar: Calendar { Calendar.current }
+            var lastLoop = tdd
+            if !uniqEvents.isEmpty { lastLoop = uniqEvents[0] }
+            let lastDate = calendar.component(.day, from: lastLoop.timestamp)
+            var prevLoop = tdd
+            if uniqEvents.count > 1 { prevLoop = uniqEvents[1] }
+            let prevDate = calendar.component(.day, from: prevLoop.timestamp)
+            if prevDate < lastDate {
+                let lastTDD = prevLoop
+                var uniqTDDdaily: [TDD_daily] = []
+                storage.transaction { storage in
+                    storage.append(lastTDD, to: OpenAPS.Monitor.tdd_daily, uniqBy: \.timestamp)
+                    uniqTDDdaily = storage.retrieve(OpenAPS.Monitor.tdd_daily, as: [TDD_daily].self)?
+                        .filter { $0.timestamp.addingTimeInterval(154.hours.timeInterval) >= Date()
+                        } // 6hrs more than 7days to be sure to catch all 7 days
+                        .sorted { $0.timestamp > $1.timestamp } ?? [] }
+                storage.save(uniqTDDdaily, as: OpenAPS.Monitor.tdd_daily)
+
+                // calc for 7 day average
+                var total7d: Decimal = 0
+                var count7d: Decimal = 0
+                for dailyTDD in uniqTDDdaily {
+                    if dailyTDD.TDD > 0 {
+                        total7d += dailyTDD.TDD
+                        count7d += 1
+                    }
+                }
+                var avg7d = Decimal()
+                if count7d > 0 {
+                    var calcAvg = total7d / count7d
+                    NSDecimalRound(&avg7d, &calcAvg, 1, .bankers)
+
+                    let avgtdd = TDD_avg(
+                        avgTDD7d: avg7d,
+                        timestamp: Date()
+                    )
+                    storage.save(avgtdd, as: OpenAPS.Monitor.tdd_avg)
+                }
+            }
+            // Jons TDD Averges handling
             var total: Decimal = 0
             var indeces: Decimal = 0
             for uniqEvent in uniqEvents {
@@ -724,9 +764,9 @@ final class BaseAPSManager: APSManager, Injectable {
             if nrOfIndeces == 0 {
                 nrOfIndeces = 1
             }
-            let average14 = total / indeces
-            let average2hours = totalAmount / nrOfIndeces
-            let weight = preferences.weightPercentage
+            let average14: Decimal = 30.0
+            let average2hours: Decimal = 35.0
+            let weight: Decimal = 0.5
             let weighted_average = weight * average2hours + (1 - weight) * average14
             let averages = TDD_averages(
                 average_total_data: roundDecimal(average14, 1),
@@ -800,22 +840,17 @@ final class BaseAPSManager: APSManager, Injectable {
         }
         var algo_ = "Oref0"
 
-        if preferences.sigmoid, preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF + CR: Sigmoid"
-        } else if preferences.sigmoid, !preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF: Sigmoid"
-        } else if preferences.useNewFormula, preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF + CR: Logarithmic"
-        } else if preferences.useNewFormula, !preferences.sigmoid,!preferences.enableDynamicCR {
-            algo_ = "Dynamic ISF: Logarithmic"
+        if preferences.autoisf {
+            algo_ = "autoISF"
         }
 
-        let af = preferences.adjustmentFactor
+        // let af = preferences.adjustmentFactor
         let insulin_type = preferences.curve
         let buildDate = Bundle.main.buildDate
         let version = Bundle.main.releaseVersionNumber
         let build = Bundle.main.buildVersionNumber
-        let branch = Bundle.main.infoDictionary?["BuildBranch"] as? String
+        let branch = Bundle.main.infoDictionary?["BuildBranch"] as? String ?? ""
+        let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
         let pump_ = pumpManager?.localizedTitle ?? ""
         let cgm = settingsManager.settings.cgm
         let file = OpenAPS.Monitor.statistics
@@ -831,6 +866,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let lsData = storage.retrieve(OpenAPS.Monitor.loopStats, as: [LoopStats].self)?
             .sorted { $0.start > $1.start } ?? []
         var successRate: Double?
+        var dailyLoopSuccess: Double?
         var successNR = 0.0
         var errorNR = 0.0
         var minimumInt = 999.0
@@ -875,7 +911,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         minimumInt = timeIntervalLoops
                     }
 
-                    timeForOneLoop = loopDuration
+                    timeForOneLoop = loopDuration * 60
 
                     timeForOneLoopArray.append(timeForOneLoop)
                     averageLoopTime += timeForOneLoop
@@ -893,6 +929,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             successRate = (successNR / Double(i)) * 100
+            dailyLoopSuccess = successNR / 288 * 100
             averageIntervalLoops = ((lsData[0].end ?? lsData[lsData.count - 1].start) - lsData[lsData.count - 1].start)
                 .timeInterval / 60 / Double(i)
             averageLoopTime /= Double(i)
@@ -979,6 +1016,14 @@ final class BaseAPSManager: APSManager, Injectable {
         if nr_bgs > 0 {
             // Up to 91 days
             bg_total = bg / nr_bgs
+
+            // If less then 24 hours of glucose data, use total instead
+            if bg_1 == 0 {
+                bg_1 = bg_total
+                bgArray_1 = bgArrayForTIR
+                end1 = true
+                nr_bgs_1 = nr_bgs
+            }
         }
 
         // Total median
@@ -1043,7 +1088,7 @@ final class BaseAPSManager: APSManager, Injectable {
         // HbA1c estimation (%, mmol/mol) 1 day
         var NGSPa1CStatisticValue: Decimal = 0.0
         var IFCCa1CStatisticValue: Decimal = 0.0
-        if end1 {
+        if end1, bg_1 > 0 {
             NGSPa1CStatisticValue = (46.7 + bg_1) / 28.7 // NGSP (%)
             IFCCa1CStatisticValue = 10.929 *
                 (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
@@ -1132,14 +1177,15 @@ final class BaseAPSManager: APSManager, Injectable {
             errors: Int(errorNR),
             readings: nrOfCGMReadings,
             success_rate: Decimal(round(successRate ?? 0)),
+            dailysuccess_rate: Decimal(round(dailyLoopSuccess ?? 0)),
             avg_interval: roundDecimal(Decimal(averageIntervalLoops), 1),
             median_interval: roundDecimal(Decimal(medianInterval), 1),
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
-            avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
-            median_duration: Decimal(roundDouble(medianLoopTime, 2)),
-            min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
-            max_duration: Decimal(roundDouble(maximumLoopTime, 1))
+            avg_duration: Decimal(roundDouble(averageLoopTime, 0)),
+            median_duration: Decimal(roundDouble(medianLoopTime, 0)),
+            min_duration: roundDecimal(Decimal(minimumLoopTime), 0),
+            max_duration: Decimal(roundDouble(maximumLoopTime, 0))
         )
 
         // TIR calcs for every case
@@ -1294,10 +1340,11 @@ final class BaseAPSManager: APSManager, Injectable {
             iOS: UIDevice.current.getOSInfo,
             Build_Version: version ?? "",
             Build_Number: build ?? "1",
-            Branch: branch ?? "N/A",
+            Branch: branch,
+            CopyRightNotice: String(copyrightNotice_.prefix(32)),
             Build_Date: buildDate,
             Algorithm: algo_,
-            AdjustmentFactor: af,
+            AdjustmentFactor: 1,
             Pump: pump_,
             CGM: cgm.rawValue,
             insulinType: insulin_type.rawValue,
@@ -1328,16 +1375,17 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
-        processQueue.async {
-            let file = OpenAPS.Monitor.loopStats
-            var uniqEvents: [LoopStats] = []
-            self.storage.transaction { storage in
-                storage.append(loopStatRecord, to: file, uniqBy: \.start)
-                uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
-                    .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
-                    .sorted { $0.start > $1.start } ?? []
-                storage.save(Array(uniqEvents), as: file)
-            }
+        let file = OpenAPS.Monitor.loopStats
+
+        var uniqEvents: [LoopStats] = []
+
+        storage.transaction { storage in
+            storage.append(loopStatRecord, to: file, uniqBy: \.start)
+            uniqEvents = storage.retrieve(file, as: [LoopStats].self)?
+                .filter { $0.start.addingTimeInterval(24.hours.timeInterval) > Date() }
+                .sorted { $0.start > $1.start } ?? []
+
+            storage.save(Array(uniqEvents), as: file)
         }
     }
 

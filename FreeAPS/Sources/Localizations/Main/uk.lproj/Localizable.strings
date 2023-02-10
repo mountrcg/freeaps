@@ -1587,7 +1587,7 @@ Enact a temp Basal or a temp target */
 "Max Delta-BG Threshold SMB" = "Максимальний поріг зміни рівня глюкози для SMB";
 
 /* Max Delta-BG Threshold SMB */
-"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "За замовчуванням 0.2 (20%). Максимальна позитивна зміна відсоткового рівня глюкози в крові для спрацьовування SMB, при перевищенні цього порога - відбудеться відключення SMB та перехід в керування лише базою. Запрограмована межа – 40%. Для повністю закритої петлі UAM рекомендується 30%. Результат можна спостерігати в журналі роботи та спливаючому вікні статусу петлі (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
+"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "За замовчуванням 0,2 (20%). Максимальна додатна відсоткова зміна рівня ГК для використання SMB, вище цього значення SMB буде вимкнено. Закріплена кришка 40%. Для UAM із повністю замкнутим контуром рекомендовано 30%. Спостерігайте в журналі та спливаючому вікні (maxDelta 27 > 20% від BG 100 - вимкнення SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
 "... When Blood Glucose Is Over (mg/dl):" = "... Коли рівень глюкози вищий (мг/дл):";

@@ -29,6 +29,12 @@ extension Settings {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
+                    Text("Statistics")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
+                    Text("Loop Cycles")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
+                    Text("Middleware")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                 }
 
                 Section(header: Text("Configuration")) {
@@ -88,18 +94,19 @@ extension Settings {
                             Text("Glucose")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                         }
-
                         Group {
+                            Text("CGM Events")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.cgmState), from: self)
+                            Text("Uploaded CGM Events")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedCGMState), from: self)
+                        }
+                        Group {
+                            Text("Alerts")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.alertHistory), from: self)
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Middleware")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
-                            Text("Statistics")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
-                            Text("Loop Cycles")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
                             Text("Glucose Data used for statistics")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose_data), from: self)
                             Text("Edit settings json")

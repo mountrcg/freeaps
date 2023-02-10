@@ -3,8 +3,6 @@ import Foundation
 enum CGMType: String, JSON, CaseIterable, Identifiable {
     var id: String { rawValue }
 
-    case nightscout
-    case xdrip
     case dexcomG6
     case dexcomG5
     case dexcomG7
@@ -12,6 +10,10 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     case libreTransmitter
     case glucoseDirect
     case enlite
+    case libreTransmitter
+    case xdrip
+    case nightscout
+    case simulator
 
     var displayName: String {
         switch self {

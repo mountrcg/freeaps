@@ -286,19 +286,18 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             )
         }
 
-        let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
-
+        // let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
         var reservoir = Decimal(from: storage.retrieveRaw(OpenAPS.Monitor.reservoir) ?? "0")
         if reservoir == 0xDEAD_BEEF {
-            reservoir = nil
+            reservoir = 0
         }
         let pumpStatus = storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
 
-        let pump = NSPumpStatus(clock: Date(), battery: battery, reservoir: reservoir, status: pumpStatus)
+        let pump = NSPumpStatus(clock: Date(), reservoir: reservoir, status: pumpStatus)
 
-        let device = UIDevice.current
+        // let device = UIDevice.current
 
-        let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
+        // let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
 
         var status: NightscoutStatus
 
@@ -306,7 +305,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             device: NigtscoutTreatment.local,
             openaps: openapsStatus,
             pump: pump,
-            uploader: uploader
+            // uploader: uploader
         )
 
         storage.save(status, as: OpenAPS.Upload.nsStatus)

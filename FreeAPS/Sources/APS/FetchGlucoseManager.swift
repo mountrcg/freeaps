@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import SpriteKit
 import SwiftDate
 import Swinject
 
@@ -10,6 +11,9 @@ protocol FetchGlucoseManager: SourceInfoProvider {
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
+
+    private let notificationCenter = Foundation.NotificationCenter.default
+
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!
@@ -41,6 +45,18 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     }
 
     var glucoseSource: GlucoseSource!
+
+    /// change timer to 1 second
+    @objc private func didEnterBackground(_: Notification) {
+        timer = DispatchTimer(timeInterval: TimeInterval(1.0))
+        subscribe()
+    }
+
+    /// change timer to 1 minute
+    @objc private func willEnterForeground(_: Notification) {
+        timer = DispatchTimer(timeInterval: TimeInterval(minutes: 1.0))
+        subscribe()
+    }
 
     private func updateGlucoseSource() {
         switch settingsManager.settings.cgm {

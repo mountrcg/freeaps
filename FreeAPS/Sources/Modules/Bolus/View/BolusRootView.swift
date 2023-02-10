@@ -5,6 +5,7 @@ extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
         let waitForSuggestion: Bool
+        // @Injected() var apsManager: APSManager!  //needed for rounding bolus to pump specifics (line 40)
         @StateObject var state = StateModel()
         @State private var isAddInsulinAlertPresented = false
 
@@ -35,7 +36,8 @@ extension Bolus {
                             ).foregroundColor(.secondary)
                         }.contentShape(Rectangle())
                             .onTapGesture {
-                                state.amount = state.insulinRequired
+                                state.amount = max(Decimal(round(Double(state.insulinRequired) * 20) / 20.0), 0) // round to x.x5
+                                // state.amount = max(0, self.apsManager.roundBolus(amount: state.insulinRequired))  //throws arror about optional parameter being nil
                             }
                         HStack {
                             Text("Insulin recommended")
