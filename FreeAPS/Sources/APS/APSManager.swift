@@ -732,42 +732,42 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             // Jons TDD Averges handling
-            var total: Decimal = 0
-            var indeces: Decimal = 0
-            for uniqEvent in uniqEvents {
-                if uniqEvent.TDD > 0 {
-                    total += uniqEvent.TDD
-                    indeces += 1
-                }
-            }
-            let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
-                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
-                .sorted { $0.timestamp > $1.timestamp } ?? []
-            var totalAmount: Decimal = 0
-            var nrOfIndeces: Decimal = 0
-            for entry in entriesPast2hours {
-                if entry.TDD > 0 {
-                    totalAmount += entry.TDD
-                    nrOfIndeces += 1
-                }
-            }
-            if indeces == 0 {
-                indeces = 1
-            }
-            if nrOfIndeces == 0 {
-                nrOfIndeces = 1
-            }
-            let average14: Decimal = 30.0
-            let average2hours: Decimal = 35.0
-            let weight: Decimal = 0.5
-            let weighted_average = weight * average2hours + (1 - weight) * average14
-            let averages = TDD_averages(
-                average_total_data: roundDecimal(average14, 1),
-                weightedAverage: roundDecimal(weighted_average, 1),
-                past2hoursAverage: roundDecimal(average2hours, 1),
-                date: Date()
-            )
-            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
+//            var total: Decimal = 0
+//            var indeces: Decimal = 0
+//            for uniqEvent in uniqEvents {
+//                if uniqEvent.TDD > 0 {
+//                    total += uniqEvent.TDD
+//                    indeces += 1
+//                }
+//            }
+//            let entriesPast2hours = storage.retrieve(file, as: [TDD].self)?
+//                .filter { $0.timestamp.addingTimeInterval(2.hours.timeInterval) > Date() }
+//                .sorted { $0.timestamp > $1.timestamp } ?? []
+//            var totalAmount: Decimal = 0
+//            var nrOfIndeces: Decimal = 0
+//            for entry in entriesPast2hours {
+//                if entry.TDD > 0 {
+//                    totalAmount += entry.TDD
+//                    nrOfIndeces += 1
+//                }
+//            }
+//            if indeces == 0 {
+//                indeces = 1
+//            }
+//            if nrOfIndeces == 0 {
+//                nrOfIndeces = 1
+//            }
+//            let average14: Decimal = 30.0
+//            let average2hours: Decimal = 35.0
+//            let weight: Decimal = 0.5
+//            let weighted_average = weight * average2hours + (1 - weight) * average14
+//            let averages = TDD_averages(
+//                average_total_data: roundDecimal(average14, 1),
+//                weightedAverage: roundDecimal(weighted_average, 1),
+//                past2hoursAverage: roundDecimal(average2hours, 1),
+//                date: Date()
+//            )
+//            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
             storage.save(Array(uniqEvents), as: file)
         }
     }
