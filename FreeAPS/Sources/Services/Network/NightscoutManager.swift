@@ -304,7 +304,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         status = NightscoutStatus(
             device: NigtscoutTreatment.local,
             openaps: openapsStatus,
-            pump: pump,
+            pump: pump
             // uploader: uploader
         )
 

@@ -75,8 +75,8 @@ extension Home {
                 Spacer()
             }
             .frame(maxWidth: .infinity)
+            .frame(maxHeight: 70)
             .padding(.top, geo.safeAreaInsets.top)
-            .padding(.bottom)
             .background(Color.gray.opacity(0.2))
         }
 
@@ -93,8 +93,8 @@ extension Home {
                         (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" g", comment: "gram of carbs")
                     )
-                    .font(.footnote).fontWeight(.bold)
-                }.frame(alignment: .top)
+                    .font(.system(size: 12, weight: .bold))
+                }
                 HStack {
 //                    Text("IOB").font(.caption2).foregroundColor(.secondary)
                     Image("bolus1")
@@ -106,8 +106,8 @@ extension Home {
                         (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" U", comment: "Insulin unit")
                     )
-                    .font(.footnote).fontWeight(.bold)
-                }.frame(alignment: .bottom)
+                    .font(.system(size: 12, weight: .bold))
+                }
             }
         }
 
@@ -545,145 +545,22 @@ extension Home {
 //                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
 //                }
                 Group {
-                    if selectedState != .total {
-                        HStack {
-                            Text("HbA1c").font(.footnote).foregroundColor(.secondary)
-                            Text(hba1c_).font(.footnote)
-                        }
-                    } else {
-                        HStack {
-                            Text(
-                                "\(NSLocalizedString("HbA1c", comment: "")) (\(targetFormatter.string(from: (state.statistics?.GlucoseStorage_Days ?? 0) as NSNumber) ?? "") \(NSLocalizedString("days", comment: "")))"
-                            )
-                            .font(.footnote).foregroundColor(.secondary)
-                            Text(hba1c_all).font(.footnote)
-                        }
-                    }
-                    // Average as default. Changes to Median when clicking.
-                    let textAverageTitle = NSLocalizedString("Average", comment: "")
-                    let textMedianTitle = NSLocalizedString("Median", comment: "")
-                    let cgmReadingsTitle = NSLocalizedString("Readings", comment: "CGM readings in statPanel")
-
-                    HStack {
-                        Text(averageOrMedianTitle).font(.footnote).foregroundColor(.secondary)
-                        if averageOrMedianTitle == textAverageTitle {
-                            Text(averageOrmedian == "" ? average_ : average_).font(.footnote)
-                        } else if averageOrMedianTitle == textMedianTitle {
-                            Text(averageOrmedian == "" ? median_ : median_).font(.footnote)
-                        } else if averageOrMedianTitle == cgmReadingsTitle {
-                            Text(
-                                averageOrmedian != "0" ? tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? "" : ""
-                            )
-                            .font(.footnote)
-                        }
-                    }.onTapGesture {
-                        if averageOrMedianTitle == textAverageTitle {
-                            averageOrMedianTitle = textMedianTitle
-                            averageOrmedian = median_
-                        } else if averageOrMedianTitle == textMedianTitle {
-                            averageOrMedianTitle = cgmReadingsTitle
-                            averageOrmedian = tirFormatter
-                                .string(from: (state.statistics?.Statistics.LoopCycles.readings ?? 0) as NSNumber) ?? ""
-                        } else if averageOrMedianTitle == cgmReadingsTitle {
-                            averageOrMedianTitle = textAverageTitle
-                            averageOrmedian = average_
-                        }
-                    }
-                    .frame(minWidth: 110)
-                    // CV as default. Changes to SD when clicking
-                    let text_CV_Title = NSLocalizedString("CV", comment: "")
-                    let text_SD_Title = NSLocalizedString("SD", comment: "")
-
-                    HStack {
-                        Text(CV_or_SD_Title).font(.footnote).foregroundColor(.secondary)
-                        if CV_or_SD_Title == text_CV_Title {
-                            Text(CVorSD == "" ? cv_ : cv_).font(.footnote)
-                        } else {
-                            Text(CVorSD == "" ? sd_ : sd_).font(.footnote)
-                        }
-                    }.onTapGesture {
-                        if CV_or_SD_Title == text_CV_Title {
-                            CV_or_SD_Title = text_SD_Title
-                            CVorSD = sd_
-                        } else {
-                            CV_or_SD_Title = text_CV_Title
-                            CVorSD = cv_
-                        }
-                    }
+                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("IOB")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
                 }
-            }
-            HStack {
                 Group {
-                    HStack {
-                        Text(
-                            NSLocalizedString("Low", comment: " ")
-                        )
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-
-                        Text(tir_low + " %").font(.footnote).foregroundColor(.loopRed)
-                    }
-
-                    HStack {
-                        Text("Normal").font(.footnote).foregroundColor(.secondary)
-                        Text(tir_ + " %").font(.footnote).foregroundColor(.loopGreen)
-                    }
-
-                    HStack {
-                        Text(
-                            NSLocalizedString("High", comment: " ")
-                        )
-                        .font(.footnote).foregroundColor(.secondary)
-
-                        Text(tir_high + " %").font(.footnote).foregroundColor(.loopYellow)
-                    }
+                    Circle().fill(Color.zt).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("ZT")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
                 }
-            }
-
-            if state.settingsManager.preferences.displayLoops {
-                HStack {
-                    Group {
-                        let loopTitle = NSLocalizedString("Loops", comment: "Nr of Loops in statPanel")
-                        let errorTitle = NSLocalizedString("Errors", comment: "Loop Errors in statPanel")
-
-                        HStack {
-                            Text(loopStatTitle).font(.footnote).foregroundColor(.secondary)
-                            Text(
-                                loopStatTitle == loopTitle ? tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.loops ?? 0) as NSNumber) ?? "" :
-                                    tirFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.errors ?? 0) as NSNumber) ?? ""
-                            ).font(.footnote)
-                        }.onTapGesture {
-                            if loopStatTitle == loopTitle {
-                                loopStatTitle = errorTitle
-                            } else if loopStatTitle == errorTitle {
-                                loopStatTitle = loopTitle
-                            }
-                        }
-
-                        HStack {
-                            Text("Interval").font(.footnote)
-                                .foregroundColor(.secondary)
-                            Text(
-                                targetFormatter
-                                    .string(from: (state.statistics?.Statistics.LoopCycles.avg_interval ?? 0) as NSNumber) ??
-                                    ""
-                            ).font(.footnote)
-                        }
-
-                        HStack {
-                            Text("Duration").font(.footnote)
-                                .foregroundColor(.secondary)
-                            Text(
-                                numberFormatter
-                                    .string(
-                                        from: (state.statistics?.Statistics.LoopCycles.median_duration ?? 0) as NSNumber
-                                    ) ?? ""
-                            ).font(.footnote)
-                        }
-                    }
+                Group {
+                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("COB")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
                 }
                 Group {
                     Circle().fill(Color.uam).frame(width: 8, height: 8)
@@ -869,7 +746,7 @@ extension Home {
                 }
 
                 if let errorMessage = state.errorMessage, let date = state.errorDate {
-                    Text(NSLocalizedString("Error at", comment: "") + " " + dateFormatter.string(from: date))
+                    Text("Error at \(dateFormatter.string(from: date))")
                         .foregroundColor(.white)
                         .font(.headline)
                         .padding(.bottom, 4)
