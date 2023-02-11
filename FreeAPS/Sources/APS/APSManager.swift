@@ -217,9 +217,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 guard let self = self else { return }
                 loopStatRecord.end = Date()
                 loopStatRecord.duration = self.roundDouble(
-                    (loopStatRecord.end! - loopStatRecord.start).timeInterval / 60,
-                    2
-                )
+                    (loopStatRecord.end! - loopStatRecord.start).timeInterval, 1
+                ) // in seconds
                 if case let .failure(error) = completion {
                     loopStatRecord.loopStatus = error.localizedDescription
                     self.loopCompleted(error: error, loopStatRecord: loopStatRecord)
@@ -911,7 +910,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         minimumInt = timeIntervalLoops
                     }
 
-                    timeForOneLoop = loopDuration * 60
+                    timeForOneLoop = loopDuration
 
                     timeForOneLoopArray.append(timeForOneLoop)
                     averageLoopTime += timeForOneLoop
@@ -1047,10 +1046,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
             var hypoLimit = settingsManager.preferences.low
             var hyperLimit = settingsManager.preferences.high
-            if units == .mmolL {
-                hypoLimit = hypoLimit / 0.0555
-                hyperLimit = hyperLimit / 0.0555
-            }
+//            if units == .mmolL {
+//                hypoLimit = hypoLimit / 0.0555
+//                hyperLimit = hyperLimit / 0.0555
+//            }
 
             var full_time = 0.0
             if endIndex > 0 {
