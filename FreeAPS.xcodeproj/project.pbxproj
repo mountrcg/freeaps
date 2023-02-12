@@ -2755,7 +2755,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = "$(VARIANT)_$(APP_VERSION)";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreNFC,
@@ -2764,6 +2764,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -2791,7 +2792,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = "$(VARIANT)_$(APP_VERSION)";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreNFC,
@@ -2800,6 +2801,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -2821,7 +2823,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = "$(VARIANT)_$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2829,6 +2831,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
+				VERSION_INFO_PREFIX = "";
 				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
@@ -2851,7 +2854,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "FreeAPS X";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(BUNDLE_IDENTIFIER)";
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = "$(VARIANT)_$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -2859,6 +2862,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
+				VERSION_INFO_PREFIX = "";
 				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
