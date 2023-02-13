@@ -20,6 +20,7 @@ extension Settings {
                 }
 
                 Section(header: Text("Services")) {
+                    Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
                     if HKHealthStore.isHealthDataAvailable() {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
@@ -34,7 +35,6 @@ extension Settings {
                 }
 
                 Section(header: Text("Configuration")) {
-                    Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)

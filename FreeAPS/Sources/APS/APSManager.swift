@@ -1,3 +1,4 @@
+import Accelerate
 import Combine
 import Foundation
 import LoopKit
@@ -210,9 +211,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 guard let self = self else { return }
                 loopStatRecord.end = Date()
                 loopStatRecord.duration = self.roundDouble(
-                    (loopStatRecord.end! - loopStatRecord.start).timeInterval / 60,
-                    2
-                )
+                    (loopStatRecord.end! - loopStatRecord.start).timeInterval, 1
+                ) // in seconds
                 if case let .failure(error) = completion {
                     loopStatRecord.loopStatus = error.localizedDescription
                     self.loopCompleted(error: error, loopStatRecord: loopStatRecord)
@@ -238,11 +238,6 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         loopStats(loopStatRecord: loopStatRecord)
-
-        // Create a statistics.json only if App in foreground
-        if settings.displayStatistics {
-            // if settings.displayStatistics, UIApplication.shared.applicationState != .background {
-            statistics() }
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -662,10 +657,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
-            // Create a tdd.json
-            // if UIApplication.shared.applicationState != .background {}
-            tdd(enacted_: enacted)
-
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
                 self.broadcaster.notify(EnactedSuggestionObserver.self, on: .main) {
@@ -673,10 +664,19 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             nightscout.uploadStatus()
+
+            // Update the tdd.json
+            tdd(enacted_: enacted)
+            // Update statistics.json. Only run if enabled in preferences
+            if settingsManager.settings.displayStatistics {
+                statistics()
+            }
         }
     }
 
     private func tdd(enacted_: Suggestion) {
+        // timer
+        let tddStartedAt = Date()
         // Add to tdd.json:
         // let preferences = settingsManager.preferences
         let currentTDD = enacted_.tdd ?? 0
@@ -770,6 +770,7 @@ final class BaseAPSManager: APSManager, Injectable {
 //            storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
             storage.save(Array(uniqEvents), as: file)
         }
+        print("Test time of tdd() computation: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
     }
 
     private func roundDecimal(_ decimal: Decimal, _ digits: Double) -> Decimal {
@@ -797,6 +798,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON
     private func statistics() {
+        // timer
+        let statisticsStartedAt = Date()
+
         var testFile: [Statistics] = []
         var testIfEmpty = 0
         storage.transaction { storage in
@@ -806,7 +810,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let updateThisOften = Int(settingsManager.preferences.updateInterval)
 
-        // Only run every 30 minutesl
+        // Only run every 30 minutes or according to setting
         if testIfEmpty != 0 {
             guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
             else {
@@ -904,7 +908,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         minimumInt = timeIntervalLoops
                     }
 
-                    timeForOneLoop = loopDuration * 60
+                    timeForOneLoop = loopDuration
 
                     timeForOneLoopArray.append(timeForOneLoop)
                     averageLoopTime += timeForOneLoop
@@ -1356,7 +1360,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         storage.transaction { storage in
             storage.append(dailystat, to: file, uniqBy: \.created_at)
-            var uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
+            let uniqeEvents: [Statistics] = storage.retrieve(file, as: [Statistics].self)?
                 .filter { $0.created_at.addingTimeInterval(24.hours.timeInterval) > Date() }
                 .sorted { $0.created_at > $1.created_at } ?? []
 
@@ -1365,9 +1369,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         nightscout.uploadStatistics(dailystat: dailystat)
         nightscout.uploadPreferences()
+        print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
+        // timer
+        let LoopStatsStartedAt = Date()
         let file = OpenAPS.Monitor.loopStats
 
         var uniqEvents: [LoopStats] = []
@@ -1380,6 +1387,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
             storage.save(Array(uniqEvents), as: file)
         }
+        print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func processError(_ error: Error) {
