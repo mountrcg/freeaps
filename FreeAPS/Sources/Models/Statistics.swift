@@ -7,6 +7,7 @@ struct Statistics: JSON, Equatable {
     var Build_Version: String
     var Build_Number: String
     var Branch: String
+    var CopyRightNotice: String
     var Build_Date: Date
     var Algorithm: String
     var AdjustmentFactor: Decimal
@@ -25,6 +26,7 @@ struct Statistics: JSON, Equatable {
         Build_Version: String,
         Build_Number: String,
         Branch: String,
+        CopyRightNotice: String,
         Build_Date: Date,
         Algorithm: String,
         AdjustmentFactor: Decimal,
@@ -42,6 +44,7 @@ struct Statistics: JSON, Equatable {
         self.Build_Version = Build_Version
         self.Build_Number = Build_Number
         self.Branch = Branch
+        self.CopyRightNotice = CopyRightNotice
         self.Build_Date = Build_Date
         self.Algorithm = Algorithm
         self.AdjustmentFactor = AdjustmentFactor
@@ -71,6 +74,7 @@ extension Statistics {
         case Build_Version
         case Build_Number
         case Branch
+        case CopyRightNotice
         case Build_Date
         case Algorithm
         case AdjustmentFactor
@@ -89,6 +93,7 @@ struct LoopCycles: JSON, Equatable {
     var errors: Int
     var readings: Int
     var success_rate: Decimal
+    var dailysuccess_rate: Decimal
     var avg_interval: Decimal
     var median_interval: Decimal
     var min_interval: Decimal
@@ -144,6 +149,7 @@ extension LoopCycles {
         case errors
         case readings
         case success_rate
+        case dailysuccess_rate
         case avg_interval
         case median_interval
         case min_interval

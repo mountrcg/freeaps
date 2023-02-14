@@ -22,16 +22,6 @@ struct MainView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
-                HStack {
-                    withAnimation {
-                        BlinkingView(count: 5, size: 3)
-                            .frame(width: 14, height: 14)
-                            .padding(2)
-                    }
-                    Text("Updating...").font(.caption2).foregroundColor(.secondary)
-                }
-            }
             VStack {
                 header
                 Spacer()
@@ -50,7 +40,7 @@ struct MainView: View {
             }
         }
         .frame(maxHeight: .infinity)
-        .padding()
+        .padding(.horizontal)
         .onReceive(state.timer) { date in
             state.timerDate = date
             state.requestState()
@@ -61,99 +51,62 @@ struct MainView: View {
     }
 
     var header: some View {
-        VStack {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(state.glucose).font(.title)
-                        Text(state.trend)
+        HStack {
+            HStack(alignment: .lastTextBaseline) {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(alignment: .bottom) {
+                        Text(state.glucose).font(.largeTitle).foregroundColor(colorOfGlucose)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
+                        // .padding(.top, 2)
+                        if state.timerDate.timeIntervalSince(state.lastUpdate) > 10 {
+                            withAnimation {
+                                BlinkingView(count: 8, size: 3)
+                                    .frame(width: 25, height: 18)
+                                    .padding(.bottom, 15)
+                            }
+                        }
+                        Spacer()
+                        Text("TDD").foregroundColor(.insulin).font(.caption).fixedSize()
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
+                            .padding(.bottom, 6)
+                    }
+                    HStack(alignment: .lastTextBaseline) {
+                        Text(state.delta).font(.title3).foregroundColor(.gray)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
+                        Text(state.trend).foregroundColor(.gray)
+                        Text(state.eventualBG).font(.title3)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
+                        Spacer()
+                        Text(iobFormatter.string(from: (state.tdd ?? 0) as NSNumber)!).font(.caption).fixedSize()
+                            .foregroundColor(.insulin)
                             .scaledToFill()
                             .minimumScaleFactor(0.5)
                     }
-                    Text(state.delta).font(.caption2).foregroundColor(.gray)
                 }
                 Spacer()
-
-                VStack(spacing: 0) {
+                VStack(spacing: 4) {
                     HStack {
-                        Circle().stroke(color, lineWidth: 5).frame(width: 26, height: 26).padding(10)
+                        Circle().stroke(color, lineWidth: 6).frame(width: 30, height: 30).padding()
                     }
 
                     if state.lastLoopDate != nil {
                         Text(timeString).font(.caption2).foregroundColor(.gray)
+                            .scaledToFill()
+                            .minimumScaleFactor(0.5)
+                            .foregroundColor(.secondary)
+                        // .padding(.bottom, 4)
                     } else {
                         Text("--").font(.caption2).foregroundColor(.gray)
-                    }
-                }
-            }
-            Spacer()
-            HStack(alignment: .firstTextBaseline) {
-                Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!)
-                    .font(.caption2)
-                    .scaledToFill()
-                    .foregroundColor(Color.white)
-                    .minimumScaleFactor(0.5)
-                Text("g").foregroundColor(.loopGreen)
-                    .font(.caption2)
-                    .scaledToFill()
-                    .foregroundColor(.loopGreen)
-                    .minimumScaleFactor(0.5)
-                Spacer()
-                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
-                    .font(.caption2)
-                    .scaledToFill()
-                    .foregroundColor(Color.white)
-                    .minimumScaleFactor(0.5)
-
-                Text("U").foregroundColor(.insulin)
-                    .font(.caption2)
-                    .scaledToFill()
-                    .foregroundColor(.loopGreen)
-                    .minimumScaleFactor(0.5)
-
-                if state.displayHR {
-                    Spacer()
-                    HStack {
-                        if completedLongPress {
-                            HStack {
-                                Text("❤️" + " \(pulse)")
-                                    .fontWeight(.regular)
-                                    .font(.custom("activated", size: 20))
-                                    .scaledToFill()
-                                    .foregroundColor(.white)
-                                    .minimumScaleFactor(0.5)
-                            }
-                            .scaleEffect(isDetectingLongPress ? 3 : 1)
-                            .gesture(longPress)
-
-                        } else {
-                            HStack {
-                                Text("❤️" + " \(pulse)")
-                                    .fontWeight(.regular)
-                                    .font(.caption2)
-                                    .scaledToFill()
-                                    .foregroundColor(.white)
-                                    .minimumScaleFactor(0.5)
-                            }
-                            .scaleEffect(isDetectingLongPress ? 3 : 1)
-                            .gesture(longPress)
-                        }
-                    }
-
-                } else if let eventualBG = state.eventualBG.nonEmpty {
-                    Spacer()
-                    HStack {
-                        Text(eventualBG)
-                            .font(.caption2)
                             .scaledToFill()
-                            .foregroundColor(.secondary)
                             .minimumScaleFactor(0.5)
                     }
                 }
             }
-            Spacer()
-                .onAppear(perform: start)
-        }.padding()
+        } // .padding(.bottom)
     }
 
     var longPress: some Gesture {
@@ -170,45 +123,69 @@ struct MainView: View {
     }
 
     var buttons: some View {
-        HStack(alignment: .center) {
-            NavigationLink(isActive: $state.isCarbsViewActive) {
-                CarbsView()
-                    .environmentObject(state)
-            } label: {
-                Image("carbs", bundle: nil)
-                    .renderingMode(.template)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.loopGreen)
-            }
-
-            NavigationLink(isActive: $state.isTempTargetViewActive) {
-                TempTargetsView()
-                    .environmentObject(state)
-            } label: {
-                VStack {
-                    Image("target", bundle: nil)
+        VStack {
+            Spacer()
+            HStack(alignment: .lastTextBaseline) {
+                Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!).font(.title3).fixedSize()
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+                Text("g").foregroundColor(.loopYellow).fixedSize()
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+                Spacer()
+                Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!).font(.title3).fixedSize()
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+                Text("U").foregroundColor(.insulin).fixedSize()
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+                Spacer()
+                Text(iobFormatter.string(from: (state.isf ?? 0) as NSNumber)!).font(.title3).fixedSize()
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+                Text("isf").foregroundColor(.loopGreen).fixedSize()
+                    .scaledToFill()
+                    .minimumScaleFactor(0.5)
+            }.padding(.bottom)
+            Spacer()
+            HStack(alignment: .bottom) {
+                NavigationLink(isActive: $state.isCarbsViewActive) {
+                    CarbsView()
+                        .environmentObject(state)
+                } label: {
+                    Image("carbs1", bundle: nil)
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 24, height: 24)
                         .foregroundColor(.loopYellow)
-                    if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
-                        Text(until, style: .timer)
-                            .scaledToFill()
-                            .font(.system(size: 8))
+                }
+                NavigationLink(isActive: $state.isBolusViewActive) {
+                    BolusView()
+                        .environmentObject(state)
+                } label: {
+                    Image("bolus", bundle: nil)
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.insulin)
+                }
+                NavigationLink(isActive: $state.isTempTargetViewActive) {
+                    TempTargetsView()
+                        .environmentObject(state)
+                } label: {
+                    VStack {
+                        Image("target1", bundle: nil)
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.loopGreen)
+                        if let until = state.tempTargets.compactMap(\.until).first, until > Date() {
+                            Text(until, style: .relative)
+                                .scaledToFill().fixedSize()
+                                .font(.system(size: 8))
+                        }
                     }
                 }
-            }
-
-            NavigationLink(isActive: $state.isBolusViewActive) {
-                BolusView()
-                    .environmentObject(state)
-            } label: {
-                Image("bolus", bundle: nil)
-                    .renderingMode(.template)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.insulin)
             }
         }
     }
@@ -270,6 +247,22 @@ struct MainView: View {
         return "\(minAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
     }
 
+    private var colorOfGlucose: Color {
+        guard let recentBG = Int(state.glucose)
+        else { return .loopYellow }
+
+        switch recentBG {
+        case 61 ... 69:
+            return .loopOrange
+        case 70 ... 140:
+            return .loopGreen
+        case 141 ... 180:
+            return .loopYellow
+        default:
+            return .loopRed
+        }
+    }
+
     private var color: Color {
         guard let lastLoopDate = state.lastLoopDate else {
             return .loopGray
@@ -290,19 +283,21 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let state = WatchStateModel()
 
-        state.glucose = "15,8"
-        state.delta = "+888"
-        state.iob = 100.38
-        state.cob = 112.123
+        state.glucose = "266"
+        state.delta = "+55"
+        state.iob = 9.9
+        state.cob = 88
+        state.isf = 100
+        state.tdd = 35.95
+        state.eventualBG = "232"
+
         state.lastLoopDate = Date().addingTimeInterval(-200)
         state
             .tempTargets =
             [TempTargetWatchPreset(name: "Test", id: "test", description: "", until: Date().addingTimeInterval(3600 * 3))]
 
         return Group {
-            MainView()
-            MainView().previewDevice("Apple Watch Series 5 - 40mm")
-            MainView().previewDevice("Apple Watch Series 3 - 38mm")
+            MainView().previewDevice("Apple Watch Series 7 - 45mm")
         }.environmentObject(state)
     }
 }

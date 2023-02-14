@@ -1,13 +1,13 @@
 {
-    "units": "mmol/L",
-    "closedLoop": false,
+    "units": "mg/dL",
+    "closedLoop": true,
     "allowAnnouncements": false,
     "useAutotune": false,
     "isUploadEnabled": false,
     "useLocalGlucoseSource": false,
     "localGlucosePort": 8080,
     "debugOptions": false,
-    "insulinReqFraction": 1.5,
+    "insulinReqFraction": 1.7,
     "skipBolusScreenAfterCarbs": false,
     "displayHR": false,
     "cgm": "nightscout",
@@ -16,10 +16,10 @@
     "glucoseNotificationsAlways": false,
     "useAlarmSound": false,
     "addSourceInfoToGlucoseNotifications": false,
-    "lowGlucose": 72,
-    "highGlucose": 270,
+    "lowGlucose": 65,
+    "highGlucose": 210,
     "carbsRequiredThreshold": 10,
     "useAppleHealth": false,
-    "animatedBackground": false,
-    "displayStatistics": false
+    "animatedBackground": false
+    "displayStatistics":false
 }

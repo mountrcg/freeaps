@@ -49,6 +49,7 @@ enum EventType: String, JSON {
     case pumpResume = "PumpResume"
     case pumpAlarm = "PumpAlarm"
     case pumpBattery = "PumpBattery"
+
     case rewind = "Rewind"
     case prime = "Prime"
     case journalCarbs = "JournalEntryMealMarker"

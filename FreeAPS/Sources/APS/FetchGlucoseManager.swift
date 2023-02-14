@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import SpriteKit
 import SwiftDate
 import Swinject
 
@@ -13,6 +14,9 @@ protocol FetchGlucoseManager: SourceInfoProvider {
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseGlucoseManager.processQueue")
+
+    private let notificationCenter = Foundation.NotificationCenter.default
+
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
     @Injected() var apsManager: APSManager!

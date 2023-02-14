@@ -21,7 +21,7 @@ struct PumpView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 11) {
             if let reservoir = reservoir {
                 HStack {
                     Image(systemName: "drop.fill")
@@ -29,6 +29,9 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 10)
                         .foregroundColor(reservoirColor)
+                        .padding(.bottom, 2)
+                        .padding(.leading, 1)
+                        .padding(.trailing, 1)
                     if reservoir == 0xDEAD_BEEF {
                         Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.footnote)
                             .fontWeight(.bold)
@@ -60,9 +63,9 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 10)
                         .foregroundColor(timerColor)
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.footnote)
-                        .fontWeight(.bold)
-                }.frame(alignment: .bottom)
+                        .padding(.bottom, 2)
+                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.system(size: 12, weight: .bold))
+                }
             }
         }
     }

@@ -10,6 +10,9 @@ build/
 DerivedData/
 R.generated.swift
 *-old
+ProfileSwitching/setting*
+FreeAPSXWatchface_fenix5xplus.prg
+secret/
 
 ## Various settings
 !default.mode1v3
@@ -29,6 +32,7 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+Change source code in Oref0*
 
 ## Obj-C/Swift specific
 *.hmap
@@ -79,4 +83,4 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/FastlaneRunner
 
-ConfigOverride.xcconfig
+*.xcconfig

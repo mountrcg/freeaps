@@ -12,7 +12,7 @@ extension Settings {
             Form {
                 Section(
                     header: Text(
-                        "FreeAPS X v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \(state.copyrightNotice) "
+                        "FreeAPS-X\n\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) "
                     )
                 ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
@@ -24,15 +24,21 @@ extension Settings {
                 }
 
                 Section(header: Text("Services")) {
+                    Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
                     if HKHealthStore.isHealthDataAvailable() {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
+                    Text("Statistics")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
+                    Text("Loop Cycles")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
+                    Text("Middleware")
+                        .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                 }
 
                 Section(header: Text("Configuration")) {
-                    Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
@@ -88,18 +94,19 @@ extension Settings {
                             Text("Glucose")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
                         }
-
                         Group {
+                            Text("CGM Events")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.cgmState), from: self)
+                            Text("Uploaded CGM Events")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedCGMState), from: self)
+                        }
+                        Group {
+                            Text("Alerts")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.alertHistory), from: self)
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Middleware")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
-                            Text("Statistics")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
-                            Text("Loop Cycles")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
                             Text("Glucose Data used for statistics")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose_data), from: self)
                             Text("Edit settings json")

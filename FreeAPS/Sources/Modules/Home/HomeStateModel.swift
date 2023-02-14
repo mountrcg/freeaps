@@ -15,6 +15,7 @@ extension Home {
         @Published var suggestion: Suggestion?
         @Published var statistics: Statistics?
         @Published var displayStatistics = false
+        @Published var displaySD = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
@@ -45,14 +46,15 @@ extension Home {
         @Published var eventualBG: Int?
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
-        @Published var units: GlucoseUnits = .mmolL
-        @Published var low: Decimal = 4
-        @Published var high: Decimal = 10
+        @Published var units: GlucoseUnits = .mgdL
+        @Published var low: Decimal = 70
+        @Published var high: Decimal = 180
         @Published var displayLoops = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
         @Published var manualTempBasal = false
+        @Published var isf: Decimal?
 
         override func subscribe() {
             setupGlucose()
@@ -306,7 +308,7 @@ extension Home {
             } else {
                 statusTitle = "Suggested"
             }
-
+            isf = suggestion.isf
             eventualBG = suggestion.eventualBG
         }
 

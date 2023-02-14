@@ -64,6 +64,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
+            self.state.isf = self.suggestion?.isf
+            self.state.tdd = self.suggestion?.tdd
             self.state.tempTargets = self.tempTargetsStorage.presets()
                 .map { target -> TempTargetWatchPreset in
                     let untilDate = self.tempTargetsStorage.current().flatMap { currentTarget -> Date? in
@@ -148,7 +150,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             return nil
         }
         let units = settingsManager.settings.units
-        return "⇢ " + eventualFormatter.string(
+        return eventualFormatter.string(
             from: (units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
         )!
     }

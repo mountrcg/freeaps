@@ -1,1 +1,15 @@
-[]
+[
+    {
+      "_type" : "TempBasalDuration",
+      "id" : "c5d7a7d621b455c7bce848f5df501973",
+      "timestamp" : "2022-07-22T06:43:58.227Z",
+      "duration (min)" : 30
+    },
+    {
+      "_type" : "TempBasal",
+      "id" : "_c5d7a7d621b455c7bce848f5df501973",
+      "timestamp" : "2022-07-22T06:43:58.227Z",
+      "temp" : "absolute",
+      "rate" : 2
+    }
+]
