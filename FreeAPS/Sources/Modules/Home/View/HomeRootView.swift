@@ -24,12 +24,10 @@ extension Home {
         @State var CVorSD = ""
 
         // Switch between Loops and Errors when tapping in statPanel
-        @State var loopStatTitle = NSLocalizedString(
-            "Loop Rate",
-            comment: "Percentage of achievable Loops during last 24 hrs in statPanel"
-        )
+        @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops during last 24 hrs in statPanel")
 
         // Avg & Median switch for Loop interval
+        
         @State var loopIntTitle = NSLocalizedString("∅ Interval", comment: "Interval average")
 
         // Avg & Median switch for Loop duration
@@ -398,7 +396,7 @@ extension Home {
                     let textAverageTitle = NSLocalizedString("∅ BG", comment: "")
                     let textMedianTitle = NSLocalizedString("~ BG", comment: "")
                     let cgmReadingsTitle = NSLocalizedString(
-                        "Readings",
+                        "24hr Readings",
                         comment: "CGM readings of last 24 hrs in statPanel"
                     )
 
@@ -485,11 +483,11 @@ extension Home {
                         let loopTitle = NSLocalizedString("Loops", comment: "Nr of Loops during last 24 hrs in statPanel")
                         let errorTitle = NSLocalizedString("Errors", comment: "Loop Errors during last 24 hrs in statPanel")
                         let rateTitle = NSLocalizedString(
-                            "Loop Rate",
+                            "Rate",
                             comment: "Percentage of achievable Loops during last 24 hrs in statPanel"
                         )
                         HStack(alignment: .lastTextBaseline, spacing: 2) {
-                            Text(loopStatTitle).font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)
+                            Text("24hr: " + loopStatTitle).font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)
 
                             if loopStatTitle == rateTitle {
                                 Text(
