@@ -27,7 +27,7 @@ extension Home {
         @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops during last 24 hrs in statPanel")
 
         // Avg & Median switch for Loop interval
-        
+
         @State var loopIntTitle = NSLocalizedString("∅ Interval", comment: "Interval average")
 
         // Avg & Median switch for Loop duration
