@@ -1,11 +1,11 @@
 import Foundation
 
 struct Preferences: JSON {
-    var maxIOB: Decimal = 9
-    var maxDailySafetyMultiplier: Decimal = 6
-    var currentBasalSafetyMultiplier: Decimal = 7
-    var autosensMax: Decimal = 1
-    var autosensMin: Decimal = 1
+    var maxIOB: Decimal = 0
+    var maxDailySafetyMultiplier: Decimal = 3
+    var currentBasalSafetyMultiplier: Decimal = 4
+    var autosensMax: Decimal = 1.3
+    var autosensMin: Decimal = 0.7
     var rewindResetsAutosens: Bool = true
     var highTemptargetRaisesSensitivity: Bool = false
     var lowTemptargetLowersSensitivity: Bool = false
@@ -43,35 +43,36 @@ struct Preferences: JSON {
     var timestamp: Date?
     // start autoISF config
     var floatingcarbs: Bool = false
-    var autoisf: Bool = true
-    var autoISFmax: Decimal = 2
-    var autoISFmin: Decimal = 0.5
-    var smbDeliveryRatio: Decimal = 0.85
-    var smbMaxRangeExtension: Decimal = 3
-    var smbDeliveryRatioBGrange: Decimal = 90
-    var smbDeliveryRatioMin: Decimal = 0.65
-    var smbDeliveryRatioMax: Decimal = 0.80
+    var autoisf: Bool = false
+    var autoISFhourlyChange: Decimal = 0.25
+    var autoISFmax: Decimal = 1.3
+    var autoISFmin: Decimal = 0.7
+    var smbMaxRangeExtension: Decimal = 1
+    var smbDeliveryRatio: Decimal = 0.5
+    var smbDeliveryRatioBGrange: Decimal = 0
+    var smbDeliveryRatioMin: Decimal = 0.5
+    var smbDeliveryRatioMax: Decimal = 0.5
+    var maxDeltaBGthreshold: Decimal = 0.2
     var enableautoISFwithCOB: Bool = true
-    var autoISFhourlyChange: Decimal = 0.6
-    var higherISFrangeWeight: Decimal = 0.3
-    var lowerISFrangeWeight: Decimal = 0.7
-    var deltaISFrangeWeight: Decimal = 0.6
-    var postMealISFalways: Bool = true
-    var postMealISFweight: Decimal = 0.02
+    var higherISFrangeWeight: Decimal = 0
+    var lowerISFrangeWeight: Decimal = 0
+    var deltaISFrangeWeight: Decimal = 0
+    var postMealISFweight: Decimal = 0
     var postMealISFduration: Decimal = 3
-    var enableBGacceleration: Bool = true
-    var bgAccelISFweight: Decimal = 0.1
-    var bgBrakeISFweight: Decimal = 0.15
-    var maxDeltaBGthreshold: Decimal = 0.3
+    var postMealISFalways: Bool = false
+    var bgAccelISFweight: Decimal = 0
+    var bgBrakeISFweight: Decimal = 0
+    var enableBGacceleration: Bool = false
     var iobThreshold: Decimal = 0
-    var enableSMBEvenOnOddOff: Bool = true
-    var enableSMBEvenOnOddOffalways: Bool = true
+    var enableSMBEvenOnOddOffalways: Bool = false
+    var enableSMBEvenOnOddOff: Bool = false
     var autoISFoffSport: Bool = true
+    // start statistics config
     var displayLoops: Bool = true
-    var updateInterval: Decimal = 60
+    var updateInterval: Decimal = 120
+    var overrideHbA1cUnit: Bool = false
     var high: Decimal = 180
     var low: Decimal = 70
-    var overrideHbA1cUnit: Bool = false
 }
 
 extension Preferences {
@@ -141,11 +142,12 @@ extension Preferences {
         case enableBGacceleration = "enable_BG_acceleration"
         case maxDeltaBGthreshold = "maxDelta_bg_threshold"
         case autoISFoffSport = "autoISF_off_Sport"
+        // start statistics config
         case displayLoops
         case updateInterval
+        case overrideHbA1cUnit
         case high
         case low
-        case overrideHbA1cUnit
     }
 }
 

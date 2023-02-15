@@ -678,10 +678,10 @@ extension Home {
                     Button { state.showModal(for: .addCarbs) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs1")
+                            Image("carbs")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: 26, height: 26)
                                 .foregroundColor(.loopYellow)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
@@ -694,24 +694,23 @@ extension Home {
                         }
                     }
                     Spacer()
+                    Button { state.showModal(for: .addTempTarget) }
+                    label: {
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 26, height: 26)
+                            .padding(8)
+                    }.foregroundColor(.loopGreen)
+                    Spacer()
                     Button { state.showModal(for: .bolus(waitForSuggestion: false)) }
                     label: {
                         Image("bolus")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 26, height: 26)
                             .padding(8)
                     }.foregroundColor(.insulin)
-                    Spacer()
-                    Button { state.showModal(for: .addTempTarget) }
-                    label: {
-                        Image("target1")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .padding(8)
-                    }.foregroundColor(.loopGreen)
-
                     Spacer()
                     if state.allowManualTemp {
                         Button { state.showModal(for: .manualTempBasal) }
@@ -719,17 +718,17 @@ extension Home {
                             Image("bolus1")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: 26, height: 26)
                                 .padding(8)
                         }.foregroundColor(.basal)
                         Spacer()
                     }
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image("settings")
+                        Image("settings1")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 26, height: 26)
                             .padding(8)
                     }.foregroundColor(.loopGray)
                 }
