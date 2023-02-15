@@ -177,6 +177,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Loop entry point
     private func loop() {
+        #if CHECKPOINT_LOGGING
+            debug(.checkpoint, "BEGIN")
+        #endif
         // check the last start of looping is more the loopInterval but the previous loop was completed
         if lastLoopDate > lastStartLoopDate {
             guard lastStartLoopDate.addingTimeInterval(Config.loopInterval) < Date() else {
@@ -231,6 +234,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             } receiveValue: {}
             .store(in: &lifetime)
+        #if CHECKPOINT_LOGGING
+            debug(.checkpoint, "END")
+        #endif
     }
 
     // Loop exit point
