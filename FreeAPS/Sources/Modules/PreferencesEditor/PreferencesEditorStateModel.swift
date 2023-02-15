@@ -13,7 +13,6 @@ extension PreferencesEditor {
 
         override func subscribe() {
             preferences = provider.preferences
-
             subscribeSetting(\.allowAnnouncements, on: $allowAnnouncements) { allowAnnouncements = $0 }
             subscribeSetting(\.insulinReqFraction, on: $insulinReqFraction) { insulinReqFraction = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
@@ -530,7 +529,10 @@ extension PreferencesEditor {
                 Field(
                     displayName: NSLocalizedString("SMB Interval", comment: "SMB Interval"),
                     type: .decimal(keypath: \.smbInterval),
-                    infoText: NSLocalizedString("Minimum duration in minutes between two enacted SMBs", comment: "SMB Interval"),
+                    infoText: NSLocalizedString(
+                        "Minimum duration in minutes for new SMB since last SMB or manual bolus",
+                        comment: "SMB Interval"
+                    ),
                     settable: self
                 ),
                 Field(

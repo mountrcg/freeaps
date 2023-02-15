@@ -43,8 +43,14 @@
 /*  */
 "Agree and continue" = "Прийняти і Продовжити";
 
-/* Enacted at a date */
-"Enacted at %@" = "Подано в %@";
+/* Headline in enacted pop up (at: at what time) */
+"Enacted at" = "Виконано в";
+
+/* Headline in suggested pop up (at: at what time) */
+"Suggested at" = "Запропоновано на";
+
+/* Headline in enacted pop up (at: at what time) */
+"Error at" = "Помилка в";
 
 /* Home title */
 "Home" = "Головна";
@@ -60,9 +66,6 @@
 
 /* Replace pod text in Header */
 "Replace pod" = "Замініть под";
-
-/* Suggested at a date */
-"Suggested at %@" = "Рекомендовано в %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Додати Вуглеводи";
@@ -416,8 +419,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Тимчасові цілі";
 
-/* Delete carbs from Treatments list*/
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Видалити вуглеводи?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Видалити інсулін?";
 
 /* Treatments list */
 "Treatments" = "Терапія";
@@ -922,10 +928,10 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Стан Bluetooth відновлений (APS перезапущено?). Виявили %d периферійних пристроїв та  під'єднано до %@ з ідентифікатором %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Використання спільної групи програм із зовнішньою програмою CGM xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Використання спільної групи програм із зовнішньою програмою CGM GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Вбудований додаток G6";
@@ -945,7 +951,60 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Онлайн або внутрішній сервер";
 
-/* HealthKit intergration --------------------*/
+/* -------------- Developer settings ---------------------- */
+/* Debug options */
+
+"Developer" = "Розробник";
+
+/* Debug option view NS Upload Profile */
+"NS Upload Profile" = "Профіль завантаження NS";
+
+/* Debug option view NS Uploaded Profile */
+"NS Uploaded Profile" = "NS Завантажений профіль";
+
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
+/* Debug option view Pump History */
+"Pump History" = "Історія помпи";
+
+/* Debug option view Target Ranges */
+"Target ranges" = "Цільові діапазони";
+
+/* Debug option view Temp targets */
+"Temp targets" = "Тимчасові цілі";
+
+/* Debug option view Meal */
+"Meal" = "Шаблон харчування";
+
+/* Debug option view Pump profile */
+"Pump profile" = "Профіль помпи";
+
+/* Debug option view Profile */
+"Profile" = "Профіль";
+
+/* Debug option view Enacted */
+"Enacted" = "Введено в дію";
+
+/* Debug option view Announcements (from NS) */
+"Announcements" = "Оголошення";
+
+/* Debug option view Enacted announcements announcements (from NS) */
+"Enacted announcements" = "Введені в дію оголошення";
+
+/* Debug option view Autotune */
+"Autotune" = "Автотюн";
+
+/* Debug option view Target presets */
+"Target presets" = "Цільові пресети";
+
+/* Debug option view */
+"Loop Cycles" = "Циклічні цикли";
+
+/* Debug option view Glucose Data used for statistics */
+"Glucose Data used for statistics" = "Дані про рівень глюкози використовуються для статистики";
+
+/* --------------- HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
@@ -978,7 +1037,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = "Ручний ТБШ ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " ОД/день";
+" U/day" = " U/день";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Всього";
@@ -1121,6 +1180,117 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Не вдалося призупинити доставку інсуліну";
 
+//* -----------------------------------------------------------------------*/
+/* ----------------------Statistics strings -------------------------------*/
+/* Headline Statistics */
+
+
+"Statistics" = "Статистика";
+
+/* Option in preferences */
+"Display Statistics" = "Показати статистику";
+
+/* infoText: Description for Display Statistics */
+"Displays Statistics under the chart view" = "Відображає статистику під вікном діаграми";
+
+/* Low Glucose Limit option in preferences */
+"Low Glucose Limit" = "Низька межа глюкози";
+
+/* High Glucose Limit option in preferences */
+"High Glucose Limit" = "Висока межа глюкози";
+
+/* infoText: Description for Low Glucose Limit */
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "BG під цим значенням відображатиметься як низький відсоток глюкози";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "BG під цим значенням буде відображатися як відсоток перебування з високим рівнем глюкози";
+
+/* When statistics.json was last updated */
+"Updated" = "Оновлено";
+
+/* Average BG = */
+"Average" = "Середній";
+
+/* Median BG */
+"Median" = "Медіана";
+
+/* CGM readings in statPanel */
+"Readings" = "Читання";
+
+/* Normal BG (within TIR) */
+"Normal" = "Нормальний";
+
+/* Title High BG in statPanel */
+"High (>" = "Високий (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Низький (<";
+
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
+/* Estimated HbA1c */
+"HbA1c" = "HbA1c";
+
+/* Total number of days of data for HbA1c estimation, part 1/2*/
+"All" = "Все";
+
+/* Total number of days of data for HbA1c estimation, part 2/2*/
+"days" = "дні";
+
+/* Nr of Loops in statPanel */
+"Loops" = "Петлі";
+
+/* Loop Errors in statPanel */
+"Errors" = "Помилки";
+
+/* Average loop interval */
+"Interval" = "Інтервал";
+
+/* Median loop interval */
+"Duration" = "Тривалість";
+
+/* "Display SD */
+"Display SD instead of CV" = "Показати SD замість CV";
+
+/* Description for display SD */
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Показувати стандартне відхилення (SD) замість Коефіцієнту варіації (CV) у панелі стану";
+
+/* How often to update the statistics */
+"Update every number of minutes:" = "Оновлюйте кожну кількість хвилин:";
+
+/* Description for update interval for statistics */
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "За замовчуванням 30 хвилин. Як часто оновлювати та зберігати statistics.json і завантажувати останній масив, якщо ввімкнено, у Nightscout. Менший інтервал, ніж для оновлення рівня глюкози (5 хв), не має сенсу.";
+
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "За останні 24 години";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Минулий тиждень";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Минулий місяць ";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "За останні 90 днів";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "Усі дані за минулі дні";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Показати статистику циклів";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Відображає статистику циклів петлі на панелі статистики, яка відображається на головному екрані";
+
+/* Display % */
+"Override HbA1c unit" = "Замінити одиницю HbA1c";
+
+/* Description for Override HbA1c unit */
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Змінити одиниці виміру HbA1c на панелі статистики. Одиниці виміру оновляться під час наступного оновлення файлу statistics.json";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
@@ -1169,13 +1339,11 @@ Enact a temp Basal or a temp target */
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "За замовчуванням значення false. Коли true, > 105 mg/dL high temp target регулювання чутливості щодо exercise_mode. Синонім для high_temptarget_raises_sensities_sensitivity";
 
-
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Розширений діапазон цілей ГК";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "За замовчуванням false, це означає лише низький кінець діапазону цілі BG по замовчуванню використовується як мета OpenAPS. Це функція безпеки для запобігання занадто широким цілям та менш оптимальним результатами. Тому найвищий кінець цільового діапазону використовується лише для уникнення виправлень майстра. Користуйтеся wide_bg_target_range: true для примушення нейтральних настроїв над ширшим діапазоном кінцевих BG.";
-
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Повернутися на нейтральний базал";
@@ -1264,7 +1432,6 @@ Enact a temp Basal or a temp target */
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Значення за замовчуванням: 1,2. Це множник для autosens (та autotune) з лімітом 20% котрий визначає наскількі високо autosens може підняти базал, наскільки низько зменьшити ISF (чутливість до інсуліну), та наскільки низько зменьшити цільовий СК.";
 
-
 /* Headline "Autosens Min" */
 "Autosens Min" = "Мінімум для алгоритму Autosens";
 
@@ -1329,7 +1496,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "Інтервал між SMB";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Мінімальна тривалість у хвилинах між двома подачами SMB";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Мінімальна тривалість у хвилинах для нового SMB після останнього SMB або ручного болюсу";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Приріст болюсу";
@@ -1395,7 +1562,7 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Використовувати Сігмоїдну функцію";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Використовуйте сигмоїдну функцію для ISF (та для CR, якщо ввімкнено) замість логарифмічної формули. Використовується лише тоді, коли параметр Dynamic ISF увімкнено в налаштуваннях\n\nПараметри autosens.min/max визначають потужність, з якою регулюється динамічне співвідношення, висоту графіка (Y-інтервал, Y: динамічне співвідношення) і де сигмоїдна крива вирівнюється, таким чином також обмежуючи, наскільки високо та як низько ISF можна налаштувати.\n\nПараметри коригування регулюють нахил кривої. Нижче значення ==> менш крутий == менш агресивний.\n\nВаше заплановане/автоматично налаштоване налаштування ISF і ваш мінімальний цільовий рівень рівня глюкози визначають, коли динамічне співвідношення = 1 (ISF без змін), тобто коли поточний рівень рівня глюкози = мінімальний цільовий рівень рівня глюкози => новий ISF завжди буде встановлено ваш поточний запланований/автонастроєний ISF, на відміну від логарифмічної формули за замовчуванням.\n\nДинамічний CR використовується, коли в налаштуваннях увімкнено параметр «Увімкнути динамічний CR».";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Використовуйте сигмоїдну функцію для ISF (та для CR, якщо ввімкнено) замість логарифмічної формули. Використовується лише тоді, коли параметр Dynamic ISF увімкнено в налаштуваннях\n\nПараметри autosens.min/max визначають потужність, з якою регулюється динамічне співвідношення, висоту графіка (Y-інтервал, Y: динамічне співвідношення) і де сигмоїдна крива вирівнюється, таким чином також обмежуючи, наскільки високо та як низько ISF можна налаштувати.\n\nПараметри коригування регулюють нахил кривої. Нижче значення ==> менш крутий == менш агресивний.\n\nВаше заплановане/автоматично налаштоване налаштування ISF і ваш мінімальний цільовий рівень рівня глюкози визначають, коли динамічне співвідношення = 1 (ISF без змін), тобто коли поточний рівень рівня глюкози = мінімальний цільовий рівень рівня глюкози => новий ISF завжди буде встановлено ваш поточний запланований/автонастроєний ISF, на відміну від логарифмічної формули за замовчуванням.\n\nДинамічний CR використовується, коли в налаштуваннях увімкнено параметр «Увімкнути динамічний CR».";
 
 
 /* Headline "Threshold Setting" */

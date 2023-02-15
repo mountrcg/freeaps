@@ -32,8 +32,8 @@ struct MainChartView: View {
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
         static let carbsScale: CGFloat = 0.3
-        static let upperTarget: CGFloat = 180
-        static let lowerTarget: CGFloat = 70
+//        static let upperTarget: CGFloat = 180
+//        static let lowerTarget: CGFloat = 70
     }
 
     @Binding var glucose: [BloodGlucose]

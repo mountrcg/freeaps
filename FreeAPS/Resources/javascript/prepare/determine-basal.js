@@ -8,7 +8,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         console.log("Middleware reason: " + (middlewareReason || "Nothing changed"));
     } catch (error) {
         console.log("Invalid middleware: " + error);
-    }
+    };
 
     var glucose_status = freeaps_glucoseGetLast(glucose);
     var autosens_data = null;
@@ -16,6 +16,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     if (autosens) {
         autosens_data = autosens;
     }
+    
 
     var reservoir_data = null;
     if (reservoir) {

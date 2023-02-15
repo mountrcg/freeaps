@@ -81,6 +81,9 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     )
                 }
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
+
+            self.state.displayHR = self.settingsManager.settings.displayHR
+
             self.state.eventualBG = self.evetualBGStraing()
 
             self.sendState()
@@ -174,7 +177,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private var deltaFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
+        formatter.maximumFractionDigits = 1
         formatter.positivePrefix = "+"
         return formatter
     }

@@ -31,8 +31,9 @@ struct CurrentGlucoseView: View {
     private var deltaFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.positivePrefix = "+"
+        formatter.maximumFractionDigits = 1
+        formatter.positivePrefix = "  +"
+        formatter.negativePrefix = "  -"
         return formatter
     }
 
@@ -120,10 +121,16 @@ struct CurrentGlucoseView: View {
                 // Spacer()
             } // .padding(.leading, 0)
             HStack(alignment: .lastTextBaseline, spacing: 2) {
+                let minutes = (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                let text = timaAgoFormatter.string(for: Double(minutes)) ?? ""
                 Text(
-                    "\(minutesAgo)m "
-                ).font(.system(size: 12, weight: .bold)).foregroundColor(colorOfMinutesAgo(minutesAgo))
-                    .fixedSize()
+                    text == "0" ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
+                        text + " " +
+                            NSLocalizedString("min", comment: "Short form for minutes")
+                    )
+                )
+                .font(.system(size: 12, weight: .bold)).foregroundColor(colorOfMinutesAgo(minutesAgo))
+                .fixedSize()
                 Text(
                     delta
                         .map { deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
@@ -136,7 +143,7 @@ struct CurrentGlucoseView: View {
                 )
                 .foregroundColor(.secondary)
                 .font(.system(size: 12))
-                .padding(.leading, 6)
+                .padding(.leading, 8)
                 .fixedSize()
                 Text(
                     numberFormatter.string(from: (currentISF ?? 0) as NSNumber) ?? "0"

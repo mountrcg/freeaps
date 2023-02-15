@@ -14,17 +14,16 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
 
-        var enactedSuggestion: Suggestion? {
-            storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
-        }
-
         var statistics: Statistics? {
             let stat = storage.retrieve(OpenAPS.Monitor.statistics, as: [Statistics].self)
             if stat?.count ?? 0 != 0 {
                 return stat![0]
             }
-            // return storage.retrieve(OpenAPS.Monitor.statistics, as: Statistics.self)
             return nil
+        }
+
+        var enactedSuggestion: Suggestion? {
+            storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
 
         func heartbeatNow() {

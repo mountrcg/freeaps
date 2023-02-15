@@ -43,8 +43,14 @@
 /*  */
 "Agree and continue" = "Zustimmen und fortfahren";
 
-/* Enacted at a date */
-"Enacted at %@" = "Gestartet um %@";
+/* Headline in enacted pop up (at: at what time) */
+"Enacted at" = "Letze Berechnung um";
+
+/* Headline in suggested pop up (at: at what time) */
+"Suggested at" = "Vorgeschlagen um";
+
+/* Headline in enacted pop up (at: at what time) */
+"Error at" = "Fehler um";
 
 /* Home title */
 "Home" = "Hauptseite";
@@ -60,9 +66,6 @@
 
 /* Replace pod text in Header */
 "Replace pod" = "Pod ersetzen";
-
-/* Suggested at a date */
-"Suggested at %@" = "Empfohlen um %@";
 
 /* Add carbs screen */
 "Add Carbs" = "Kohlenhydrate hinzufügen";
@@ -416,8 +419,11 @@ Enact a temp Basal or a temp target */
 /* Header for Temp targets in Watch app */
 "Temp Targets" = "Temporäre Ziele";
 
-/* Delete carbs from Treatments list*/
+/* Delete carbs from data table and Nightscout */
 "Delete carbs?" = "Kohlenhydrate löschen?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Insulin löschen?";
 
 /* Treatments list */
 "Treatments" = "Behandlungen";
@@ -922,13 +928,13 @@ Enact a temp Basal or a temp target */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-Status wiederhergestellt (APS neu gestartet?). %d Peripheriegeräte gefunden und mit %@ mit der Kennung %@ verbunden";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Benutze gemeinsame App-Groups (Xcode) mit externer CGM App GlucoseDirect";
 
 /* Dexcom G6 app */
-"Dexcom G6 app" = "Dexcom G6 app";
+"Dexcom G6 app" = "Dexcom G6 App";
 
 /* Native G5 app */
 "Native G5 app" = "Native G5 App";
@@ -945,7 +951,60 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online oder interner Server";
 
-/* HealthKit intergration --------------------*/
+/* -------------- Developer settings ---------------------- */
+/* Debug options */
+
+"Developer" = "Entwickler";
+
+/* Debug option view NS Upload Profile */
+"NS Upload Profile" = "NS Profil zum Hochladen";
+
+/* Debug option view NS Uploaded Profile */
+"NS Uploaded Profile" = "NS Hochgeladenes Profil";
+
+/* Debug option view Autosense */
+"Autosense" = "Autosense";
+
+/* Debug option view Pump History */
+"Pump History" = "Insulinpumpen-Speicher";
+
+/* Debug option view Target Ranges */
+"Target ranges" = "Zielbereiche";
+
+/* Debug option view Temp targets */
+"Temp targets" = "Temporäre Ziele";
+
+/* Debug option view Meal */
+"Meal" = "Essen";
+
+/* Debug option view Pump profile */
+"Pump profile" = "Pumpen Profil";
+
+/* Debug option view Profile */
+"Profile" = "Mein Profil";
+
+/* Debug option view Enacted */
+"Enacted" = "letzte Berechnung";
+
+/* Debug option view Announcements (from NS) */
+"Announcements" = "Notifikationen";
+
+/* Debug option view Enacted announcements announcements (from NS) */
+"Enacted announcements" = "Erlassene Ankündigungen";
+
+/* Debug option view Autotune */
+"Autotune" = "Autotune";
+
+/* Debug option view Target presets */
+"Target presets" = "Temporäre Ziele";
+
+/* Debug option view */
+"Loop Cycles" = "Loop-Zyklen";
+
+/* Debug option view Glucose Data used for statistics */
+"Glucose Data used for statistics" = "Benutzte CGM-Daten für die Statistik";
+
+/* --------------- HealthKit intergration --------------------*/
 /* */
 "Apple Health" = "Apple Health";
 
@@ -1121,6 +1180,117 @@ Enact a temp Basal or a temp target */
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Unterbrechung Insulinagabe fehlgeschlagen";
 
+//* -----------------------------------------------------------------------*/
+/* ----------------------Statistics strings -------------------------------*/
+/* Headline Statistics */
+
+
+"Statistics" = "Statistiken";
+
+/* Option in preferences */
+"Display Statistics" = "Statistiken anzeigen";
+
+/* infoText: Description for Display Statistics */
+"Displays Statistics under the chart view" = "Zeigt Statistiken unter der Diagrammansicht an";
+
+/* Low Glucose Limit option in preferences */
+"Low Glucose Limit" = "Niedrige Blutzuckergrenze";
+
+/* High Glucose Limit option in preferences */
+"High Glucose Limit" = "Hohe Blutzuckergrenze";
+
+/* infoText: Description for Low Glucose Limit */
+"BG Under This Value Will Be Displayed As Low Glucose Percentage" = "Ein Blutzuckerwert unter diesem Wert wird als Unterzuckerung angezeigt";
+/* infoText: Description for High Glucose Limit */
+"BG Under This Value Will Be Displayed As High Glucose Percentage" = "Ein Blutzuckerwert unter diesem Wert wird als hoher Prozentsatz des Blutzuckers angezeigt";
+
+/* When statistics.json was last updated */
+"Updated" = "Aktualisiert um";
+
+/* Average BG = */
+"Average" = "Mittelwert";
+
+/* Median BG */
+"Median" = "Median";
+
+/* CGM readings in statPanel */
+"Readings" = "Readings";
+
+/* Normal BG (within TIR) */
+"Normal" = "im Zielbereich";
+
+/* Title High BG in statPanel */
+"High (>" = "Hoch (>";
+
+/* Title Low BG in statPanel */
+"Low (<" = "Niedrig (<";
+
+/* SD */
+"SD" = "SD";
+
+/* CV */
+"CV" = "CV";
+
+/* Estimated HbA1c */
+"HbA1c" = "HbA1c";
+
+/* Total number of days of data for HbA1c estimation, part 1/2*/
+"All" = "Ø";
+
+/* Total number of days of data for HbA1c estimation, part 2/2*/
+"days" = "Tage";
+
+/* Nr of Loops in statPanel */
+"Loops" = "Loops";
+
+/* Loop Errors in statPanel */
+"Errors" = "Fehler";
+
+/* Average loop interval */
+"Interval" = "Intervall";
+
+/* Median loop interval */
+"Duration" = "Dauer";
+
+/* "Display SD */
+"Display SD instead of CV" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV)";
+
+/* Description for display SD */
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zeige die Standardabweichung (SD) statt des Variationskoeffizienten (CV) in den Statistiken";
+
+/* How often to update the statistics */
+"Update every number of minutes:" = "Update der Statistik (in Minuten)";
+
+/* Description for update interval for statistics */
+"Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless." = "Standardintervall ist 30 Minuten. Legt fest wie oft die statistics.json aktualisiert und gespeichert wird. Gleichzeitig werden die Daten zu Nightscout hochladen, wenn aktiviert. Ein geringerer Intervall, wie die Werte vom CGMS (5 Minuten) ist sinnlos.";
+
+/* Duration displayed in statPanel */
+"Past 24 Hours " = "Letzten 24 Stunden";
+
+/* Duration displayed in statPanel */
+"Past Week " = "Letzte Woche";
+
+/* Duration displayed in statPanel */
+"Past Month " = "Letzter Monat";
+
+/* Duration displayed in statPanel */
+"Past 90 Days " = "Letzten 90 Tage";
+
+/* Duration displayed in statPanel */
+"All Past Days of Data " = "Alle Tage (mit Daten)";
+
+/* "Display Loop statistics in statPanel */
+"Display Loop Cycle statistics" = "Zeige Schleifenzyklus-Statistik";
+
+/* Description for Display Loop statistics */
+"Displays Loop statistics in the statPanel in Home View" = "Zeigt Loop Statistiken im Statistikbereich auf der Startseite an";
+
+/* Display % */
+"Override HbA1c unit" = "HbA1c-Einheit überschreiben";
+
+/* Description for Override HbA1c unit */
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Ändern Sie den HbA1c in der Statistik (% <—> mmol/mol). Die Anzeige in der Statistik wird mit dem nächsten statistics.json Update aktualisiert.";
+
 /* --------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
@@ -1169,13 +1339,11 @@ Enact a temp Basal or a temp target */
 /* "Exercise Mode" */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Standard aus. Wenn an, > 105 mg/dL hohes temporäres Ziel passt Empfindlichkeit für den Exercise_Mode an. Synonym für hoch_tempziel_eröht_sensitivität";
 
-
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Größere BG-Zielreichweite";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Standardmäßig aus, bedeutet standardmäßig nur das niedrige Ende des BG-Zielbereichs der Pumpe wird als OpenAPS-Ziel verwendet. Dies ist ein Sicherheitsmerkmal, um zu weit gefasste Ziele und weniger optimale Ergebnisse zu verhindern. Daher wird das höhere Ende des Zielbereichs nur verwendet, um Überkorrekturen des bolus Wizards zu vermeiden. Benutzen Sie die wide_bg_target_range: true, um neutrale temps über einen größeren Bereich von eventualBG zu erzwingen.";
-
 
 /* Headline "Skip Neutral Temps" */
 "Skip Neutral Temps" = "Neutrale Temps überspringen";
@@ -1264,7 +1432,6 @@ Enact a temp Basal or a temp target */
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Dies ist eine Sicherheitsgrenze für Autosens (und Autotune), die besagt, wie hoch Autosens Basalraten anpassen darf und wie niedrig der ISF (Insulin-Sensitivitäts-Faktor) und der BZ-Zielwert eingestellt werden können. Eine Anpassung um max 20% ist erlaubt.";
 
-
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens Min";
 
@@ -1329,7 +1496,7 @@ Enact a temp Basal or a temp target */
 "SMB Interval" = "SMB-Intervall";
 
 /* "SMB Interval" */
-"Minimum duration in minutes between two enacted SMBs" = "Minimaler Abstand (in Minuten), der zwischen zwei SMBs liegen muss";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimale Dauer in Minuten für neue SMBs seit dem letzten SMB oder manuellem Bolus";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolus-Erhöhung";
@@ -1395,7 +1562,7 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Sigmoid-Funktion verwenden";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the Logarithmic formula. Is only used when the Dynamic ISF setting is enabled in settings\n\nThe autosens.min/max settings determines the power with which dynamic ratio is adjusted, the height of the graph (Y-interval, Y: Dynamic ratio) and where the sigmoid curve flattens out, thus also limiting how high and how low the the ISF can be adjusted.\n\nThe Adjustment settings adjusts the slope of the curve. A lower value ==> less steep == less aggressive.\n\nYour scheduled/autotuned ISF setting and your min BG target determines when Dynamic ratio = 1 (ISF unchanged), meaning when current BG = minimum target BG => new ISF will always be set to your current scheduled/autotuned ISF, unlike the default logarithmic formula.\n\nDynamic CR is used when the setting 'Enable Dynamic CR' is enabled in settings." = "Anstelle der logarithmischen Formel wird eine Sigmoidfunktion für ISF (und für CR, wenn diese Option aktiv ist) verwendet. Voraussetzung ist, dass die Einstellung \"Dynamischer ISF\" in den Einstellungen aktiviert ist.\n\nDie Einstellwerte für \"Autosens Min/Max\" bestimmen die Stärke, mit der das dynamische Verhältnis angepasst wird, die Höhe des Graphen (Y-Intervall, Y: Dynamisches Verhältnis) und den Punkt, an dem die Sigmoidkurve abflacht, wodurch auch begrenzt wird, wie hoch und wie niedrig der ISF angepasst werden kann.\n\nDeine Einstellwerte für den “Anpassungsfaktor” (Adjustment Factor) bestimmen die Steigung der Kurve. Bei einem niedrigeren Wert wird die Steigung weniger steil und der ISF damit weniger aggressiv.\n\nDeine planmäßige/autogetunte ISF-Einstellung und dein minimaler BZ-Zielwert bestimmen, wann das dynamische Verhältnis = 1 ist (ISF unverändert). Wenn also der aktuelle BZ-Wert deinem Mindest-Zielwert entspricht, wird der neue ISF immer auf deinen aktuellen planmäßigen/autogetunten ISF-Wert eingestellt, im Gegensatz zur logarithmischen Standardformel.\n\nDynamische Kohlenhydratfaktoren werden nur verwendet, wenn in den Einstellungen \"Enable Dynamic CR\" aktiviert ist.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Anstelle der logarithmischen Formel wird eine Sigmoidfunktion für ISF (und für CR, wenn diese Option aktiv ist) verwendet. Voraussetzung ist, dass die Einstellung \"Dynamischer ISF\" in den Einstellungen aktiviert ist.\n\nDie Einstellwerte für \"Autosens Min/Max\" bestimmen die Stärke, mit der das dynamische Verhältnis angepasst wird, die Höhe des Graphen (Y-Intervall, Y: Dynamisches Verhältnis) und den Punkt, an dem die Sigmoidkurve abflacht, wodurch auch begrenzt wird, wie hoch und wie niedrig der ISF angepasst werden kann.\n\nDeine Einstellwerte für den “Anpassungsfaktor” (Adjustment Factor) bestimmen die Steigung der Kurve. Bei einem niedrigeren Wert wird die Steigung weniger steil und der ISF damit weniger aggressiv.\n\nDeine planmäßige/autogetunte ISF-Einstellung und dein minimaler BZ-Zielwert bestimmen, wann das dynamische Verhältnis = 1 ist (ISF unverändert). Wenn also der aktuelle BZ-Wert deinem Mindest-Zielwert entspricht, wird der neue ISF immer auf deinen aktuellen planmäßigen/autogetunten ISF-Wert eingestellt, im Gegensatz zur logarithmischen Standardformel.\n\nDynamische Kohlenhydratfaktoren werden nur verwendet, wenn in den Einstellungen \"Enable Dynamic CR\" aktiviert ist.";
 
 
 /* Headline "Threshold Setting" */

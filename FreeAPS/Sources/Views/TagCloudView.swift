@@ -1,4 +1,7 @@
+import Combine
+import Foundation
 import SwiftUI
+import Swinject
 
 struct TagCloudView: View {
     var tags: [String]
@@ -6,7 +9,6 @@ struct TagCloudView: View {
     @State private var totalHeight
 //          = CGFloat.zero       // << variant for ScrollView/List
         = CGFloat.infinity // << variant for VStack
-
     var body: some View {
         VStack {
             GeometryReader { geometry in

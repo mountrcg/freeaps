@@ -1,3 +1,4 @@
+import HealthKit
 import SwiftDate
 import SwiftUI
 
@@ -11,6 +12,13 @@ struct MainView: View {
     @State var isCarbsActive = false
     @State var isTargetsActive = false
     @State var isBolusActive = false
+    @State private var pulse = 0
+
+    @GestureState var isDetectingLongPress = false
+    @State var completedLongPress = false
+
+    private var healthStore = HKHealthStore()
+    let heartRateQuantity = HKUnit(from: "count/min")
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -101,6 +109,19 @@ struct MainView: View {
         } // .padding(.bottom)
     }
 
+    var longPress: some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .updating($isDetectingLongPress) { currentState, gestureState,
+                _ in
+                gestureState = currentState
+            }
+            .onEnded { _ in
+                if completedLongPress {
+                    completedLongPress = false
+                } else { completedLongPress = true }
+            }
+    }
+
     var buttons: some View {
         VStack {
             Spacer()
@@ -169,6 +190,48 @@ struct MainView: View {
         }
     }
 
+    func start() {
+        autorizeHealthKit()
+        startHeartRateQuery(quantityTypeIdentifier: .heartRate)
+    }
+
+    func autorizeHealthKit() {
+        let healthKitTypes: Set = [
+            HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+        ]
+        healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { _, _ in }
+    }
+
+    private func startHeartRateQuery(quantityTypeIdentifier: HKQuantityTypeIdentifier) {
+        let devicePredicate = HKQuery.predicateForObjects(from: [HKDevice.local()])
+        let updateHandler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = {
+            _, samples, _, _, _ in
+            guard let samples = samples as? [HKQuantitySample] else {
+                return
+            }
+            self.process(samples, type: quantityTypeIdentifier)
+        }
+        let query = HKAnchoredObjectQuery(
+            type: HKObjectType.quantityType(forIdentifier: quantityTypeIdentifier)!,
+            predicate: devicePredicate,
+            anchor: nil,
+            limit: HKObjectQueryNoLimit,
+            resultsHandler: updateHandler
+        )
+        query.updateHandler = updateHandler
+        healthStore.execute(query)
+    }
+
+    private func process(_ samples: [HKQuantitySample], type: HKQuantityTypeIdentifier) {
+        var lastHeartRate = 0.0
+        for sample in samples {
+            if type == .heartRate {
+                lastHeartRate = sample.quantity.doubleValue(for: heartRateQuantity)
+            }
+            pulse = Int(lastHeartRate)
+        }
+    }
+
     private var iobFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
@@ -189,9 +252,9 @@ struct MainView: View {
         else { return .loopYellow }
 
         switch recentBG {
-        case 55 ... 74:
+        case 61 ... 69:
             return .loopOrange
-        case 75 ... 140:
+        case 70 ... 140:
             return .loopGreen
         case 141 ... 180:
             return .loopYellow
