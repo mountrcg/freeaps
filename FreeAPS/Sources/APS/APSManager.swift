@@ -723,8 +723,8 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "read CoreData current TDD: \(daily[0].tdd!.decimalValue)")
         if daily.count > 1 { previous_TDD = daily[1] }
         debug(.apsManager, "read CoreData previous TDD: \(daily[1].tdd!.decimalValue)")
-        let currentDay = calendar.component(.day, from: current_TDD.timestamp!)
-        let previousDay = calendar.component(.day, from: previous_TDD.timestamp!)
+        let currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
+        let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
         if currentDay > previousDay {
             let last_dailyTDD = DailyTDD(context: coredataContext)
             last_dailyTDD.timestamp = previous_TDD.timestamp
