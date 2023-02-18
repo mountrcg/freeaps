@@ -17,6 +17,12 @@
          location = "group:Readings+CoreDataProperties.swift">
       </FileRef>
       <FileRef
+         location = "group:/Users/RCG/Projects/freeaps/DailyTDD+CoreDataClass.swift">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/RCG/Projects/freeaps/DailyTDD+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
          location = "group:TDD+CoreDataClass.swift">
       </FileRef>
       <FileRef

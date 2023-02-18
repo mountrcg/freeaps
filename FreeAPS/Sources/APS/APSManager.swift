@@ -693,13 +693,36 @@ final class BaseAPSManager: APSManager, Injectable {
 
         try? coredataContext.save()
 
-        let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
-        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
-        let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-        requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
-        var uniqEvents: [TDD] = []
+        // check wether previous TDD was yesterday
+        let sortedTDD = TDD.fetchRequest()
+        let sort = NSSortDescriptor(key: "timestamp", ascending: false)
+        sortedTDD.sortDescriptors = [sort]
+        sortedTDD.fetchLimit = 2
+        var calendar: Calendar { Calendar.current }
+        var current_TDD = nTDD
+        var previous_TDD = nTDD
+        var daily: [TDD] = []
+        try? daily = coredataContext.fetch(sortedTDD)
+        if !daily.isEmpty { current_TDD = daily[0] }
+        if daily.count > 1 { previous_TDD = daily[1] }
 
-        try? uniqEvents = coredataContext.fetch(requestTDD)
+        let currentDay = calendar.component(.day, from: current_TDD.timestamp!)
+        let previousDay = calendar.component(.day, from: previous_TDD.timestamp!)
+        if currentDay > previousDay {
+            let last_dailyTDD = DailyTDD(context: coredataContext)
+            last_dailyTDD.timestamp = previous_TDD.timestamp
+            last_dailyTDD.tdd = previous_TDD.tdd
+            try? coredataContext.save()
+            debug(.apsManager, "Wrote a daily TDD to CoreData")
+        }
+
+        // TDD averages
+        let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
+        let requestDailyTDD = DailyTDD.fetchRequest() as NSFetchRequest<DailyTDD>
+        requestDailyTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
+        var uniqEvents: [DailyTDD] = []
+
+        try? uniqEvents = coredataContext.fetch(requestDailyTDD)
 
         var total: Decimal = 0
         var indeces: Decimal = 0
@@ -709,6 +732,8 @@ final class BaseAPSManager: APSManager, Injectable {
             indeces += 1
         }
 
+        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
+        let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
         requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
         var entriesPast2hours: [TDD] = []
 
