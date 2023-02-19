@@ -699,19 +699,19 @@ final class BaseAPSManager: APSManager, Injectable {
         requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", hoursAgo as NSDate)
         requestTDD.sortDescriptors = [sort]
 
-        var TDDpast2hr: [TDD] = []
-        try? TDDpast2hr = coredataContext.fetch(requestTDD)
+        var TDDpastHrs: [TDD] = []
+        try? TDDpastHrs = coredataContext.fetch(requestTDD)
 
-        var total2hr: Decimal = 0
-        var indeces2hr: Decimal = 0
-        for entry in TDDpast2hr {
+        var totalHrs: Decimal = 0
+        var indecesHrs: Decimal = 0
+        for entry in TDDpastHrs {
             if (entry.tdd?.decimalValue ?? 0) > 0 {
-                total2hr += entry.tdd?.decimalValue ?? 0
-                indeces2hr += 1
+                totalHrs += entry.tdd?.decimalValue ?? 0
+                indecesHrs += 1
             }
         }
-        if indeces2hr == 0 { indeces2hr = 1 }
-        let avgTDD2hr = total2hr / indeces2hr
+        if indecesHrs == 0 { indecesHrs = 1 }
+        let avgTDDhrs = totalHrs / indecesHrs
 
         // check wether previous TDD was yesterday and fill full calender day TDD (dailyTDD)
         var calendar: Calendar { Calendar.current }
@@ -758,11 +758,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // weighted TDD average
         let weight = preferences.weightPercentage
-        let weighted_average = weight * avgTDD2hr + (1 - weight) * avgTDDdays
+        let weighted_average = weight * avgTDDhrs + (1 - weight) * avgTDDdays
         let averages = TDD_averages(
             average_total_data: roundDecimal(avgTDDdays, 1),
             weightedAverage: roundDecimal(weighted_average, 1),
-            past2hoursAverage: roundDecimal(avgTDD2hr, 1),
+            past2hoursAverage: roundDecimal(avgTDDhrs, 1),
             date: Date()
         )
         storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
