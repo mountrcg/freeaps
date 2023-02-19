@@ -687,8 +687,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let nTDD = TDD(context: coredataContext)
         nTDD.timestamp = Date()
-        nTDD.tdd = NSDecimalNumber(decimal: currentTDD)
-        debug(.apsManager, "Writing r24hr-TDD to CoreData: \(nTDD.tdd!.decimalValue)")
+        nTDD.tdd = currentTDD as NSDecimalNumber
+        debug(.apsManager, "Writing r24hr-TDD to CoreData: \(nTDD.tdd?.decimalValue ?? 0)")
 
         try? coredataContext.save()
 
@@ -720,9 +720,9 @@ final class BaseAPSManager: APSManager, Injectable {
         var daily: [TDD] = []
         try? daily = coredataContext.fetch(requestTDD)
         if !daily.isEmpty { current_TDD = daily[0] }
-        debug(.apsManager, "read CoreData current TDD: \(daily[0].tdd!.decimalValue)")
+        debug(.apsManager, "read CoreData current TDD: \(daily[0].tdd?.decimalValue ?? 0)")
         if daily.count > 1 { previous_TDD = daily[1] }
-        debug(.apsManager, "read CoreData previous TDD: \(daily[1].tdd!.decimalValue)")
+        debug(.apsManager, "read CoreData previous TDD: \(daily[1].tdd?.decimalValue ?? 0)")
         let currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
         let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
         if currentDay > previousDay {
@@ -730,7 +730,7 @@ final class BaseAPSManager: APSManager, Injectable {
             last_dailyTDD.timestamp = previous_TDD.timestamp
             last_dailyTDD.tdd = previous_TDD.tdd
             try? coredataContext.save()
-            debug(.apsManager, "write daily TDD at \(last_dailyTDD.timestamp!) to CoreData: \(last_dailyTDD.tdd!.decimalValue)")
+            debug(.apsManager, "write daily TDD at \(last_dailyTDD.timestamp!) to CoreData: \(last_dailyTDD.tdd?.decimalValue ?? 0)")
         }
 
         // TDD averages over multiple days
