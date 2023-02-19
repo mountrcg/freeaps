@@ -693,10 +693,10 @@ final class BaseAPSManager: APSManager, Injectable {
         try? coredataContext.save()
 
         // 2 hr TDD average
-        let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
+        let hoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
         let sort = NSSortDescriptor(key: "timestamp", ascending: false)
         let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-        requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
+        requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", hoursAgo as NSDate)
         requestTDD.sortDescriptors = [sort]
 
         var TDDpast2hr: [TDD] = []
@@ -734,9 +734,9 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         // TDD averages over multiple days
-        let twoWeeksAgo = Date().addingTimeInterval(-14.days.timeInterval)
+        let daysAgo = Date().addingTimeInterval(-10.days.timeInterval)
         let requestDailyTDD = DailyTDD.fetchRequest() as NSFetchRequest<DailyTDD>
-        requestDailyTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoWeeksAgo as NSDate)
+        requestDailyTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", daysAgo as NSDate)
         var TDDpastDays: [DailyTDD] = []
 
         try? TDDpastDays = coredataContext.fetch(requestDailyTDD)
