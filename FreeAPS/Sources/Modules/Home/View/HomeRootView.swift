@@ -24,7 +24,10 @@ extension Home {
         @State var CVorSD = ""
 
         // Switch between Loops and Errors when tapping in statPanel
-        @State var loopStatTitle = NSLocalizedString("Loops", comment: "Nr of Loops during last 24 hrs in statPanel")
+        @State var loopStatTitle = NSLocalizedString(
+            "succ.Rate",
+            comment: "Percentage of achievable Loops during last 24 hrs in statPanel"
+        )
 
         // Avg & Median switch for Loop interval
 
@@ -365,6 +368,21 @@ extension Home {
             }
         }
 
+        var colorOfStatLoop: Color {
+            let whichRate = state.statistics?.Statistics.LoopCycles.dailysuccess_rate ?? 1
+
+            switch whichRate {
+            case 80 ... 100:
+                return .loopGreen
+            case 1 ... 40:
+                return .loopRed
+            case 41 ... 79:
+                return .loopYellow
+            default:
+                return .primary
+            }
+        }
+
         @ViewBuilder private func averageTIRhca1c(
             _ hba1c_all: String,
             _ average_: String,
@@ -479,15 +497,27 @@ extension Home {
 
             if state.settingsManager.preferences.displayLoops {
                 HStack {
+                    HStack(spacing: 3) {
+                        let rect = CGRect(x: 0, y: 0, width: 12, height: 12)
+                        Text("24hr").font(.footnote).foregroundColor(.secondary)
+                        Circle()
+                            .strokeBorder(colorOfStatLoop, lineWidth: 2)
+                            .frame(width: rect.width, height: rect.height, alignment: .bottom)
+                    }
+                    .padding(.trailing, 1)
+                    // .onTapGesture { isLoopStatPopupPresented = true }
                     Group {
-                        let loopTitle = NSLocalizedString("Loops", comment: "Nr of Loops during last 24 hrs in statPanel")
+                        let loopTitle = NSLocalizedString(
+                            "Loops",
+                            comment: "Nr of Loops completed during last 24 hrs in statPanel"
+                        )
                         let errorTitle = NSLocalizedString("Errors", comment: "Loop Errors during last 24 hrs in statPanel")
                         let rateTitle = NSLocalizedString(
-                            "Rate",
+                            "succ.Rate",
                             comment: "Percentage of achievable Loops during last 24 hrs in statPanel"
                         )
                         HStack(alignment: .lastTextBaseline, spacing: 2) {
-                            Text("24hr: " + loopStatTitle).font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)
+                            Text(loopStatTitle).font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)
 
                             if loopStatTitle == rateTitle {
                                 Text(
@@ -543,10 +573,8 @@ extension Home {
                         }.onTapGesture {
                             if loopIntTitle == avgIntTitle {
                                 loopIntTitle = medIntTitle
-                                loopDurTitle = medDurTitle
                             } else {
                                 loopIntTitle = avgIntTitle
-                                loopDurTitle = avgDurTitle
                             }
                         }
 
@@ -572,10 +600,8 @@ extension Home {
                         }.onTapGesture {
                             if loopDurTitle == avgDurTitle {
                                 loopDurTitle = medDurTitle
-                                loopIntTitle = medIntTitle
                             } else {
                                 loopDurTitle = avgDurTitle
-                                loopIntTitle = avgIntTitle
                             }
                         }
                     }
