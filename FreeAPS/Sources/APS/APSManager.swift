@@ -84,6 +84,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var lifetime = Lifetime()
 
+    private var backGroundTaskID: UIBackgroundTaskIdentifier?
+
     var pumpManager: PumpManagerUI? {
         get { deviceDataManager.pumpManager }
         set { deviceDataManager.pumpManager = newValue }
@@ -190,8 +192,16 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        debug(.apsManager, "Starting loop")
+        // start background time extension
+        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
+            guard let backgroundTask = self.backGroundTaskID else { return }
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            self.backGroundTaskID = .invalid
+        }
 
+        debug(.apsManager, "Starting loop with a delay of \(UIApplication.shared.backgroundTimeRemaining.rounded())")
+
+        lastStartLoopDate = Date()
         var loopStatRecord = LoopStats(
             start: Date(),
             loopStatus: "Starting"
@@ -239,6 +249,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+            if let backgroundTask = backGroundTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundTaskID = .invalid
+            }
             processError(error)
         } else {
             debug(.apsManager, "Loop succeeded")
@@ -250,6 +264,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
+        }
+
+        // end of the BG tasks
+        if let backgroundTask = backGroundTaskID {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backGroundTaskID = .invalid
         }
     }
 
@@ -675,10 +695,9 @@ final class BaseAPSManager: APSManager, Injectable {
             nightscout.uploadStatus()
 
             // Update the tdd.json
-            tdd(enacted_: enacted)
+            DispatchQueue.main.async { [self] in tdd(enacted_: enacted) }
             // Update statistics.json. Only run if enabled in preferences
-            if settingsManager.settings.displayStatistics {
-                statistics()
+            DispatchQueue.main.async { [self] in if settingsManager.settings.displayStatistics { statistics() }
             }
         }
     }
