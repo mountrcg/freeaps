@@ -21,7 +21,7 @@ class ReadSettingsCarelinkMessageBodyTests: XCTestCase {
                 XCTAssertEqual(3.5, body.maxBasal)
                 XCTAssertEqual(15, body.maxBolus)
                 XCTAssertEqual(BasalProfile.standard, body.selectedBasalProfile)
-                XCTAssertEqual(4, body.insulinActionCurveHours)
+                XCTAssertEqual(9, body.insulinActionCurveHours)
             }
             
         } else {
@@ -39,7 +39,7 @@ class ReadSettingsCarelinkMessageBodyTests: XCTestCase {
                 XCTAssertEqual(34, body.maxBasal)
                 XCTAssertEqual(22.9, body.maxBolus)
                 XCTAssertEqual(BasalProfile.standard, body.selectedBasalProfile)
-                XCTAssertEqual(4, body.insulinActionCurveHours)
+                XCTAssertEqual(9, body.insulinActionCurveHours)
             }
             
         } else {
