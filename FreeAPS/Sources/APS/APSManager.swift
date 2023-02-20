@@ -717,13 +717,12 @@ final class BaseAPSManager: APSManager, Injectable {
         var calendar: Calendar { Calendar.current }
         var current_TDD = nTDD
         var previous_TDD = nTDD
-        var daily: [TDD] = []
-        try? daily = coredataContext.fetch(requestTDD)
-        if !daily.isEmpty { current_TDD = daily[0]
-            debug(.apsManager, "read CoreData current TDD: \(daily[0].tdd?.decimalValue ?? 0)")
+
+        if !TDDpastHrs.isEmpty { current_TDD = TDDpastHrs[0]
+            debug(.apsManager, "read CoreData current TDD: \(TDDpastHrs[0].tdd?.decimalValue ?? 0)")
         }
-        if daily.count > 1 { previous_TDD = daily[1]
-            debug(.apsManager, "read CoreData previous TDD: \(daily[1].tdd?.decimalValue ?? 0)")
+        if TDDpastHrs.count > 1 { previous_TDD = TDDpastHrs[1]
+            debug(.apsManager, "read CoreData previous TDD: \(TDDpastHrs[1].tdd?.decimalValue ?? 0)")
         }
         let currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
         let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
