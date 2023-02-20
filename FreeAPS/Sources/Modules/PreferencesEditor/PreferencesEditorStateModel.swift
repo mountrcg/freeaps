@@ -648,7 +648,7 @@ extension PreferencesEditor {
                     displayName: "Bolus Snooze DIA Divisor",
                     type: .decimal(keypath: \.bolusSnoozeDIADivisor),
                     infoText: NSLocalizedString(
-                        "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2).",
+                        "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 7 hour DIA means that bolus snooze will be gradually phased out over 3.5 hours (7DIA/2).",
                         comment: "Bolus Snooze DIA Divisor"
                     ),
                     settable: self

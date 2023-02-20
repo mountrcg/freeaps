@@ -1,5 +1,5 @@
 {
-    "insulin_action_curve": 5,
+    "insulin_action_curve": 9,
     "maxBolus": 10,
     "maxBasal": 2
 }
