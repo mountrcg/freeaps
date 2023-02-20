@@ -690,7 +690,7 @@ final class BaseAPSManager: APSManager, Injectable {
         nTDD.tdd = currentTDD as NSDecimalNumber
         debug(.apsManager, "Writing r24hr-TDD to CoreData: \(nTDD.tdd?.decimalValue ?? 0)")
 
-        try? coredataContext.save()
+        try? coredataContext.save() // Question: Shall we not do it here, as it should be done only once for all changed contexts??
 
         // 2 hr TDD average
         let hoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
@@ -721,26 +721,32 @@ final class BaseAPSManager: APSManager, Injectable {
         if !TDDpastHrs.isEmpty { current_TDD = TDDpastHrs[0]
             debug(.apsManager, "read CoreData current TDD: \(TDDpastHrs[0].tdd?.decimalValue ?? 0)")
         }
+        // as no saving the new TDD before
         if TDDpastHrs.count > 1 { previous_TDD = TDDpastHrs[1]
             debug(.apsManager, "read CoreData previous TDD: \(TDDpastHrs[1].tdd?.decimalValue ?? 0)")
         }
         let currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
         let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
-        if currentDay > previousDay {
+        if currentDay == previousDay {
             let last_dailyTDD = DailyTDD(context: coredataContext)
             last_dailyTDD.timestamp = previous_TDD.timestamp
             last_dailyTDD.tdd = previous_TDD.tdd
-            try? coredataContext.save()
             debug(
                 .apsManager,
                 "write daily TDD at \(last_dailyTDD.timestamp!) to CoreData: \(last_dailyTDD.tdd?.decimalValue ?? 0)"
             )
         }
 
+        // if not writing coredata here the first 10 day averge of a new day will still be the same as yesterdays calculation, only after next loop it will get updated to previous 10 calender day / fine for me
+        try? coredataContext.save()
+
         // TDD averages over multiple days
-        let daysAgo = Date().addingTimeInterval(-10.days.timeInterval)
+        let numberOfDays = 10 // number of days to average the TDD
+        let daysAgo = Date().addingTimeInterval(numberOfDays.days.timeInterval)
         let requestDailyTDD = DailyTDD.fetchRequest() as NSFetchRequest<DailyTDD>
         requestDailyTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", daysAgo as NSDate)
+        requestDailyTDD.fetchLimit = numberOfDays
+        requestDailyTDD.sortDescriptors = [sort]
         var TDDpastDays: [DailyTDD] = []
 
         try? TDDpastDays = coredataContext.fetch(requestDailyTDD)
