@@ -3,6 +3,7 @@ import Foundation
 import SpriteKit
 import SwiftDate
 import Swinject
+import UIKit
 
 protocol FetchGlucoseManager: SourceInfoProvider {
     func updateGlucoseStore(newBloodGlucose: [BloodGlucose])
@@ -111,12 +112,33 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         var filteredByDate: [BloodGlucose] = []
         var filtered: [BloodGlucose] = []
 
-        guard allGlucose.isNotEmpty else { return }
+        // start background time extension
+        var backGroundFetchBGTaskID: UIBackgroundTaskIdentifier?
+        backGroundFetchBGTaskID = UIApplication.shared.beginBackgroundTask(withName: "save BG starting") {
+            guard let bg = backGroundFetchBGTaskID else { return }
+            UIApplication.shared.endBackgroundTask(bg)
+            backGroundFetchBGTaskID = .invalid
+        }
+
+        guard allGlucose.isNotEmpty else {
+            if let backgroundTask = backGroundFetchBGTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundFetchBGTaskID = .invalid
+            }
+            return
+        }
 
         filteredByDate = allGlucose.filter { $0.dateString > syncDate }
         filtered = glucoseStorage.filterTooFrequentGlucose(filteredByDate, at: syncDate)
 
-        guard filtered.isNotEmpty else { return }
+        guard filtered.isNotEmpty else {
+            // end of the BG tasks
+            if let backgroundTask = backGroundFetchBGTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundFetchBGTaskID = .invalid
+            }
+            return
+        }
         debug(.deviceManager, "New glucose found")
 
         glucoseStorage.storeGlucose(filtered)
@@ -127,8 +149,21 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
         let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
 
-        guard glucoseForHealth.isNotEmpty else { return }
+        guard glucoseForHealth.isNotEmpty else {
+            // end of the BG tasks
+            if let backgroundTask = backGroundFetchBGTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundFetchBGTaskID = .invalid
+            }
+            return
+        }
         healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
+
+        // end of the BG tasks
+        if let backgroundTask = backGroundFetchBGTaskID {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backGroundFetchBGTaskID = .invalid
+        }
 
 //        if filtered.isEmpty {
 //            let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
