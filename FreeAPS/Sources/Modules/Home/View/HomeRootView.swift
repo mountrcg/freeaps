@@ -369,7 +369,7 @@ extension Home {
         }
 
         var colorOfStatLoop: Color {
-            let whichRate = state.statistics?.Statistics.LoopCycles.dailysuccess_rate ?? 1
+            let whichRate = state.statistics?.Statistics.LoopCycles.success_rate ?? 1
 
             switch whichRate {
             case 80 ... 100:
@@ -524,7 +524,7 @@ extension Home {
                                     tirFormatter
                                         .string(from: (
                                             state.statistics?.Statistics.LoopCycles
-                                                .dailysuccess_rate ?? 0
+                                                .success_rate ?? 0
                                         ) as NSNumber) ??
                                         ""
                                 ).font(.footnote)

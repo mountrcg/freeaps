@@ -20,9 +20,7 @@ extension PeripheralManager {
         dispatchPrecondition(condition: .onQueue(queue))
 
         let controllerId = Id.fromUInt32(myId).address
-#if LOG_DEFAULT
         log.default("Sending Hello %{public}@", controllerId.hexadecimalString)
-#endif
         guard let characteristic = peripheral.getCommandCharacteristic() else {
             throw PeripheralManagerError.notReady
         }
@@ -150,9 +148,7 @@ extension PeripheralManager {
         guard let characteristic = peripheral.getCommandCharacteristic() else {
             throw PeripheralManagerError.notReady
         }
-#if LOG_DEFAULT
         log.default("CMD >>> %{public}@", Data([command.rawValue]).hexadecimalString)
-#endif
         
         try writeValue(Data([command.rawValue]), for: characteristic, type: .withResponse, timeout: timeout)
     }
@@ -161,9 +157,7 @@ extension PeripheralManager {
     func waitForCommand(_ command: PodCommand, timeout: TimeInterval = 5) throws {
         dispatchPrecondition(condition: .onQueue(queue))
 
-#if LOG_DEBUG
         log.debug("waitForCommand %{public}@", Data([command.rawValue]).hexadecimalString)
-#endif
         
         // Wait for data to be read.
         queueLock.lock()
@@ -204,10 +198,8 @@ extension PeripheralManager {
         guard let characteristic = peripheral.getDataCharacteristic() else {
             throw PeripheralManagerError.notReady
         }
-       
-#if LOG_DEFAULT 
+        
         log.default("DATA >>> %{public}@", value.hexadecimalString)
-#endif
         
         try writeValue(value, for: characteristic, type: .withResponse, timeout: timeout)
     }
@@ -216,9 +208,7 @@ extension PeripheralManager {
     func waitForData(sequence: UInt8, timeout: TimeInterval) throws -> Data {
         dispatchPrecondition(condition: .onQueue(queue))
 
-#if LOG_DEFAULT
         log.default("waitForData sequence %02x", sequence)
-#endif
 
         // Wait for data to be read.
         queueLock.lock()
@@ -245,9 +235,7 @@ extension PeripheralManager {
                 log.error("waitForData failed data[0] != sequence (%d != %d).", data[0], sequence)
                 throw PeripheralManagerError.incorrectResponse
             }
-#if LOG_DEFAULT
             log.default("waitForData success %{public}@", data.hexadecimalString)
-#endif
             return data
         }
         

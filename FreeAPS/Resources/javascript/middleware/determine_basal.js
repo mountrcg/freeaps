@@ -1,6 +1,4 @@
-function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pump_history, preferences, basalProfile, tdd, tdd_daily, tdd_avg) {
-
-   // number of minutes that Stat updates shall be done
+function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalprofile) {
     const nightlyChange = 0;
     var nightlyUpdate = 360
     
@@ -30,5 +28,6 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
     reason = reason + reasonAutoISF + reasonStat;
 
     return reason
+   // number of minutes that Stat updates shall be done
 }
 

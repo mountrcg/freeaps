@@ -75,9 +75,7 @@ public class PodComms: CustomDebugStringConvertible {
     
     public func forgetPod() {
         if let manager = manager {
-#if LOG_DEFAULT
             self.log.default("Removing %{public}@ from auto-connect ids", manager.peripheral)
-#endif
             bluetoothManager.disconnectFromDevice(uuidString: manager.peripheral.identifier.uuidString)
         }
 
@@ -107,9 +105,7 @@ public class PodComms: CustomDebugStringConvertible {
                     let devices = self.bluetoothManager.getConnectedDevices()
 
                     if devices.count > 1 {
-#if LOG_DEFAULT
                         self.log.default("Multiple pods found while scanning")
-#endif
                         self.bluetoothManager.endPodDiscovery()
                         completion(.failure(PodCommsError.tooManyPodsFound))
                         timer.invalidate()
@@ -119,9 +115,7 @@ public class PodComms: CustomDebugStringConvertible {
 
                     // If we've found a pod by 2 seconds, let's go.
                     if elapsed > TimeInterval(seconds: 2) && devices.count > 0 {
-#if LOG_DEFAULT
                         self.log.default("Found pod!")
-#endif
                         let targetPod = devices.first!
                         self.bluetoothManager.connectToDevice(uuidString: targetPod.manager.peripheral.identifier.uuidString)
                         self.manager = targetPod.manager
@@ -132,9 +126,7 @@ public class PodComms: CustomDebugStringConvertible {
                     }
 
                     if elapsed > TimeInterval(seconds: 10) {
-#if LOG_DEFAULT
                         self.log.default("No pods found while scanning")
-#endif
                         self.bluetoothManager.endPodDiscovery()
                         completion(.failure(PodCommsError.noPodsFound))
                         timer.invalidate()
@@ -153,16 +145,12 @@ public class PodComms: CustomDebugStringConvertible {
 
         defer {
             if self.podState != nil {
-#if LOG_DEBUG
                 log.debug("sendPairMessage saving current message transport state %@", String(reflecting: transport))
-#endif
                 self.podState!.messageTransportState = MessageTransportState(ck: transport.ck, noncePrefix: transport.noncePrefix, msgSeq: transport.msgSeq, nonceSeq: transport.nonceSeq, messageNumber: transport.messageNumber)
             }
         }
 
-#if LOG_DEBUG
         log.debug("sendPairMessage: attempting to use PodMessageTransport %@ to send message %@", String(reflecting: transport), String(reflecting: message))
-#endif
         let podMessageResponse = try transport.sendMessage(message)
 
         if let fault = podMessageResponse.fault {
@@ -179,9 +167,7 @@ public class PodComms: CustomDebugStringConvertible {
             throw PodCommsError.unexpectedResponse(response: responseType)
         }
 
-#if LOG_DEBUG
         log.debug("sendPairMessage: returning versionResponse %@", String(describing: versionResponse))
-#endif
         return versionResponse
     }
 
@@ -197,17 +183,13 @@ public class PodComms: CustomDebugStringConvertible {
         let ltk = response.ltk
 
         guard podId == response.address else {
-#if LOG_DEBUG
             log.debug("podId 0x%x doesn't match response value!: %{public}@", podId, String(describing: response))
-#endif
             throw PodCommsError.invalidAddress(address: response.address, expectedAddress: self.podId)
         }
 
         log.info("Establish an Eap Session")
         guard let messageTransportState = try establishSession(ltk: ltk, eapSeq: 1, msgSeq: Int(response.msgSeq)) else {
-#if LOG_DEBUG
             log.debug("pairPod: failed to create messageTransportState!")
-#endif
             throw PodCommsError.noPodPaired
         }
  
@@ -226,9 +208,7 @@ public class PodComms: CustomDebugStringConvertible {
         let versionResponse = try sendPairMessage(transport: transport, message: message)
 
         // Now create the real PodState using the current transport state and the versionResponse info
-#if LOG_DEBUG
         log.debug("pairPod: creating PodState for versionResponse %{public}@ and transport %{public}@", String(describing: versionResponse), String(describing: transport.state))
-#endif
         self.podState = PodState(
             address: self.podId,
             ltk: ltk,
@@ -250,9 +230,7 @@ public class PodComms: CustomDebugStringConvertible {
             throw PodCommsError.activationTimeExceeded
         }
 
-#if LOG_DEBUG
         log.debug("pairPod: self.PodState messageTransportState now: %@", String(reflecting: self.podState?.messageTransportState))
-#endif
     }
 
     private func establishSession(ltk: Data, eapSeq: Int, msgSeq: Int = 1)  throws -> MessageTransportState? {
@@ -266,21 +244,15 @@ public class PodComms: CustomDebugStringConvertible {
 
         switch result {
         case .SessionNegotiationResynchronization(let keys):
-#if LOG_DEBUG
             log.debug("Received EAP SQN resynchronization: %@", keys.synchronizedEapSqn.data.hexadecimalString)
-#endif
             if self.podState != nil {
                 let eapSeq = keys.synchronizedEapSqn.toInt()
-#if LOG_DEBUG
                 log.debug("Updating EAP SQN to: %d", eapSeq)
-#endif
                 self.podState!.messageTransportState.eapSeq = eapSeq
             }
             return nil
         case .SessionKeys(let keys):
-#if LOG_DEBUG
             log.debug("Session Established")
-#endif
             // log.debug("CK: %@", keys.ck.hexadecimalString)
             log.info("msgSequenceNumber: %@", String(keys.msgSequenceNumber))
             // log.info("NoncePrefix: %@", keys.nonce.prefix.hexadecimalString)
@@ -295,14 +267,10 @@ public class PodComms: CustomDebugStringConvertible {
             )
 
             if self.podState != nil {
-#if LOG_DEBUG
                 log.debug("Setting podState transport state to %{public}@", String(describing: messageTransportState))
-#endif
                 self.podState!.messageTransportState = messageTransportState
             } else {
-#if LOG_DEBUG
                 log.debug("Used keys %@ to create messageTransportState: %@", String(reflecting: keys), String(reflecting: messageTransportState))
-#endif
             }
             return messageTransportState
         }
@@ -340,9 +308,7 @@ public class PodComms: CustomDebugStringConvertible {
 
         let message = Message(address: 0xffffffff, messageBlocks: [setupPod], sequenceNum: transport.messageNumber)
 
-#if LOG_DEBUG
         log.debug("setupPod: calling sendPairMessage %@ for message %@", String(reflecting: transport), String(describing: message))
-#endif
         let versionResponse = try sendPairMessage(transport: transport, message: message)
 
         // Verify that the fundemental pod constants returned match the expected constant values in the Pod struct.
@@ -516,18 +482,14 @@ extension PodComms: OmniBLEConnectionDelegate {
     func omnipodPeripheralDidDisconnect(peripheral: CBPeripheral, error: Error?) {
         if let podState = podState, peripheral.identifier.uuidString == podState.bleIdentifier {
             self.delegate?.omnipodPeripheralDidDisconnect(peripheral: peripheral, error: error)
-#if LOG_DEBUG
             log.debug("omnipodPeripheralDidDisconnect... will auto-reconnect")
-#endif
         }
     }
 
     func omnipodPeripheralDidFailToConnect(peripheral: CBPeripheral, error: Error?) {
         if let podState = podState, peripheral.identifier.uuidString == podState.bleIdentifier {
             self.delegate?.omnipodPeripheralDidFailToConnect(peripheral: peripheral, error: error)
-#if LOG_DEBUG
             log.debug("omnipodPeripheralDidDisconnect... will auto-reconnect")
-#endif
         }
     }
 
@@ -538,9 +500,7 @@ extension PodComms: OmniBLEConnectionDelegate {
 extension PodComms: PeripheralManagerDelegate {
     
     func completeConfiguration(for manager: PeripheralManager) throws {
-#if LOG_DEFAULT
         log.default("PodComms completeConfiguration: isPaired=%{public}@ needsSessionEstablishment=%{public}@", String(describing: self.isPaired), String(describing: needsSessionEstablishment))
-#endif
 
         if self.isPaired && needsSessionEstablishment {
             let myId = self.myId
@@ -561,9 +521,7 @@ extension PodComms: PeripheralManagerDelegate {
             }
 
         } else {
-#if LOG_DEFAULT
             log.default("Session already established.")
-#endif
         }
     }
 }

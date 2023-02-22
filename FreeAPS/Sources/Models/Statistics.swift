@@ -93,7 +93,6 @@ struct LoopCycles: JSON, Equatable {
     var errors: Int
     var readings: Int
     var success_rate: Decimal
-    var dailysuccess_rate: Decimal
     var avg_interval: Decimal
     var median_interval: Decimal
     var min_interval: Decimal
@@ -149,7 +148,6 @@ extension LoopCycles {
         case errors
         case readings
         case success_rate
-        case dailysuccess_rate
         case avg_interval
         case median_interval
         case min_interval
