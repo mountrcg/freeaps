@@ -970,7 +970,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         if timeIntervalLoops < minimumInt, i != 1 {
                             minimumInt = timeIntervalLoops
                         }
-                        timeForOneLoop = loopDuration
+                        timeForOneLoop = loopDuration * 60 // duration in seconds
                         timeForOneLoopArray.append(timeForOneLoop)
 
                         if timeForOneLoop >= maximumLoopTime, timeForOneLoop != 0.0 {
