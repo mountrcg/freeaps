@@ -732,7 +732,7 @@ final class BaseAPSManager: APSManager, Injectable {
                             saveDailyTDD.timestamp = previous_TDD.timestamp
                             saveDailyTDD.tdd = previous_TDD.tdd
                             print(
-                                "CoreData: write daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
+                                "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
                             )
                         }
                     }
