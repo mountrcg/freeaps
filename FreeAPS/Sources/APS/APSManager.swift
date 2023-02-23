@@ -718,8 +718,16 @@ final class BaseAPSManager: APSManager, Injectable {
                     if previousTDDfetched.count > 1 {
                         current_TDD = previousTDDfetched[0]
                         previous_TDD = previousTDDfetched[1]
+                        debug(
+                            .apsManager,
+                            "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
+                        )
                         print(
                             "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
+                        )
+                        debug(
+                            .apsManager,
+                            "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
                         )
                         print(
                             "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
@@ -731,6 +739,10 @@ final class BaseAPSManager: APSManager, Injectable {
                             let saveDailyTDD = DailyTDD(context: coredataContext)
                             saveDailyTDD.timestamp = previous_TDD.timestamp
                             saveDailyTDD.tdd = previous_TDD.tdd
+                            debug(
+                                .apsManager,
+                                "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
+                            )
                             print(
                                 "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
                             )
@@ -761,6 +773,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestDailyTDD.fetchLimit = avgOverDays
 
                 try? dailyTDDfetched = coredataContext.fetch(requestDailyTDD)
+                debug(
+                    .apsManager,
+                    "CoreData: last daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
+                )
                 print("CoreData: last daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)")
                 if !dailyTDDfetched.isEmpty { TDDytd = dailyTDDfetched[0].tdd?.decimalValue ?? 0 }
             }
