@@ -1258,10 +1258,10 @@ final class BaseAPSManager: APSManager, Injectable {
             median_interval: roundDecimal(Decimal(medianInterval), 1),
             min_interval: roundDecimal(Decimal(minimumInt), 1),
             max_interval: roundDecimal(Decimal(maximumInt), 1),
-            avg_duration: Decimal(roundDouble(averageLoopTime, 2)),
-            median_duration: Decimal(roundDouble(medianLoopTime, 2)),
-            min_duration: roundDecimal(Decimal(minimumLoopTime), 2),
-            max_duration: Decimal(roundDouble(maximumLoopTime, 1))
+            avg_duration: Decimal(roundDouble(averageLoopTime, 0)),
+            median_duration: Decimal(roundDouble(medianLoopTime, 0)),
+            min_duration: roundDecimal(Decimal(minimumLoopTime), 0),
+            max_duration: Decimal(roundDouble(maximumLoopTime, 0))
         )
 
         // TIR calcs for every case
