@@ -682,79 +682,114 @@ final class BaseAPSManager: APSManager, Injectable {
         // MARK: Fetch data from Core Data: TDD Entity. TEST:
 
         if enactedTDD > 0 {
-            let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
-            let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
+            // let DaysAgo = Date().addingTimeInterval(-7.days.timeInterval)
+            let HoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
-            var previousTDDfetched = [TDD]()
+            var previousTDDfetched: [TDD] = []
             var total: Decimal = 0
-            var totalAmount: Decimal = 0
-            var indeces: Int = 0
-            var nrOfIndeces: Int = 0
+            var totalHrs: Decimal = 0
+            var totalDaily: Decimal = 0
+            var indeces: Int = 1
+            var indicesHrs: Int = 1
+            var indicesDaily: Int = 1
+            var TDDytd: Decimal = 0
 
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
 
-                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
+                // requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", DaysAgo as NSDate)
+                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", HoursAgo as NSDate)
 
-                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
                 requestTDD.sortDescriptors = [sortTDD]
-                requestTDD.fetchLimit = 10
+                // requestTDD.fetchLimit = 2
 
                 try? previousTDDfetched = coredataContext.fetch(requestTDD)
 
                 // check wether previous TDD was yesterday and fill full calender day TDD (dailyTDD)
-                var calendar: Calendar { Calendar.current }
-                var last_dailyTDD = DailyTDD[]
-                var previous_TDD: [TDD] = []
-                // as no saving the new TDD before
-                if previousTDDfetched.count > 1 { previous_TDD = previousTDDfetched[1]
-                    debug(.apsManager, "last fetched TDD CoreData: \(previousTDDfetched[1].tdd?.decimalValue ?? 0)")
+                coredataContext.performAndWait {
+                    var current_TDD = TDD(context: coredataContext)
+                    var previous_TDD = TDD(context: coredataContext)
+
+                    var calendar: Calendar { Calendar.current }
+                    var currentDay = calendar.component(.day, from: Date())
+                    var previousDay = calendar.component(.day, from: Date())
+
+                    if previousTDDfetched.count > 1 {
+                        current_TDD = previousTDDfetched[0]
+                        previous_TDD = previousTDDfetched[1]
+                        print(
+                            "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
+                        )
+                        print(
+                            "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
+                        )
+                        currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
+                        previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
+                        // if previous TDD was yesterday
+                        if currentDay > previousDay {
+                            let saveDailyTDD = DailyTDD(context: coredataContext)
+                            saveDailyTDD.timestamp = previous_TDD.timestamp
+                            saveDailyTDD.tdd = previous_TDD.tdd
+                            print(
+                                "CoreData: write daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
+                            )
+                        }
+                    }
                 }
-                let currentDay = calendar.component(.day, from: enactedTDD.timestamp ?? Date())
-                let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
-                if currentDay == previousDay {
-                    let last_dailyTDD = DailyTDD(context: coredataContext)
-                    last_dailyTDD.timestamp = previous_TDD.timestamp
-                    last_dailyTDD.tdd = previous_TDD.tdd
-                    debug(
-                        .apsManager,
-                        "write daily TDD at \(last_dailyTDD.timestamp!) to CoreData: \(last_dailyTDD.tdd?.decimalValue ?? 0)"
-                    )
-                }
+                coredataContext.perform {
+                    try? self.coredataContext.save() }
 
                 total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
                 indeces = previousTDDfetched.count
 
                 // Only fetch once. Use same (previous) fetch
-                let twoHoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
-                nrOfIndeces = twoHoursArray.count
+                let HoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= HoursAgo })
 
-                totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                totalHrs = HoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                indicesHrs = HoursArray.count
             }
+
+            var dailyTDDfetched = [DailyTDD]()
+            coredataContext.performAndWait {
+                let avgOverDays = 7
+                let avgOverDaysAgo = Date().addingTimeInterval(-avgOverDays.days.timeInterval)
+                let requestDailyTDD = DailyTDD.fetchRequest() as NSFetchRequest<DailyTDD>
+                requestDailyTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", avgOverDaysAgo as NSDate)
+                let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
+                requestDailyTDD.sortDescriptors = [sortTDD]
+                requestDailyTDD.fetchLimit = avgOverDays
+
+                try? dailyTDDfetched = coredataContext.fetch(requestDailyTDD)
+                print("CoreData: last daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)")
+                if !dailyTDDfetched.isEmpty { TDDytd = dailyTDDfetched[0].tdd?.decimalValue ?? 0 }
+            }
+            totalDaily = dailyTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            indicesDaily = dailyTDDfetched.count
 
             if indeces == 0 {
                 indeces = 1
             }
-            if nrOfIndeces == 0 {
-                nrOfIndeces = 1
+            if indicesHrs == 0 {
+                indicesHrs = 1
             }
 
-            let average2hours = totalAmount / Decimal(nrOfIndeces)
+            let average2hours = totalHrs / Decimal(indicesHrs)
             let average14 = total / Decimal(indeces)
+            let averageDaily = totalDaily / Decimal(indicesDaily)
 
-            let testTDD: Decimal = 38
             let weighted_average: Decimal = 1.1
             let averages = TDD_averages(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
                 past2hoursAverage: roundDecimal(average2hours, 1),
-                tddYtd: roundDecimal(testTDD, 1),
-                tdd7d: roundDecimal(testTDD, 1),
+                tddYtd: roundDecimal(TDDytd, 1),
+                tdd7d: roundDecimal(averageDaily, 1),
                 date: Date()
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
 
-            print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
+            // print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
         }
     }
 
@@ -1404,7 +1439,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
         nightscout.uploadStatistics(dailystat: dailystat)
         nightscout.uploadPreferences()
-        print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
+        // print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
@@ -1421,7 +1456,7 @@ final class BaseAPSManager: APSManager, Injectable {
             try? self.coredataContext.save()
         }
 
-        print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
+        // print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func processError(_ error: Error) {
