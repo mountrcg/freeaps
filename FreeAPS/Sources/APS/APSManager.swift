@@ -722,14 +722,8 @@ final class BaseAPSManager: APSManager, Injectable {
                             .apsManager,
                             "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
                         )
-                        print(
-                            "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
-                        )
                         debug(
                             .apsManager,
-                            "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
-                        )
-                        print(
                             "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
                         )
                         currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
@@ -741,9 +735,6 @@ final class BaseAPSManager: APSManager, Injectable {
                             saveDailyTDD.tdd = previous_TDD.tdd
                             debug(
                                 .apsManager,
-                                "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
-                            )
-                            print(
                                 "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
                             )
                         }
@@ -778,14 +769,9 @@ final class BaseAPSManager: APSManager, Injectable {
                         .apsManager,
                         "CoreData: daily TDD \(uniqDailyTDD.tdd?.decimalValue ?? 0) from \(uniqDailyTDD.timestamp!)"
                     )
-                    print("CoreData: daily TDD \(uniqDailyTDD.tdd?.decimalValue ?? 0) from \(uniqDailyTDD.timestamp!)")
                 }
-
                 debug(
                     .apsManager,
-                    "CoreData: yesterdays daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
-                )
-                print(
                     "CoreData: yesterdays daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
                 )
                 if !dailyTDDfetched.isEmpty { TDDytd = dailyTDDfetched[0].tdd?.decimalValue ?? 0 }
@@ -815,7 +801,10 @@ final class BaseAPSManager: APSManager, Injectable {
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
 
-            // print("Test time of TDD: \(-1 * tddStartedAt.timeIntervalSinceNow) s")
+            debug(
+                .apsManager,
+                "Timer of TDD computation: \(-1 * tddStartedAt.timeIntervalSinceNow) s"
+            )
         }
     }
 
@@ -1465,7 +1454,10 @@ final class BaseAPSManager: APSManager, Injectable {
         }
         nightscout.uploadStatistics(dailystat: dailystat)
         nightscout.uploadPreferences()
-        // print("Test time of statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s")
+        debug(
+            .apsManager,
+            "Timer of Statistics computation: \(-1 * statisticsStartedAt.timeIntervalSinceNow) s"
+        )
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
@@ -1482,7 +1474,10 @@ final class BaseAPSManager: APSManager, Injectable {
             try? self.coredataContext.save()
         }
 
-        // print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
+        debug(
+            .apsManager,
+            "Timer of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s"
+        )
     }
 
     private func processError(_ error: Error) {
