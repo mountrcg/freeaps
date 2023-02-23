@@ -702,7 +702,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
                 let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
                 requestTDD.sortDescriptors = [sortTDD]
-                // requestTDD.fetchLimit = 2
+                requestTDD.fetchLimit = 2
 
                 try? previousTDDfetched = coredataContext.fetch(requestTDD)
 
@@ -773,11 +773,21 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestDailyTDD.fetchLimit = avgOverDays
 
                 try? dailyTDDfetched = coredataContext.fetch(requestDailyTDD)
+                for uniqDailyTDD in dailyTDDfetched {
+                    debug(
+                        .apsManager,
+                        "CoreData: daily TDD \(uniqDailyTDD.tdd?.decimalValue ?? 0) from \(uniqDailyTDD.timestamp!)"
+                    )
+                    print("CoreData: daily TDD \(uniqDailyTDD.tdd?.decimalValue ?? 0) from \(uniqDailyTDD.timestamp!)")
+                }
+
                 debug(
                     .apsManager,
-                    "CoreData: last daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
+                    "CoreData: yesterdays daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
                 )
-                print("CoreData: last daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)")
+                print(
+                    "CoreData: yesterdays daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
+                )
                 if !dailyTDDfetched.isEmpty { TDDytd = dailyTDDfetched[0].tdd?.decimalValue ?? 0 }
             }
             totalDaily = dailyTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
