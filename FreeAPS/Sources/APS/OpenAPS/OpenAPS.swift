@@ -44,8 +44,6 @@ final class OpenAPS {
 
                 self.storage.save(meal, as: Monitor.meal)
 
-//                let tdd_daily = self.loadFileFromStorage(name: OpenAPS.Monitor.tdd_daily)
-//                let tdd_avg = self.loadFileFromStorage(name: OpenAPS.Monitor.tdd_avg)
                 let tdd_averages = self.loadFileFromStorage(name: OpenAPS.Monitor.tdd_averages)
 
                 // iob

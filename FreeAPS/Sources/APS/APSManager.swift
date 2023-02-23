@@ -680,15 +680,15 @@ final class BaseAPSManager: APSManager, Injectable {
     private func tdd(enacted_: Suggestion) {
         let tddStartedAt = Date()
         let preferences = settingsManager.preferences
-        let currentTDD = enacted_.tdd ?? 0
+        let enactedTDD = enacted_.tdd ?? 0
 
         // MARK: Fetch data from Core Data: TDD Entity. TEST:
 
-        if currentTDD > 0 {
+        if enactedTDD > 0 {
             let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
-            var uniqEvents = [TDD]()
+            var previousTDDfetched = [TDD]()
             var total: Decimal = 0
             var totalAmount: Decimal = 0
             var indeces: Int = 0
@@ -697,18 +697,39 @@ final class BaseAPSManager: APSManager, Injectable {
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
 
-                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
+                requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", twoHoursAgo as NSDate)
 
                 let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
                 requestTDD.sortDescriptors = [sortTDD]
+                requestTDD.fetchLimit = 10
+                
+                try? previousTDDfetched = coredataContext.fetch(requestTDD)
+                
+                // check wether previous TDD was yesterday and fill full calender day TDD (dailyTDD)
+                var calendar: Calendar { Calendar.current }
+                var previous_TDD: [TDD] = []
+                // as no saving the new TDD before
+                if previousTDDfetched.count > 1 { previous_TDD = previousTDDfetched[0]
+                    debug(.apsManager, "last fetched TDD CoreData: \(previousTDDfetched[0].tdd?.decimalValue ?? 0)")
+                }
+                let currentDay = calendar.component(.day, from: enactedTDD.timestamp ?? Date())
+                let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
+                if currentDay == previousDay {
+                    let last_dailyTDD = DailyTDD(context: coredataContext)
+                    last_dailyTDD.timestamp = previous_TDD.timestamp
+                    last_dailyTDD.tdd = previous_TDD.tdd
+                    debug(
+                        .apsManager,
+                        "write daily TDD at \(last_dailyTDD.timestamp!) to CoreData: \(last_dailyTDD.tdd?.decimalValue ?? 0)"
+                    )
+                }
+                
 
-                try? uniqEvents = coredataContext.fetch(requestTDD)
-
-                total = uniqEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-                indeces = uniqEvents.count
+                total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                indeces = previousTDDfetched.count
 
                 // Only fetch once. Use same (previous) fetch
-                let twoHoursArray = uniqEvents.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
+                let twoHoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= twoHoursAgo })
                 nrOfIndeces = twoHoursArray.count
 
                 totalAmount = twoHoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
@@ -724,14 +745,14 @@ final class BaseAPSManager: APSManager, Injectable {
             let average2hours = totalAmount / Decimal(nrOfIndeces)
             let average14 = total / Decimal(indeces)
 
-            let weight = 1
+            let testTDD: Decimal = 38
             let weighted_average: Decimal = 1.1
             let averages = TDD_averages(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
                 past2hoursAverage: roundDecimal(average2hours, 1),
-                tddYtd: roundDecimal(average2hours, 1),
-                tdd7d: roundDecimal(average2hours, 1),
+                tddYtd: roundDecimal(testTDD, 1),
+                tdd7d: roundDecimal(testTDD, 1),
                 date: Date()
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
@@ -911,7 +932,7 @@ final class BaseAPSManager: APSManager, Injectable {
                         previousTimeLoop = loopEnd
                     }
                 }
-                successRate = (Double(successNR) / Double(i)) * 100
+                successRate = (Double(successNR) / 288) * 100
 
                 // Average Loop Interval in minutes
                 let timeOfFirstIndex = lsr[0].start ?? Date()

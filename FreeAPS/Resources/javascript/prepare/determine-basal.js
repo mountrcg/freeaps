@@ -2,6 +2,8 @@
 
 function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date(), pump_history, preferences, basalProfile, tdd_averages) {
 
+    var clock = new Date();
+    
     try {
         var middlewareReason = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pump_history, preferences, basalProfile, tdd_averages);
         console.log("Middleware reason: " + (middlewareReason || "Nothing changed"));
@@ -16,7 +18,6 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         autosens_data = autosens;
     }
     
-
     var reservoir_data = null;
     if (reservoir) {
         reservoir_data = reservoir;
@@ -36,16 +37,10 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     if (basalProfile) {
         basalprofile = basalProfile;
     }
-    /*
-    var tdd_ = {};
-    if (tdd) {
-        tdd_ = tdd;
-    }
-     */
     
-    var tdd_daily_ = {};
-    if (tdd_daily) {
-        tdd_daily_ = tdd_daily;
+    var tdd_averages_ = {};
+    if (tdd_averages) {
+        tdd_averages_ = tdd_averages;
     }
     
     return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock, pumphistory, preferences, basalprofile, tdd_averages_);
