@@ -31,7 +31,7 @@ extension Home {
 
         // Avg & Median switch for Loop interval
 
-        @State var loopIntTitle = NSLocalizedString("∅ Interv", comment: "Interval average")
+        @State var loopIntTitle = NSLocalizedString("∅ Interv.", comment: "Interval average")
 
         // Avg & Median switch for Loop duration
         @State var loopDurTitle = NSLocalizedString("∅ Dura", comment: "Duration average")
@@ -546,10 +546,10 @@ extension Home {
                             if loopStatTitle == errorTitle { loopStatTitle = rateTitle }
                         }
 
-                        let avgIntTitle = NSLocalizedString("∅ Interv", comment: "")
-                        let medIntTitle = NSLocalizedString("~ Interv", comment: "")
-                        let avgDurTitle = NSLocalizedString("∅ Dura", comment: "")
-                        let medDurTitle = NSLocalizedString("~ Dura", comment: "")
+                        let avgIntTitle = NSLocalizedString("∅ Interv.", comment: "")
+                        let medIntTitle = NSLocalizedString("~ Interv.", comment: "")
+                        let avgDurTitle = NSLocalizedString("∅ Dura.", comment: "")
+                        let medDurTitle = NSLocalizedString("~ Dura.", comment: "")
 
                         HStack(alignment: .lastTextBaseline, spacing: 2) {
                             Text(loopIntTitle).font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)

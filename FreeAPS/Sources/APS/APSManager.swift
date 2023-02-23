@@ -692,7 +692,8 @@ final class BaseAPSManager: APSManager, Injectable {
             var indeces: Int = 1
             var indicesHrs: Int = 1
             var indicesDaily: Int = 1
-            var TDDytd: Decimal = 0
+            var TDDytd: Decimal = 1
+            var averageDaily: Decimal = 1
 
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
@@ -705,53 +706,53 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestTDD.fetchLimit = 2
 
                 try? previousTDDfetched = coredataContext.fetch(requestTDD)
+            }
+            // check wether previous TDD was yesterday and fill full calender day TDD (dailyTDD)
+            coredataContext.performAndWait {
+                var current_TDD = TDD(context: coredataContext)
+                var previous_TDD = TDD(context: coredataContext)
 
-                // check wether previous TDD was yesterday and fill full calender day TDD (dailyTDD)
-                coredataContext.performAndWait {
-                    var current_TDD = TDD(context: coredataContext)
-                    var previous_TDD = TDD(context: coredataContext)
+                var calendar: Calendar { Calendar.current }
+                var currentDay = calendar.component(.day, from: Date())
+                var previousDay = calendar.component(.day, from: Date())
 
-                    var calendar: Calendar { Calendar.current }
-                    var currentDay = calendar.component(.day, from: Date())
-                    var previousDay = calendar.component(.day, from: Date())
-
-                    if previousTDDfetched.count > 1 {
-                        current_TDD = previousTDDfetched[0]
-                        previous_TDD = previousTDDfetched[1]
+                if previousTDDfetched.count > 1 {
+                    current_TDD = previousTDDfetched[0]
+                    previous_TDD = previousTDDfetched[1]
+                    debug(
+                        .apsManager,
+                        "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
+                    )
+                    debug(
+                        .apsManager,
+                        "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
+                    )
+                    currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
+                    previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
+                    // if previous TDD was yesterday
+                    if currentDay > previousDay {
+                        let saveDailyTDD = DailyTDD(context: coredataContext)
+                        saveDailyTDD.timestamp = previous_TDD.timestamp
+                        saveDailyTDD.tdd = previous_TDD.tdd
                         debug(
                             .apsManager,
-                            "CoreData: current fetched TDD \(previousTDDfetched[0].tdd?.decimalValue ?? 0) from \(previousTDDfetched[0].timestamp!)"
+                            "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
                         )
-                        debug(
-                            .apsManager,
-                            "CoreData: previous fetched TDD \(previousTDDfetched[1].tdd?.decimalValue ?? 0) from \(previousTDDfetched[1].timestamp!)"
-                        )
-                        currentDay = calendar.component(.day, from: current_TDD.timestamp ?? Date())
-                        previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
-                        // if previous TDD was yesterday
-                        if currentDay > previousDay {
-                            let saveDailyTDD = DailyTDD(context: coredataContext)
-                            saveDailyTDD.timestamp = previous_TDD.timestamp
-                            saveDailyTDD.tdd = previous_TDD.tdd
-                            debug(
-                                .apsManager,
-                                "CoreData: write previous daily TDD \(saveDailyTDD.tdd?.decimalValue ?? 0) at \(saveDailyTDD.timestamp!)"
-                            )
-                        }
                     }
                 }
-                coredataContext.perform {
-                    try? self.coredataContext.save() }
-
-                total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-                indeces = previousTDDfetched.count
-
-                // Only fetch once. Use same (previous) fetch
-                let HoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= HoursAgo })
-
-                totalHrs = HoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-                indicesHrs = HoursArray.count
             }
+
+            coredataContext.perform {
+                try? self.coredataContext.save() }
+
+            total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            indeces = previousTDDfetched.count
+
+            // Only fetch once. Use same (previous) fetch
+            let HoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= HoursAgo })
+
+            totalHrs = HoursArray.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+            indicesHrs = HoursArray.count
 
             var dailyTDDfetched = [DailyTDD]()
             coredataContext.performAndWait {
@@ -764,20 +765,22 @@ final class BaseAPSManager: APSManager, Injectable {
                 requestDailyTDD.fetchLimit = avgOverDays
 
                 try? dailyTDDfetched = coredataContext.fetch(requestDailyTDD)
-                for uniqDailyTDD in dailyTDDfetched {
+                if !dailyTDDfetched.isEmpty {
+                    for uniqDailyTDD in dailyTDDfetched {
+                        debug(
+                            .apsManager,
+                            "CoreData: daily TDD \(uniqDailyTDD.tdd?.decimalValue ?? 0) from \(uniqDailyTDD.timestamp!)"
+                        )
+                    }
                     debug(
                         .apsManager,
-                        "CoreData: daily TDD \(uniqDailyTDD.tdd?.decimalValue ?? 0) from \(uniqDailyTDD.timestamp!)"
+                        "CoreData: yesterdays daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
                     )
+                    TDDytd = dailyTDDfetched[0].tdd?.decimalValue ?? 0
+                    totalDaily = dailyTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
+                    indicesDaily = dailyTDDfetched.count
                 }
-                debug(
-                    .apsManager,
-                    "CoreData: yesterdays daily TDD \(dailyTDDfetched[0].tdd?.decimalValue ?? 0) at \(dailyTDDfetched[0].timestamp!)"
-                )
-                if !dailyTDDfetched.isEmpty { TDDytd = dailyTDDfetched[0].tdd?.decimalValue ?? 0 }
             }
-            totalDaily = dailyTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-            indicesDaily = dailyTDDfetched.count
 
             if indeces == 0 {
                 indeces = 1
@@ -788,7 +791,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
             let average2hours = totalHrs / Decimal(indicesHrs)
             let average14 = total / Decimal(indeces)
-            let averageDaily = totalDaily / Decimal(indicesDaily)
+            averageDaily = totalDaily / Decimal(indicesDaily)
 
             let weighted_average: Decimal = 1.1
             let averages = TDD_averages(
