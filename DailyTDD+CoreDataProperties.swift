@@ -8,5 +8,4 @@ public extension DailyTDD {
 
     @NSManaged var tdd: NSDecimalNumber?
     @NSManaged var timestamp: Date?
-
 }

@@ -667,13 +667,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             }
             nightscout.uploadStatus()
-
             // Update the TDD value
             tdd(enacted_: enacted)
-            // Update statistics. Only run if enabled in preferences
-            // if settingsManager.settings.displayStatistics {
+            // Update statistics
             statistics()
-            // }
         }
     }
 
@@ -702,15 +699,16 @@ final class BaseAPSManager: APSManager, Injectable {
                 let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
                 requestTDD.sortDescriptors = [sortTDD]
                 requestTDD.fetchLimit = 10
-                
+
                 try? previousTDDfetched = coredataContext.fetch(requestTDD)
-                
+
                 // check wether previous TDD was yesterday and fill full calender day TDD (dailyTDD)
                 var calendar: Calendar { Calendar.current }
+                var last_dailyTDD = DailyTDD[]
                 var previous_TDD: [TDD] = []
                 // as no saving the new TDD before
-                if previousTDDfetched.count > 1 { previous_TDD = previousTDDfetched[0]
-                    debug(.apsManager, "last fetched TDD CoreData: \(previousTDDfetched[0].tdd?.decimalValue ?? 0)")
+                if previousTDDfetched.count > 1 { previous_TDD = previousTDDfetched[1]
+                    debug(.apsManager, "last fetched TDD CoreData: \(previousTDDfetched[1].tdd?.decimalValue ?? 0)")
                 }
                 let currentDay = calendar.component(.day, from: enactedTDD.timestamp ?? Date())
                 let previousDay = calendar.component(.day, from: previous_TDD.timestamp ?? Date())
@@ -723,7 +721,6 @@ final class BaseAPSManager: APSManager, Injectable {
                         "write daily TDD at \(last_dailyTDD.timestamp!) to CoreData: \(last_dailyTDD.tdd?.decimalValue ?? 0)"
                     )
                 }
-                
 
                 total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
                 indeces = previousTDDfetched.count
@@ -794,7 +791,7 @@ final class BaseAPSManager: APSManager, Injectable {
             testIfEmpty = testFile.count
         }
         let updateThisOften = Int(settingsManager.preferences.updateInterval)
-        // Only run every 30 minutes of according to setting.
+        // Only run every 30 minutes or according to setting.
         if testIfEmpty != 0 {
             guard testFile[0].created_at.addingTimeInterval(updateThisOften.minutes.timeInterval) < Date()
             else {
@@ -998,13 +995,13 @@ final class BaseAPSManager: APSManager, Injectable {
 
             try? glucose = coredataContext.fetch(requestGFS)
 
-            firstElementTime = glucose.first?.date ?? Date()
-            lastElementTime = glucose.last?.date ?? Date()
+            // Time In Range (%) and Average Glucose. This will be refactored later after some testing.
+            let endIndex = glucose.count - 1
+
+            firstElementTime = glucose[0].date ?? Date()
+            lastElementTime = glucose[endIndex].date ?? Date()
 
             currentIndexTime = firstElementTime
-
-            // Time In Range (%) and Average Glucose (24 hours). This will be refactored later after some testing.
-            let endIndex = glucose.count - 1
 
             numberOfDays = (firstElementTime - lastElementTime).timeInterval / 8.64E4
 
@@ -1018,23 +1015,23 @@ final class BaseAPSManager: APSManager, Injectable {
                         bgArray.append(Double(glucose[j].glucose) * Double(conversionFactor))
                         bgArrayForTIR.append((Double(glucose[j].glucose), glucose[j].date!))
                         nr_bgs += 1
-                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 8.64E4 { // 1 day
+                        if (firstElementTime - currentIndexTime).timeInterval <= 8.64E4 { // 1 day
                             bg_1 = bg / nr_bgs
                             bgArray_1 = bgArrayForTIR
                             bgArray_1_ = bgArray
                             nr1 = nr_bgs
                         }
-                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 6.048E5 { // 7 days
+                        if (firstElementTime - currentIndexTime).timeInterval <= 6.048E5 { // 7 days
                             bg_7 = bg / nr_bgs
                             bgArray_7 = bgArrayForTIR
                             bgArray_7_ = bgArray
                         }
-                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 2.592E6 { // 30 days
+                        if (firstElementTime - currentIndexTime).timeInterval <= 2.592E6 { // 30 days
                             bg_30 = bg / nr_bgs
                             bgArray_30 = bgArrayForTIR
                             bgArray_30_ = bgArray
                         }
-                        if (firstElementTime - currentIndexTime).timeInterval / 60 <= 7.776E7 { // 30 days
+                        if (firstElementTime - currentIndexTime).timeInterval <= 7.776E7 { // 30 days
                             bg_90 = bg / nr_bgs
                             bgArray_90 = bgArrayForTIR
                             bgArray_90_ = bgArray
