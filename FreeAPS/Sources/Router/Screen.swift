@@ -14,7 +14,6 @@ enum Screen: Identifiable, Hashable {
     case crEditor
     case targetsEditor
     case preferencesEditor
-    case logSettingsConfig
     case addCarbs
     case addTempTarget
     case bolus(waitForSuggestion: Bool)
@@ -61,8 +60,6 @@ extension Screen {
             TargetsEditor.RootView(resolver: resolver)
         case .preferencesEditor:
             PreferencesEditor.RootView(resolver: resolver)
-        case .logSettingsConfig:
-            LogSettingsConfig.RootView(resolver: resolver)
         case .addCarbs:
             AddCarbs.RootView(resolver: resolver)
         case .addTempTarget:

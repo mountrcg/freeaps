@@ -25,7 +25,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var displayStatistics: Bool = false
-    var omniBLEDebug: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -131,10 +130,6 @@ extension FreeAPSSettings: Decodable {
 
         if let displayStatistics = try? container.decode(Bool.self, forKey: .displayStatistics) {
             settings.displayStatistics = displayStatistics
-        }
-
-        if let omniBLEDebug = try? container.decode(Bool.self, forKey: .omniBLEDebug) {
-            settings.omniBLEDebug = omniBLEDebug
         }
 
         self = settings

@@ -31,10 +31,10 @@ extension Home {
 
         // Avg & Median switch for Loop interval
 
-        @State var loopIntTitle = NSLocalizedString("∅ Interval", comment: "Interval average")
+        @State var loopIntTitle = NSLocalizedString("∅ Interv.", comment: "Interval average")
 
         // Avg & Median switch for Loop duration
-        @State var loopDurTitle = NSLocalizedString("∅ Duration", comment: "Duration average")
+        @State var loopDurTitle = NSLocalizedString("∅ Dura", comment: "Duration average")
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -369,7 +369,7 @@ extension Home {
         }
 
         var colorOfStatLoop: Color {
-            let whichRate = state.statistics?.Statistics.LoopCycles.dailysuccess_rate ?? 1
+            let whichRate = state.statistics?.Statistics.LoopCycles.success_rate ?? 1
 
             switch whichRate {
             case 80 ... 100:
@@ -524,7 +524,7 @@ extension Home {
                                     tirFormatter
                                         .string(from: (
                                             state.statistics?.Statistics.LoopCycles
-                                                .dailysuccess_rate ?? 0
+                                                .success_rate ?? 0
                                         ) as NSNumber) ??
                                         ""
                                 ).font(.footnote)
@@ -546,10 +546,10 @@ extension Home {
                             if loopStatTitle == errorTitle { loopStatTitle = rateTitle }
                         }
 
-                        let avgIntTitle = NSLocalizedString("∅ Interval", comment: "")
-                        let medIntTitle = NSLocalizedString("~ Interval", comment: "")
-                        let avgDurTitle = NSLocalizedString("∅ Duration", comment: "")
-                        let medDurTitle = NSLocalizedString("~ Duration", comment: "")
+                        let avgIntTitle = NSLocalizedString("∅ Interv.", comment: "")
+                        let medIntTitle = NSLocalizedString("~ Interv.", comment: "")
+                        let avgDurTitle = NSLocalizedString("∅ Dura.", comment: "")
+                        let medDurTitle = NSLocalizedString("~ Dura.", comment: "")
 
                         HStack(alignment: .lastTextBaseline, spacing: 2) {
                             Text(loopIntTitle).font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)

@@ -25,8 +25,6 @@ class OmniBLEPlugin: NSObject, PumpManagerUIPlugin {
 
     override init() {
         super.init()
-#if LOG_DEFAULT
         log.default("OmniBLEPlugin Instantiated")
-#endif
     }
 }
