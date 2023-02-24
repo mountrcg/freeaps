@@ -4,7 +4,6 @@ import Swinject
 
 protocol SettingsManager: AnyObject {
     var settings: FreeAPSSettings { get set }
-    var logSettings: LogSettings { get }
     var preferences: Preferences { get }
     var pumpSettings: PumpSettings { get }
     func updateInsulinCurve(_ insulinType: InsulinType?)
@@ -42,12 +41,6 @@ final class BaseSettingsManager: SettingsManager, Injectable {
 
     private func save() {
         storage.save(settings, as: OpenAPS.FreeAPS.settings)
-    }
-
-    var logSettings: LogSettings {
-        storage.retrieve(OpenAPS.Settings.logsettings, as: LogSettings.self)
-            ?? LogSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.logsettings))
-            ?? LogSettings()
     }
 
     var preferences: Preferences {

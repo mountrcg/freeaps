@@ -30,10 +30,6 @@ extension Settings {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
-                    Text("Statistics")
-                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
-                    Text("Loop Cycles")
-                        .navigationLink(to: .configEditor(file: OpenAPS.Monitor.loopStats), from: self)
                     Text("Middleware")
                         .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                 }
@@ -107,8 +103,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Glucose Data used for statistics")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose_data), from: self)
+                            Text("Statistics")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.statistics), from: self)
                             Text("Edit settings json")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }
@@ -119,8 +115,7 @@ extension Settings {
                     Toggle("Animated Background", isOn: $state.animatedBackground)
                 }
 
-                Section(header: Text("Logs")) {
-                    Text("Log Settings").navigationLink(to: .logSettingsConfig, from: self)
+                Section {
                     Text("Share logs")
                         .onTapGesture {
                             showShareSheet = true

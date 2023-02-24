@@ -28,7 +28,6 @@ extension OpenAPS {
 
     enum Settings {
         static let preferences = "preferences.json"
-        static let logsettings = "logsettings.json"
         static let autotune = "settings/autotune.json"
         static let autosense = "settings/autosense.json"
         static let profile = "settings/profile.json"
@@ -55,14 +54,10 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
         static let podAge = "monitor/pod-age.json"
-        static let tdd = "monitor/tdd.json"
-        static let tdd_daily = "monitor/tdd_daily.json"
-        static let tdd_avg = "monitor/tdd_avg.json"
+        // static let tdd = "monitor/tdd.json"
         static let tdd_averages = "monitor/tdd_averages.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
-        static let loopStats = "monitor/loopStats.json"
-        static let glucose_data = "monitor/glucoseForStats.json"
     }
 
     enum Enact {

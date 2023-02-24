@@ -30,8 +30,8 @@ struct Preferences: JSON {
     var enableSMBAlways: Bool = true
     var enableSMBAfterCarbs: Bool = true
     var allowSMBWithHighTemptarget: Bool = false
-    var maxSMBBasalMinutes: Decimal = 120
-    var maxUAMSMBBasalMinutes: Decimal = 120
+    var maxSMBBasalMinutes: Decimal = 30
+    var maxUAMSMBBasalMinutes: Decimal = 30
     var smbInterval: Decimal = 2
     var bolusIncrement: Decimal = 0.05
     var curve: InsulinCurve = .rapidActing
@@ -69,7 +69,7 @@ struct Preferences: JSON {
     var autoISFoffSport: Bool = true
     // start statistics config
     var displayLoops: Bool = true
-    var updateInterval: Decimal = 120
+    var updateInterval: Decimal = 20
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 180
     var low: Decimal = 70

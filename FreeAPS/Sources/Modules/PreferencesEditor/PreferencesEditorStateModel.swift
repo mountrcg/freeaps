@@ -33,7 +33,7 @@ extension PreferencesEditor {
 
                     type: .decimal(keypath: \.updateInterval),
                     infoText: NSLocalizedString(
-                        "Default is 30 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.",
+                        "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout. A lower interval than for glucose updates (5 min) is pointless.",
                         comment: "Description for update interval for statistics"
                     ),
                     settable: self
@@ -539,7 +539,7 @@ extension PreferencesEditor {
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
                     infoText: NSLocalizedString(
-                        "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
+                        "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.",
                         comment: "Bolus Increment"
                     ),
                     settable: self

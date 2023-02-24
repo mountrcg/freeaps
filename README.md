@@ -1,32 +1,49 @@
 # FreeAPS X
 
-## Introduction 
+## Introduction
 
-FreeAPS X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms.
+FreeAPS-X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms.
 
-FreeAPS X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system. 
+FreeAPS-X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system.
 
 
-To use this branch : 
+To use this branch :
 
-git clone --branch=bdb https://github.com/Jon-b-m/freeaps.git
+git clone --branch=dev-aisf_TDD https://github.com/mountrcg/freeaps.git
 
-The bdb branch includes my implementation of dynamic ISF, dynamic CR and some other extra features. Dyn ISF and dyn CR are off by default. 
+The autoISF branch includes my implementation of autoISF by ga-zelle and some other extra features. autoISF is off by default.
 
 Please understand that this version is :
 - highly experimental
 - not approved for therapy
 
+# Changes
+
+## Version
+- 0.2.8b refers to the autoISF version as used in AAPS
+- dev release with current mods as of Feb 23, 2023
+
+## Release
+- 1.07 refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)
+- Dash & G7 frameworks from Loop3
+- CoreData refactoring
+
+## Remarks
+Due to the heavy refactoring and my changes to Jon's CoreData, it is advised to delete FAX and install with a new clone. All current stats will be gone and build up again. All settings will be at default values, like `maxIOB = 0`. Due to deleting FAX you should do it in between pods, as you loose this information.
+
+
 
 # Documentation
 
-[Discord FreeAPS X - bdb branch channel](https://discord.com/channels/1020905149037813862/1021041588627062854)
+Most of the changes are made in oref code of OpenAPS, which is part of FreeAPS-X. But it is not really readable in FAX, so refer to my [oref0-repository](https://github.com/mountrcg/oref0/tree/dev_aisf_TDD).
 
-[My Crowdin Project for translation of FreeAPS X](https://crowdin.com/project/freeaps-x)
+[Original autoISF implementation for AAPS](https://github.com/ga-zelle/autoISF)
 
-[Middleware code for FreeAPS X](https://github.com/Jon-b-m/middleware)
+[Discord FreeAPS-X ](https://discord.com/channels/1020905149037813862/1021578455839682560)
 
-[freeAPS X original github](https://github.com/ivalkou/freeaps)
+[Discord autoISF - FreeAPS-X channel](https://discord.com/channels/953929437894803478/1025731124615458848)
+
+[FreeAPS-X original github](https://github.com/ivalkou/freeaps)
 
 [ADD DASH PUMP and SETTINGS](https://loopkit.github.io/loopdocs/loop-3/omnipod/)
 
@@ -36,9 +53,4 @@ Please understand that this version is :
 
 # Contribute
 
-Code contributions as PRs are welcome! There is a need for more developers reviewing and optimizing current code and for adding new features. 
-
-Translators can click the Crowdin link above. 
-
-Code is open (and free) for everyone. For those of you who have asked about buying me a coffe for me to stay awake at night, 
-my PayPal account is jon.m@live.se (Sweden, Europe). 
+Code is open (and free) for everyone.
