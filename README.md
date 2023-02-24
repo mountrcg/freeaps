@@ -1,4 +1,4 @@
-# FreeAPS X
+# FreeAPS-X autoISF Branch
 
 ## Introduction
 
@@ -18,6 +18,8 @@ Please understand that this version is :
 - not approved for therapy
 
 # Changes
+
+Latest version brings significant improvements for Omnipod Dash punps and Dexcom G6 sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences). Dexcom G7 is also supported.
 
 ## Version
 - 0.2.8b refers to the autoISF version as used in AAPS
@@ -50,7 +52,3 @@ Most of the changes are made in oref code of OpenAPS, which is part of FreeAPS-X
 [Overview & Onboarding Tips on Loop&Learn](https://www.loopandlearn.org/freeaps-x/)
 
 [OpenAPS documentation](https://openaps.readthedocs.io/en/latest/)
-
-# Contribute
-
-Code is open (and free) for everyone.
