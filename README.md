@@ -4,7 +4,7 @@
 
 FreeAPS-X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms.
 
-FreeAPS-X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system.
+FreeAPS-X uses original JavaScript files of oref0 and provides a user interface (UI) to control and setup the system.
 
 
 To use this branch :
@@ -19,7 +19,7 @@ Please understand that this version is :
 
 # Changes
 
-Latest version brings significant improvements for Omnipod Dash punps and Dexcom G6 sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences). Dexcom G7 is also supported.
+Latest version brings significant improvements for Omnipod Dash pumps and Dexcom G6 and G7sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences).
 
 ## Version
 - 0.2.8b refers to the autoISF version as used in AAPS
