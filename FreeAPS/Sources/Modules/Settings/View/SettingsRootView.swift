@@ -30,6 +30,7 @@ extension Settings {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
                     }
                     Text("Notifications").navigationLink(to: .notificationsConfig, from: self)
+                    Text("FPU Settings").navigationLink(to: .fpuConfig, from: self)
                     Text("Middleware")
                         .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
                 }

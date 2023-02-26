@@ -21,14 +21,19 @@ Please understand that this version is :
 
 Latest version brings significant improvements for Omnipod Dash pumps and Dexcom G6 and G7sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences).
 
-## Version
-- 0.2.8b refers to the autoISF version as used in AAPS
-- dev release with current mods as of Feb 23, 2023
+## autoISF Version
+* 0.2.8b
+	* dev release with current mods as of Feb 23, 2023
 
 ## Release
-- 1.07 refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)
-- Dash & G7 frameworks from Loop3
-- CoreData refactoring
+<sub>refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)</sub>
+* 1.07a
+	* Fat Protein conversions
+	* AppleHealth Integration, good for manual BG values
+	* fixes MDT and G6
+* 1.07
+	* Dash & G7 frameworks from Loop3
+	* CoreData refactoring
 
 ## Remarks
 Due to the heavy refactoring and my changes to Jon's CoreData, it is advised to delete FAX and install with a new clone. All current stats will be gone and build up again. All settings will be at default values, like `maxIOB = 0`. Due to deleting FAX you should do it in between pods, as you loose this information.
