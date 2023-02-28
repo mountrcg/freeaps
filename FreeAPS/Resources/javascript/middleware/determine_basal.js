@@ -1,10 +1,7 @@
 function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pumphistory, preferences, basalprofile) {
-    const nightlyChange = 0;
-    var nightlyUpdate = 360
     
     var reason = "nothing done";
     var reasonAutoISF = "";
-    var reasonStat = "";
     
     const d = new Date();
     let currentHour = d.getHours();
@@ -16,18 +13,8 @@ function middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoi
         reason = "";
     }
     
-    // set nightly Stats update intervall
-    if (nightlyChange == 1) {
-        if (currentHour >= 0 && currentHour <= 6) {
-            profile.updateInterval = 360;
-            reasonStat = "Stats update interval " + nightlyUpdate + "m. "
-            reason = "";
-        }
-    }
-    
-    reason = reason + reasonAutoISF + reasonStat;
+    reason = reason + reasonAutoISF;
 
     return reason
-   // number of minutes that Stat updates shall be done
 }
 
