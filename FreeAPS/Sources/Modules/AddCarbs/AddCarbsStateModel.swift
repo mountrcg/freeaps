@@ -23,41 +23,74 @@ extension AddCarbs {
                 return
             }
 
-            let interval = settings.settings.minuteInterval
-            let timeCap = settings.settings.timeCap * (60 / Decimal(interval))
-            let adjustment = settings.settings.individualAdjustmentFactor
-            let delay = settings.settings.delay
+            if useFPU {
+                // -------------------------- FPU--------------------------------------
+                let interval = settings.settings.minuteInterval // Interval betwwen carbs
+                let timeCap = settings.settings.timeCap // Max Duration
+                let adjustment = settings.settings.individualAdjustmentFactor
+                let delay = settings.settings.delay // Tme before first future carb entry
 
-            // Convert fat and protein to carb equivalents and store as future carbs
-            let fpucarb = 0.4 * protein + 0.9 * fat
-            let fpus = (fat * 9.0 + protein * 4.0) / 100.0
-            var counter: Decimal = (fpus * 2) - 1.0
-            counter = min(timeCap, counter)
-            var roundedCounter: Decimal = 0
-            NSDecimalRound(&roundedCounter, &counter, 0, .up)
-            let carbequiv = (fpucarb / roundedCounter) * adjustment
-            let firstDate = date.addingTimeInterval(delay.minutes.timeInterval)
-            var previousDate = date
+                let kcal = protein * 4 + fat * 9
+                let carbEquivalents = (kcal / 10) * adjustment
+                let fpus = carbEquivalents / 10
 
-            while counter > 0, carbequiv > 0 {
-                var useDate = date + 1 * Double(interval * 60)
-                // Fix Interval and Delay
-                useDate = max(previousDate.addingTimeInterval(interval.minutes.timeInterval), useDate, firstDate)
-                if useDate > previousDate {
-                    carbsStorage.storeCarbs([
-                        CarbsEntry(
-                            id: UUID().uuidString, createdAt: useDate, carbs: carbequiv,
-                            enteredBy: CarbsEntry.manual
-                        )
-                    ])
+                // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carbquivalents instead, excluding the configurable delay.
+                var computedDuration = 0
+                switch fpus {
+                case ..<2:
+                    computedDuration = 3
+                case 2 ..< 3:
+                    computedDuration = 4
+                case 3 ..< 4:
+                    computedDuration = 5
+                default:
+                    computedDuration = timeCap
                 }
-                previousDate = useDate
-                counter -= 1
-            }
+
+                // Size of each created carb equivalent if 60 minutes interval
+                var equivalent: Decimal = carbEquivalents / Decimal(computedDuration)
+                // Adjust for interval setting other than 60 minutes
+                equivalent /= Decimal(60 / interval)
+                // Number of equivalents
+                var numberOfEquivalents = carbEquivalents / equivalent
+                // Only use delay in first loop
+                var firstIndex = true
+                // New date for each carb equivalent
+                var useDate = date
+                // Group and Identify all FPUs together
+                let fpuID = UUID().uuidString
+
+                // Create an array of all future carb equivalents.
+                var futureCarbArray = [CarbsEntry]()
+                while carbEquivalents > 0, numberOfEquivalents > 0 {
+                    if firstIndex {
+                        useDate = useDate.addingTimeInterval(delay.minutes.timeInterval)
+                        firstIndex = false
+                    } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
+
+                    let eachCarbEntry = CarbsEntry(
+                        id: UUID().uuidString, createdAt: useDate, carbs: equivalent, enteredBy: CarbsEntry.manual, isFPU: true,
+                        fpuID: fpuID
+                    )
+                    futureCarbArray.append(eachCarbEntry)
+                    numberOfEquivalents -= 1
+                }
+                // Save the array
+                if carbEquivalents > 0 {
+                    carbsStorage.storeCarbs(futureCarbArray)
+                }
+            } // ------------------------- END OF TPU ----------------------------------------
+
             // Store the real carbs
             if carbs > 0 {
                 carbsStorage
-                    .storeCarbs([CarbsEntry(id: UUID().uuidString, createdAt: date, carbs: carbs, enteredBy: CarbsEntry.manual)])
+                    .storeCarbs([CarbsEntry(
+                        id: UUID().uuidString,
+                        createdAt: date,
+                        carbs: carbs,
+                        enteredBy: CarbsEntry.manual,
+                        isFPU: false, fpuID: nil
+                    )])
             }
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {
