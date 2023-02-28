@@ -37,7 +37,7 @@ extension AddCarbs {
 
                         if state.useFPU {
                             HStack {
-                                Text("Protein").foregroundColor(.loopRed).fontWeight(.thin)
+                                Text("Protein").foregroundColor(.uam)
                                 Spacer()
                                 DecimalTextField(
                                     "0",
@@ -45,11 +45,11 @@ extension AddCarbs {
                                     formatter: formatter,
                                     autofocus: false,
                                     cleanInput: true
-                                ).foregroundColor(.loopRed)
+                                ).foregroundColor(.insulin)
                                 Text("grams").foregroundColor(.secondary)
                             }
                             HStack {
-                                Text("Fat").foregroundColor(.loopYellow).fontWeight(.thin)
+                                Text("Fat").foregroundColor(.uam)
                                 Spacer()
                                 DecimalTextField(
                                     "0",

@@ -27,7 +27,7 @@ Latest version brings significant improvements for Omnipod Dash pumps and Dexcom
 
 ## Release
 <sub>refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)</sub>
-* 1.07b
+* 1.08
 	* Fat Protein conversions
 	* AppleHealth Integration, good for manual BG values
 	* fixes MDT and G6
