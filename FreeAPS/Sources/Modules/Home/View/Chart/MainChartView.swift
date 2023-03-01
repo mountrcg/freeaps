@@ -63,6 +63,8 @@ struct MainChartView: View {
     @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
+    @State private var fpuDots: [DotInfo] = []
+    @State private var fpuPath = Path()
     @State private var glucoseYGange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
@@ -94,7 +96,16 @@ struct MainChartView: View {
     private var carbsFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
+    private var fpuFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 1
+        formatter.decimalSeparator = "."
+        formatter.minimumIntegerDigits = 0
         return formatter
     }
 
@@ -239,6 +250,7 @@ struct MainChartView: View {
                 ZStack {
                     xGridView(fullSize: fullSize)
                     carbsView(fullSize: fullSize)
+                    fpuView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
                     glucoseView(fullSize: fullSize)
                     predictionsView(fullSize: fullSize)
@@ -355,6 +367,28 @@ struct MainChartView: View {
         }
     }
 
+    private func fpuView(fullSize: CGSize) -> some View {
+        ZStack {
+            fpuPath
+                .fill(Color.uam)
+            fpuPath
+                .stroke(Color.loopYellow, lineWidth: 1.5)
+
+            ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
+                let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
+                return Text(fpuFormatter.string(from: info.value as NSNumber)!).font(.caption2)
+                    .position(position)
+                    .asAny()
+            }
+        }
+        .onChange(of: carbs) { _ in
+            calculateFPUsDots(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateFPUsDots(fullSize: fullSize)
+        }
+    }
+
     private func tempTargetsView(fullSize: CGSize) -> some View {
         ZStack {
             tempTargetsPath
@@ -416,6 +450,7 @@ extension MainChartView {
         calculateGlucoseDots(fullSize: fullSize)
         calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
+        calculateFPUsDots(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
@@ -466,7 +501,8 @@ extension MainChartView {
 
     private func calculateCarbsDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = carbs.map { value -> DotInfo in
+            let realCarbs = carbs.filter { !($0.isFPU ?? false) }
+            let dots = realCarbs.map { value -> DotInfo in
                 let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
                 let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
@@ -482,6 +518,29 @@ extension MainChartView {
             DispatchQueue.main.async {
                 carbsDots = dots
                 carbsPath = path
+            }
+        }
+    }
+
+    private func calculateFPUsDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let fpus = carbs.filter { $0.isFPU ?? false }
+            let dots = fpus.map { value -> DotInfo in
+                let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
+                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                return DotInfo(rect: rect, value: value.carbs)
+            }
+
+            let path = Path { path in
+                for dot in dots {
+                    path.addEllipse(in: dot.rect)
+                }
+            }
+
+            DispatchQueue.main.async {
+                fpuDots = dots
+                fpuPath = path
             }
         }
     }

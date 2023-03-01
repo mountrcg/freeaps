@@ -76,10 +76,13 @@ extension DataTable {
             HStack {
                 ZStack {
                     Image(systemName: "circle.fill").foregroundColor(item.color)
-                    if item
-                        .type == .tempTarget
-                    { Image(systemName: "circle").foregroundColor(Color.basal.opacity(0.8))
-                    }}
+                    if item.type == .tempTarget {
+                        Image(systemName: "circle").foregroundColor(Color.basal.opacity(0.8))
+                    }
+                    if item.type == .fpus {
+                        Image(systemName: "circle").foregroundColor(Color.loopYellow.opacity(0.8))
+                    }
+                }
                 Text(dateFormatter.string(from: item.date))
                     .moveDisabled(true)
                 Text(item.type.name)
@@ -97,6 +100,28 @@ extension DataTable {
                             removeCarbsAlert = Alert(
                                 title: Text("Delete carbs?"),
                                 message: Text(item.amountText),
+                                primaryButton: .destructive(
+                                    Text("Delete"),
+                                    action: { state.deleteCarbs(item) }
+                                ),
+                                secondaryButton: .cancel()
+                            )
+                            isRemoveCarbsAlertPresented = true
+                        }
+                        .alert(isPresented: $isRemoveCarbsAlertPresented) {
+                            removeCarbsAlert!
+                        }
+                }
+
+                if item.type == .fpus {
+                    Spacer()
+                    Image(systemName: "xmark.circle").foregroundColor(.secondary)
+                        .contentShape(Rectangle())
+                        .padding(.vertical)
+                        .onTapGesture {
+                            removeCarbsAlert = Alert(
+                                title: Text("Delete carb equivalents?"),
+                                message: Text(""), // Temporary fix. New to fix real amount of carb equivalents later
                                 primaryButton: .destructive(
                                     Text("Delete"),
                                     action: { state.deleteCarbs(item) }
