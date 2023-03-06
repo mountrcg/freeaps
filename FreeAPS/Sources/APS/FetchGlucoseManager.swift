@@ -11,6 +11,7 @@ protocol FetchGlucoseManager: SourceInfoProvider {
     func updateGlucoseSource()
     var glucoseSource: GlucoseSource! { get }
     var cgmGlucoseSourceType: CGMType? { get set }
+    var settingsManager: SettingsManager! { get }
 }
 
 final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
@@ -20,11 +21,13 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var nightscoutManager: NightscoutManager!
+    @Injected() var libreLinkManager: LibreLinkManager!
     @Injected() var apsManager: APSManager!
     @Injected() var settingsManager: SettingsManager!
     @Injected() var libreTransmitter: LibreTransmitterSource!
     @Injected() var healthKitManager: HealthKitManager!
     @Injected() var deviceDataManager: DeviceDataManager!
+    @Injected() private var keychain: Keychain!
 
     private var lifetime = Lifetime()
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
@@ -138,6 +141,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         deviceDataManager.heartbeat(date: Date())
 
         nightscoutManager.uploadGlucose()
+        libreLinkManager.uploadIfNeeded()
 
         let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
 

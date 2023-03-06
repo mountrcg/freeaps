@@ -31,18 +31,18 @@ extension AddCarbs {
                 let delay = settings.settings.delay // Tme before first future carb entry
 
                 let kcal = protein * 4 + fat * 9
-                let carbEquivalents = (kcal / 10) * adjustment
-                let fpus = carbEquivalents / 10
+                let fpus = kcal / 100
+                let carbEquivalents = fpus * 10 * adjustment // 10g of carbs per FPU, adjustment 1.2 makes it 12g carbs per FPU
 
                 // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carbquivalents instead, excluding the configurable delay.
                 var computedDuration = 0
                 switch fpus {
-                case ..<2:
+                case ..<3:
                     computedDuration = 3
-                case 2 ..< 3:
-                    computedDuration = 4
                 case 3 ..< 4:
-                    computedDuration = 5
+                    computedDuration = 4
+                case 4 ..< 6:
+                    computedDuration = 6
                 default:
                     computedDuration = timeCap
                 }
