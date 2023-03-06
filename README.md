@@ -24,9 +24,16 @@ Latest version brings significant improvements for Omnipod Dash punps and Dexcom
 ## autoISF Version
 * 0.2.8b
 	* dev release with current mods as of Feb 23, 2023
+	* documentation at https://github.com/ga-zelle/autoISF
 
 ## Release
 <sub>refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)</sub>
+* 1.09
+	* Allow to delete Carbs when connexion with NS is impossible - Alert the user of the issue. (#606), Pierre Avous.
+	* Put back DASH strings deleted in Loop3 branch
+	* Reverts oref0 commit. Scott Leibrand. Revert "fix(lib/iob): Move value checks up to index.js". Fix for too high predictions.
+	* Synchronise upload readings toggle in dexcom settings with FAX settings (#608), Pierre Avous.
+	* LibreView
 * 1.08
 	* Fat Protein conversions
 	* AppleHealth Integration, good for manual BG values
