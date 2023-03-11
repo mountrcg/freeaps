@@ -41,6 +41,8 @@ struct Preferences: JSON {
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
     var timestamp: Date?
+    var enableSMB_high_bg: Bool = false
+    var enableSMB_high_bg_target: Decimal = 110
     // start autoISF config
     var floatingcarbs: Bool = false
     var autoisf: Bool = false
@@ -116,6 +118,8 @@ extension Preferences {
         case carbsReqThreshold
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
+        case enableSMB_high_bg
+        case enableSMB_high_bg_target
         // start autoISF config for oref variables
         case autoisf = "use_autoisf"
         case autoISFhourlyChange = "dura_ISF_weight"

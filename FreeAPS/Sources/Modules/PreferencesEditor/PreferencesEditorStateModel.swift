@@ -464,6 +464,24 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
+                    displayName: "Enable SMB With High BG",
+                    type: .boolean(keypath: \.enableSMB_high_bg),
+                    infoText: NSLocalizedString(
+                        "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile). When this is enabled, Enable SMB Always should be off, to disable SMB's below High BG.",
+                        comment: "Enable SMB With High BG"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Enable SMB over this BG",
+                    type: .decimal(keypath: \.enableSMB_high_bg_target),
+                    infoText: NSLocalizedString(
+                        "The Value above which Enable SMB With High BG will switch on SMB's. If you want no SMB's below that value Enable SMB Always needs to be off.",
+                        comment: "Over This BG (mg/dl):"
+                    ),
+                    settable: self
+                ),
+                Field(
                     displayName: NSLocalizedString("Max Delta-BG Threshold SMB", comment: "Max Delta-BG Threshold SMB"),
                     type: .decimal(keypath: \.maxDeltaBGthreshold),
                     infoText: NSLocalizedString(
