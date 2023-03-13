@@ -28,6 +28,10 @@ Latest version brings significant improvements for Omnipod Dash pumps and Dexcom
 
 ## Release
 <sub>refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)</sub>
+* 1.1.0
+	* Meal presets
+	* oref fixes
+	* G7 smoothing
 * 1.09
 	* Allow to delete Carbs when connexion with NS is impossible - Alert the user of the issue. (#606), Pierre Avous.
 	* Put back DASH strings deleted in Loop3 branch
