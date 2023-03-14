@@ -1431,7 +1431,7 @@ final class BaseAPSManager: APSManager, Injectable {
             iOS: UIDevice.current.getOSInfo,
             Build_Version: version ?? "",
             Build_Number: build ?? "1",
-            Branch: branch,
+            Branch: branch ?? "",
             CopyRightNotice: String(copyrightNotice_.prefix(32)),
             Build_Date: buildDate,
             Algorithm: algo_,

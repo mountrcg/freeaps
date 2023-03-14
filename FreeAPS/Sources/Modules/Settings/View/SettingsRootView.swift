@@ -12,7 +12,7 @@ extension Settings {
             Form {
                 Section(
                     header: Text(
-                        "FreeAPS-X\n\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) "
+                        "FreeAPS X v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \nVariant:\(state.copyrightNotice) "
                     )
                 ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
