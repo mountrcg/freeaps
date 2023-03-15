@@ -4,8 +4,37 @@
 
 FreeAPS-X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms.
 
-FreeAPS-X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system.
+FreeAPS-X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system. This branch includes autoISF to adjust ISF depending on 4 different effects in glucose behaviour that autoISF checks and reacts to:
+* acce_ISF is a factor derived from acceleration of glucose levels
+* bg_ISF is a factor derived from the deviation of glucose from target
+* delta_ISF and pp_ISF are factors derived from glucose rise, 5min, 10min and 45min deltas and postprandial time frames
+* dura_ISF is a factor derived from glucose being stuck at high levels
 
+on iPhone 13 mini:
+
+<img src="FAX_autoISF.png"
+     alt="FreeAPS-X iPhone screen"
+	 width=350
+	 />
+<img src="FAX_autoISF2.png"
+     alt="FreeAPS-X iPhone screen2"
+	 width=350
+	 />
+
+Apple Watch:
+
+<img src="FAX_appleW1.png"
+     alt="AppleWatch screen"
+	 width=200
+	 />
+<img src="FAX_appleW2.png"
+     alt="AppleWatch Bolus screen"
+	 width=200
+	 />
+<img src="FAX_appleW3.png"
+     alt="AppleWatch TempTarget screen"
+	 width=200
+	 />
 
 To use this branch :
 
