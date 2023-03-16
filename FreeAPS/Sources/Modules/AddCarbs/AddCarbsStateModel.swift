@@ -43,11 +43,11 @@ extension AddCarbs {
                 // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carbquivalents instead, excluding the configurable delay.
                 var computedDuration = 0
                 switch fpus {
-                case ..<3:
-                    computedDuration = 3
-                case 3 ..< 4:
+                case ..<2:
+                    computedDuration = 2
+                case 2 ..< 4:
                     computedDuration = 4
-                case 4 ..< 6:
+                case 4 ..< 7:
                     computedDuration = 6
                 default:
                     computedDuration = timeCap
