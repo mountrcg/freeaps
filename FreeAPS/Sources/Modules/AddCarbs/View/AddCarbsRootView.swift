@@ -146,6 +146,7 @@ extension AddCarbs {
                     label: { Text("[ +1 ]") }
                         .disabled(state.selection == nil)
                         .buttonStyle(BorderlessButtonStyle())
+                        .accentColor(.blue)
                 }
             }
         }
