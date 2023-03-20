@@ -12,8 +12,8 @@ extension Settings {
             Form {
                 Section(
                     header: Text(
-                        "FreeAPS X v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \nVariant:\(state.copyrightNotice) "
-                    )
+                        "iAPS v\(state.versionNumber) - \(state.buildNumber) \nBranch: \(state.branch) \nVariant:\(state.copyrightNotice) "
+                    ).textCase(nil)
                 ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
