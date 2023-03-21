@@ -32,6 +32,7 @@ struct Suggestion: JSON, Equatable {
     var target_bg: Decimal?
     var SMBratio: Decimal?
     let insulin: Insulin?
+    let current_target: Decimal?
 }
 
 struct Predictions: JSON, Equatable {
@@ -81,6 +82,7 @@ extension Suggestion {
         case target_bg
         case SMBratio
         case insulin
+        case current_target
     }
 }
 

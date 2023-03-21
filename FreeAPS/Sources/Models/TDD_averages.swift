@@ -7,6 +7,7 @@ struct TDD_averages: JSON, Equatable {
     var tddYtd: Decimal
     var tdd7d: Decimal
     var date: Date
+    var isEnabled: Bool
 
     init(
         average_total_data: Decimal,
@@ -14,7 +15,8 @@ struct TDD_averages: JSON, Equatable {
         past2hoursAverage: Decimal,
         tddYtd: Decimal,
         tdd7d: Decimal,
-        date: Date
+        date: Date,
+        isEnabled: Bool
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
@@ -22,6 +24,7 @@ struct TDD_averages: JSON, Equatable {
         self.tddYtd = tddYtd
         self.tdd7d = tdd7d
         self.date = date
+        self.isEnabled = isEnabled
     }
 }
 
@@ -33,5 +36,6 @@ extension TDD_averages {
         case tddYtd
         case tdd7d
         case date
+        case isEnabled
     }
 }

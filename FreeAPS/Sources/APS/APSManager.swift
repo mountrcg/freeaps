@@ -700,6 +700,9 @@ final class BaseAPSManager: APSManager, Injectable {
             var TDDytd: Decimal = 1
             var averageDaily: Decimal = 1
 
+            var booleanArray = [ViewPercentage]()
+            var isPercentageEnabled = false
+
             coredataContext.performAndWait {
                 let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
 
@@ -750,8 +753,15 @@ final class BaseAPSManager: APSManager, Injectable {
             coredataContext.perform {
                 try? self.coredataContext.save() }
 
+            let requestIsEnbled = ViewPercentage.fetchRequest() as NSFetchRequest<ViewPercentage>
+            let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+            requestIsEnbled.sortDescriptors = [sortIsEnabled]
+            requestIsEnbled.fetchLimit = 1
+            try? booleanArray = coredataContext.fetch(requestIsEnbled)
+            
             total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             indeces = previousTDDfetched.count
+            
 
             // Only fetch once. Use same (previous) fetch
             let HoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= HoursAgo })
@@ -797,15 +807,19 @@ final class BaseAPSManager: APSManager, Injectable {
             let average2hours = totalHrs / Decimal(indicesHrs)
             let average14 = total / Decimal(indeces)
             averageDaily = totalDaily / Decimal(indicesDaily)
-
             let weighted_average: Decimal = 1.1
+            if !booleanArray.isEmpty {
+                isPercentageEnabled = booleanArray[0].enabled
+            }
+            
             let averages = TDD_averages(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
                 past2hoursAverage: roundDecimal(average2hours, 1),
                 tddYtd: roundDecimal(TDDytd, 1),
                 tdd7d: roundDecimal(averageDaily, 1),
-                date: Date()
+                date: Date(),
+                isEnabled: isPercentageEnabled
             )
             storage.save(averages, as: OpenAPS.Monitor.tdd_averages)
 
