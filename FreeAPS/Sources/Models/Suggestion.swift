@@ -29,7 +29,6 @@ struct Suggestion: JSON, Equatable {
     var acceISFratio: Decimal?
     var autoISFratio: Decimal?
     var tick: Decimal?
-    var target_bg: Decimal?
     var SMBratio: Decimal?
     let insulin: Insulin?
     let current_target: Decimal?
@@ -78,11 +77,10 @@ extension Suggestion {
         case ppISFratio = "pp_ISFratio"
         case acceISFratio = "acce_ISFratio"
         case autoISFratio = "auto_ISFratio"
+        case current_target = "target_bg"
         case tick
-        case target_bg
         case SMBratio
         case insulin
-        case current_target
     }
 }
 
