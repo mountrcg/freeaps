@@ -758,10 +758,9 @@ final class BaseAPSManager: APSManager, Injectable {
             requestIsEnbled.sortDescriptors = [sortIsEnabled]
             requestIsEnbled.fetchLimit = 1
             try? booleanArray = coredataContext.fetch(requestIsEnbled)
-            
+
             total = previousTDDfetched.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             indeces = previousTDDfetched.count
-            
 
             // Only fetch once. Use same (previous) fetch
             let HoursArray = previousTDDfetched.filter({ ($0.timestamp ?? Date()) >= HoursAgo })
@@ -811,7 +810,7 @@ final class BaseAPSManager: APSManager, Injectable {
             if !booleanArray.isEmpty {
                 isPercentageEnabled = booleanArray[0].enabled
             }
-            
+
             let averages = TDD_averages(
                 average_total_data: roundDecimal(average14, 1),
                 weightedAverage: roundDecimal(weighted_average, 1),
