@@ -121,7 +121,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
+                    displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target") + " (mg/dL)",
                     type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
@@ -331,7 +331,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "SMB DeliveryRatio BG Range",
+                    displayName: "SMB DeliveryRatio BG Range" + " (mg/dL)",
                     type: .decimal(keypath: \.smbDeliveryRatioBGrange),
                     infoText: NSLocalizedString(
                         "Default value: 0, Sensible is bteween 40 and 120. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used.",
@@ -473,7 +473,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable SMB over this BG",
+                    displayName: "Enable SMB over this BG" + " (mg/dL",
                     type: .decimal(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "The Value above which Enable SMB With High BG will switch on SMB's. If you want no SMB's below that value Enable SMB Always needs to be off.",
