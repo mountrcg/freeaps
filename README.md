@@ -77,7 +77,7 @@ Latest version brings significant improvements for Omnipod Dash pumps and Dexcom
 	* CoreData refactoring
 
 ## Remarks
-Due to the heavy refactoring and my changes to Jon's CoreData, it is advised to delete FAX and install with a new clone. All current stats will be gone and build up again. All settings will be at default values, like `maxIOB = 0`. Due to deleting FAX you should do it in between pods, as you loose this information.
+Due to the heavy refactoring and my changes to Jon's CoreData, when moving from a version (below 1.07) to (1.07 or above) it is advised to delete FAX and install with a new clone. All current stats will be gone and build up again. All settings will be at default values, like `maxIOB = 0`. Due to deleting FAX you should do it in between pods, as you loose this information.
 
 
 
