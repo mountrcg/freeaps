@@ -121,7 +121,8 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target") + " (mg/dL)",
+                    displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target") +
+                        " (mg/dL)",
                     type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
