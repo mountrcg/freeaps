@@ -17,15 +17,22 @@ struct MainView: View {
     @GestureState var isDetectingLongPress = false
     @State var completedLongPress = false
 
+    @State var completedLongPressOfBG = false
+    @GestureState var isDetectingLongPressOfBG = false
+
     private var healthStore = HKHealthStore()
     let heartRateQuantity = HKUnit(from: "count/min")
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-                header
-                Spacer()
-                buttons
+                if !completedLongPressOfBG {
+                    header
+                    Spacer()
+                    buttons
+                } else {
+                    bigHeader
+                }
             }
 
             if state.isConfirmationViewActive {
@@ -106,7 +113,34 @@ struct MainView: View {
                     }
                 }
             }
-        } // .padding(.bottom)
+            Spacer()
+                .onAppear(perform: start)
+        }
+        .padding()
+        // .scaleEffect(isDetectingLongPressOfBG ? 3 : 1)
+        .gesture(longPresBGs)
+    }
+
+    var bigHeader: some View {
+        VStack(alignment: .center) {
+            HStack {
+                Text(state.glucose)
+                    .font(.custom("Big BG", size: 65))
+                    .foregroundColor(colorOfGlucose)
+                Text(state.trend)
+                    .scaledToFill()
+            }
+            VStack {
+                Circle().stroke(color, lineWidth: 12).frame(width: 60, height: 60).padding(10)
+
+                if state.lastLoopDate != nil {
+                    Text(timeString).font(.title3).foregroundColor(.gray)
+                } else {
+                    Text("--").font(.title3).foregroundColor(.gray)
+                }
+            }
+        }
+        .gesture(longPresBGs)
     }
 
     var longPress: some Gesture {
@@ -119,6 +153,19 @@ struct MainView: View {
                 if completedLongPress {
                     completedLongPress = false
                 } else { completedLongPress = true }
+            }
+    }
+
+    var longPresBGs: some Gesture {
+        LongPressGesture(minimumDuration: 1)
+            .updating($isDetectingLongPressOfBG) { currentState, gestureState,
+                _ in
+                gestureState = currentState
+            }
+            .onEnded { _ in
+                if completedLongPressOfBG {
+                    completedLongPressOfBG = false
+                } else { completedLongPressOfBG = true }
             }
     }
 
@@ -234,7 +281,7 @@ struct MainView: View {
 
     private var iobFormatter: NumberFormatter {
         let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
+        formatter.maximumFractionDigits = 1
         formatter.numberStyle = .decimal
         return formatter
     }
