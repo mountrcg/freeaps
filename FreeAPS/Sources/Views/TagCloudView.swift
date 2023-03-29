@@ -63,16 +63,18 @@ struct TagCloudView: View {
                  textTag where textTag.contains("disabled"),
                  textTag where textTag.contains("final"):
                 return .loopRed
-            case "SMB Ratio:":
-                return .insulin
+            case "SMB Del.Ratio:":
+                return .loopGreen
             case "Parabolic Fit",
                  textTag where textTag.contains("acce-ISF"):
                 return .zt
             case "Autosens",
+                 "Standard",
                  "TDD":
-                return .loopGreen
-            case "Standard":
                 return .insulin
+            case textTag where textTag.contains("Exercise"),
+                 textTag where textTag.contains("Ratio TT"):
+                return .uam
             default:
                 return .basal
             }
