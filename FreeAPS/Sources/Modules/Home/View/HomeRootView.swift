@@ -34,7 +34,7 @@ extension Home {
         @State var loopIntTitle = NSLocalizedString("∅ Interv.", comment: "Average Loop Interval in min")
 
         // Avg & Median switch for Loop duration
-        @State var loopDurTitle = NSLocalizedString("∅ Dura", comment: "Average Loop Duration in s")
+        @State var loopDurTitle = NSLocalizedString("∅ Dura.", comment: "Average Loop Duration in s")
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
