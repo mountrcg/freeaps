@@ -53,7 +53,7 @@ Latest version brings significant improvements for Omnipod Dash pumps and Dexcom
 
 ## autoISF Version
 * 2.2.8.1
-	* dev release with current mods as of Mar 29, 2023
+	* dev release with current mods as of Mar 23, 2023
 	* documentation at https://github.com/ga-zelle/autoISF
 
 ## Release
