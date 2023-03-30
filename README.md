@@ -52,8 +52,8 @@ Please understand that this version is :
 Latest version brings significant improvements for Omnipod Dash pumps and Dexcom G6 and G7sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences).
 
 ## autoISF Version
-* 0.2.8b
-	* dev release with current mods as of Feb 23, 2023
+* 2.2.8.1
+	* dev release with current mods as of Mar 29, 2023
 	* documentation at https://github.com/ga-zelle/autoISF
 
 ## Release
@@ -79,7 +79,8 @@ Latest version brings significant improvements for Omnipod Dash pumps and Dexcom
 ## Remarks
 Due to the heavy refactoring and my changes to Jon's CoreData, when moving from a version (below 1.07) to (1.07 or above) it is advised to delete FAX and install with a new clone. All current stats will be gone and build up again. All settings will be at default values, like `maxIOB = 0`. Due to deleting FAX you should do it in between pods, as you loose this information.
 
-
+## Exercise Modes
+Exercise Mode with high TT can be combined with autoISF. The Ratio from the TT, calculated with the Half Basal target, will be adjusted with the strongest (>1) or weakest (<1) ISF-Ratio from autoISF. This can be substantial. I myself prefer to disable autoISF adjustments while exercising, relying on the TT Ratio, by setting `Exercise toggles all autoISF adjustments off` to on.
 
 # Documentation
 
