@@ -51,8 +51,8 @@ Please understand that this version is :
 Latest version brings significant improvements for Omnipod Dash punps and Dexcom G6 sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences). Dexcom G7 is also supported.
 
 ## autoISF Version
-* 0.2.8b
-	* dev release with current mods as of Feb 23, 2023
+* 2.2.8.1
+	* dev release with current mods as of Mar 23, 2023
 	* documentation at https://github.com/ga-zelle/autoISF
 
 ## Release
