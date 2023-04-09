@@ -15,7 +15,12 @@ extension AddTempTarget {
         @Published var percentage = 100.0
         @Published var maxValue: Decimal = 1.2
         @Published var halfBasal: Decimal = 160
-        @Published var viewPercantage = false
+        @Published var viewPercentage = false
+        @Published var lowTTlowers = false
+        @Published var highTTraises = false
+        @Published var exerMode = false
+        @Published var hbt: Double = 160
+        @Published var saveSettings: Bool = false
 
         private(set) var units: GlucoseUnits = .mmolL
 
@@ -24,29 +29,32 @@ extension AddTempTarget {
             presets = storage.presets()
             maxValue = settingsManager.preferences.autosensMax
             halfBasal = settingsManager.preferences.halfBasalExerciseTarget
+            lowTTlowers = settingsManager.preferences.lowTemptargetLowersSensitivity
+            highTTraises = settingsManager.preferences.highTemptargetRaisesSensitivity
+            exerMode = settingsManager.preferences.exerciseMode
         }
 
         func enact() {
             var lowTarget = low
 
-            if viewPercantage {
-                var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
-
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
+            if viewPercentage {
+                let ratio = Decimal(percentage / 100)
+                let normalTarget: Decimal = 100
+                var target: Decimal = low
+                if units == .mmolL { target = Decimal(round(Double(target.asMgdL))) }
+                var hbtcalc: Decimal = halfBasal
+                if ratio != 1 {
+                    hbtcalc = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
                 }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target)))
+                hbt = round(Double(hbtcalc))
+                print("Test HBT calc: \(hbt) mg/dL")
+                saveSettings = true
             }
-            var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+            var highTarget = lowTarget
+            if units == .mmolL {
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
 
             let entry = TempTarget(
@@ -69,25 +77,24 @@ extension AddTempTarget {
 
         func save() {
             var lowTarget = low
-
-            if viewPercantage {
-                var ratio = Decimal(percentage / 100)
-                let hB = halfBasal
-                let c = hB - 100
-                var target = (c / ratio) - c + 100
-
-                if c * (c + target - 100) <= 0 {
-                    ratio = maxValue
-                    target = (c / ratio) - c + 100
-                }
-                lowTarget = target
-                lowTarget = Decimal(round(Double(target)))
-            }
             var highTarget = lowTarget
 
-            if units == .mmolL, !viewPercantage {
-                lowTarget = lowTarget.asMgdL
-                highTarget = highTarget.asMgdL
+            if viewPercentage {
+                let ratio = Decimal(percentage / 100)
+                let normalTarget: Decimal = 100
+                var target: Decimal = low
+                if units == .mmolL { target = Decimal(round(Double(target.asMgdL))) }
+                var hbtcalc: Decimal = halfBasal
+                if ratio != 1 {
+                    hbtcalc = ((2 * ratio * normalTarget) - normalTarget - (ratio * target)) / (ratio - 1)
+                }
+                hbt = round(Double(hbtcalc))
+                saveSettings = true
+            }
+
+            if units == .mmolL {
+                lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
+                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
 
             let entry = TempTarget(
@@ -110,6 +117,8 @@ extension AddTempTarget {
                 showModal(for: nil)
             }
         }
+
+        func savedHBT() {}
 
         func removePreset(id: String) {
             presets = presets.filter { $0.id != id }

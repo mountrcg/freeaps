@@ -57,6 +57,10 @@ Latest version brings significant improvements for Omnipod Dash punps and Dexcom
 
 ## Release
 <sub>refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)</sub>
+* 1.1.1
+	* ExerciseMode calculation with InsulinRatio Slider
+	* Tag changes in Popup
+	* display ratio from TempTargets in InfoPanel
 * 1.1.0
 	* Meal presets
 	* oref fixes
