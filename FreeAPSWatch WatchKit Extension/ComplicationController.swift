@@ -8,7 +8,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let descriptors = [
             CLKComplicationDescriptor(
                 identifier: "complication",
-                displayName: "FreeAPS X",
+                displayName: "iAPS",
                 supportedFamilies: [
                     .graphicCorner,
                     .graphicCircular,
