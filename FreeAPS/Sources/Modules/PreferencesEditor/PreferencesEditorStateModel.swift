@@ -115,7 +115,7 @@ extension PreferencesEditor {
                     displayName: "Exercise Mode",
                     type: .boolean(keypath: \.exerciseMode),
                     infoText: NSLocalizedString(
-                        "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity",
+                        "Defaults to false. When true, > 100 mg/dL high temp target adjusts sensitivityRatio for exercise mode. Synonym for high_temptarget_raises_sensitivity",
                         comment: "Exercise Mode"
                     ),
                     settable: self
@@ -124,7 +124,7 @@ extension PreferencesEditor {
                     displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
                     type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
-                        "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
+                        "Set to a number in mg/dl, e.g. 160, which means when TempTarget (TT) is 160 mg/dL and exercise mode = true, it will run 50% basal at this TT level (if high TT at 120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
                         comment: "Half Basal Exercise Target"
                     ),
                     settable: self
@@ -571,7 +571,7 @@ extension PreferencesEditor {
                     displayName: "High Temptarget Raises Sensitivity",
                     type: .boolean(keypath: \.highTemptargetRaisesSensitivity),
                     infoText: NSLocalizedString(
-                        "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).",
+                        "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to > 100 mg/dl. Synonym for exercise_mode. Higher TTs above 100, will result in more sensitivity or lower ratios e.g., a High TT of 120 mg/dl results in sensitivity ratio of 75%, while 140 results in 60% (with default Half Basal Exercise Target of 160 mg/dl).",
                         comment: "High Temptarget Raises Sensitivity"
                     ),
                     settable: self
@@ -580,7 +580,7 @@ extension PreferencesEditor {
                     displayName: "Low Temptarget Lowers Sensitivity",
                     type: .boolean(keypath: \.lowTemptargetLowersSensitivity),
                     infoText: NSLocalizedString(
-                        "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160).",
+                        "Defaults to false. When set to true, lowers sensitivity (higher sensitivity ratio) for temptargets < 100 mg/dl. Lower TTs below 100 will result in less sensitivity or higher ratios e.g., a Low TT of 95 mg/dl results in sensitivity ratio of 109%, while 85 results in 133% (with default Half Basal Exercise Target of 160 mg/dl).",
                         comment: "Low Temptarget Lowers Sensitivity"
                     ),
                     settable: self

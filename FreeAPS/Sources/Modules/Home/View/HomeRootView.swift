@@ -85,10 +85,10 @@ extension Home {
                    !state.settingsManager.preferences.exerciseMode,
                    !state.settingsManager.preferences.highTemptargetRaisesSensitivity
                 { ratio = 1 }
-                if ratio > 1, !state.settingsManager.preferences.lowTemptargetLowersSensitivity { ratio = 1 }
                 if ratio > 1 {
-                    ratio = Decimal(round(Double(min(ratio, state.settingsManager.preferences.autosensMax))))
+                    ratio = Decimal(round(Double(min(ratio, state.settingsManager.preferences.autosensMax)) * 100) / 100)
                 }
+                if ratio > 1, !state.settingsManager.preferences.lowTemptargetLowersSensitivity { ratio = 1 }
             }
             return ratio
         }
@@ -271,7 +271,7 @@ extension Home {
                             }
                         }
                         if computeRatio() != 1 {
-                            Text("Ratio")
+                            Text("@")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Text(tirFormatter.string(from: computeRatio() * 100 as NSNumber) ?? "")

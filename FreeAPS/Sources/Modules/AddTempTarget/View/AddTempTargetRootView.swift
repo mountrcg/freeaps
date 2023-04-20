@@ -10,6 +10,7 @@ extension AddTempTarget {
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
         @State private var isEditing = false
+        @State private var infoButtonPressed: InfoText?
 
         @FetchRequest(
             entity: ViewPercentage.entity(),
@@ -80,17 +81,16 @@ extension AddTempTarget {
                                 Divider()
                                 HStack {
                                     Text(
-                                        "Half Basal Target at: \(computeHBT().formatted(.number)) mg/dl"
+                                        "Half Basal Exercise Target to be set at: \(computeHBT().formatted(.number)) mg/dl"
 //                                    Text(
 //                                        state
-//                                            .units == .mgdL ? "Half Basal Target at: \(computeHBT().formatted(.number)) mg/dl" :
-//                                            "Half Basal Target at: \(computeHBT().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L"
+//                                            .units == .mgdL ? "Half Basal Exercise Target to be set at: \(computeHBT().formatted(.number)) mg/dl" :
+//                                            "Half Basal Exercise Target to be set at: \(computeHBT().asMmolL.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))) mmol/L"
                                     )
                                     .foregroundColor(.loopGreen)
                                     .font(.caption).italic()
                                     .fixedSize(horizontal: true, vertical: false)
                                 }
-                                Divider()
                                 if state.percentage != 100 && state.percentage != round(Double(computeRatio())) {
                                     Text(
                                         "Enter HBT in Preferences to achieve Insulin Ratio." + "\n" +
@@ -113,14 +113,19 @@ extension AddTempTarget {
                         }
                     }
                     Section(
-                        header: Text("Current settings in Preferences:"),
-                        footer: Text(
-                            "Half Basal Target (HBT) setting adjusts how a TempTarget affects Sensitivity (Basal, CR and ISF). A lower HBT using a high TT will allow Basal to be reduced earlier, in other words with a smaller high TT. However for this feature to be activated either High TempTarget raises Sensitivity or Exercise Mode must be activated for high TT to increase Sensitivity. Accordingly Low TempTarget lowers Sensitivity must be activated and Autosens.max needs to be higher than 1, to give reduced Sensitivity for low TT."
-                        )
+                        header: Text("Current settings in Preferences:")
                     ) {
                         VStack(alignment: .leading) {
                             HStack {
-                                Text("Half Basal Target")
+                                ZStack {
+                                    Button("", action: {
+                                        infoButtonPressed = InfoText(
+                                            description: "Half Basal Exercise Target (HBT) setting adjusts how a TempTarget affects Sensitivity (Basal, CR and ISF). HBT defines at which highTT the Insulin Ratio is reduced to 50%, in other words sensitivity is at 200%. A lower HBT using a high TT will allow Basal to be reduced earlier, in other words with a smaller high TT. However for this feature to be activated either High TempTarget raises Sensitivity or Exercise Mode must be activated for high TT to increase Sensitivity. Accordingly Low TempTarget lowers Sensitivity must be activated and Autosens.max needs to be higher than 1, to give reduced Sensitivity for low TT.",
+                                            oref0Variable: "Half Basal Exercise Target functionality"
+                                        )
+                                    })
+                                    Text("Half Basal Exercise Target")
+                                }
                                 Spacer()
                                 Text("" + "\(state.halfBasal)")
                                     .foregroundColor(
@@ -128,6 +133,7 @@ extension AddTempTarget {
                                             .secondary
                                     )
                             }
+                            Divider()
                             HStack {
                                 Text("Exercise Mode")
                                 Spacer()
@@ -140,6 +146,7 @@ extension AddTempTarget {
                                 Text(" " + "\(state.highTTraises)")
                                     .foregroundColor(state.highTTraises ? .blue : .secondary)
                             }
+                            Divider()
                             HStack {
                                 Text("Low TT lowers Sensitivity")
                                 Spacer()
@@ -211,6 +218,13 @@ extension AddTempTarget {
             .onAppear {
                 configureView()
                 // state.hbt = isEnabledArray.first?.hbt ?? 160
+            }
+            .alert(item: $infoButtonPressed) { infoButton in
+                Alert(
+                    title: Text("\(infoButton.oref0Variable)"),
+                    message: Text("\(infoButton.description)"),
+                    dismissButton: .default(Text("OK"))
+                )
             }
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.automatic)
