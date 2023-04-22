@@ -1,8 +1,8 @@
-# FreeAPS-X autoISF Branch
+# FreeAPS-X / iAPS autoISF Branch
 
 ## Introduction
 
-FreeAPS-X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms.
+FreeAPS-X - an artificial pancreas system for iOS developed by Ivan Valkou based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms. It is currently renamed to [iAPS](https://github.com/Artificial-Pancreas/iAPS) and maintained by Jon-b-m.
 
 FreeAPS-X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system. This branch includes autoISF to adjust ISF depending on 4 different effects in glucose behaviour that autoISF checks and reacts to:
 * acce_ISF is a factor derived from acceleration of glucose levels
@@ -52,12 +52,14 @@ Please understand that this version is :
 Latest version brings significant improvements for Omnipod Dash pumps and Dexcom G6 and G7sensors, Looping should be immediate and robust. Review in the Statistics Panel (see preferences).
 
 ## autoISF Version
+<sub>refers the changes done to the original oref0 used in FAX, the source can be found at my [oref0-repository](https://github.com/mountrcg/oref0/tree/dev_aisf_TDD)</sub>
 * 2.2.8.1
 	* dev release with current mods as of Mar 23, 2023
 	* documentation at https://github.com/ga-zelle/autoISF
 
 ## Release
-<sub>refers to FreeAPS-X which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Jon-b-m/freeaps)</sub>
+<sub>refers to iAPS, which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Artificial-Pancreas/iAPS)
+I can't keep up with their newest changes, that integrate more into oref0-Code, as this is atm not published by Jon. So all the newest bling-bling is not here, you would have to use the original with DynISF.</sub>
 * 1.1.1
 	* ExerciseMode calculation with InsulinRatio Slider
 	* Tag changes in Popup
