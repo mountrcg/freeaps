@@ -49,12 +49,10 @@ extension AddTempTarget {
                 print("Test HBT calc: \(hbt) mg/dL")
                 saveSettings = true
             }
-
-            var highTarget = lowTarget
             if units == .mmolL {
                 lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
-                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
+            var highTarget = lowTarget
 
             let entry = TempTarget(
                 name: TempTarget.custom,
@@ -77,7 +75,6 @@ extension AddTempTarget {
 
         func save() {
             var lowTarget = low
-            var highTarget = lowTarget
 
             if viewPercentage {
                 let ratio = Decimal(percentage / 100)
@@ -94,8 +91,8 @@ extension AddTempTarget {
 
             if units == .mmolL {
                 lowTarget = Decimal(round(Double(lowTarget.asMgdL)))
-                highTarget = Decimal(round(Double(highTarget.asMgdL)))
             }
+            var highTarget = lowTarget
 
             let entry = TempTarget(
                 name: newPresetName.isEmpty ? TempTarget.custom : newPresetName,
