@@ -60,6 +60,9 @@ Latest version brings significant improvements for Omnipod Dash pumps and Dexcom
 ## Release
 <sub>refers to iAPS, which is currently mainly improved by Jon & Pierre at this [github repository](https://github.com/Artificial-Pancreas/iAPS)
 I can't keep up with their newest changes, that integrate more into oref0-Code, as this is atm not published by Jon. So all the newest bling-bling is not here, you would have to use the original with DynISF.</sub>
+* 1.2.1
+	* Loop Framework 3.2
+	* TempTarget changes for Slider & Rounding
 * 1.1.1
 	* ExerciseMode calculation with InsulinRatio Slider
 	* Tag changes in Popup

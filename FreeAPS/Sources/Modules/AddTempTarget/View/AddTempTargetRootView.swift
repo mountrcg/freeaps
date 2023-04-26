@@ -65,6 +65,9 @@ extension AddTempTarget {
 
                             if computeSliderLow() != computeSliderHigh() {
                                 Text(NSLocalizedString("Desired Insulin Ratio", comment: ""))
+                                Text("\(state.percentage.formatted(.number)) %")
+                                    .foregroundColor(isEditing ? .orange : .blue)
+                                    .font(.title)
                                 Slider(
                                     value: $state.percentage,
                                     in: computeSliderLow() ... computeSliderHigh(),
@@ -74,10 +77,6 @@ extension AddTempTarget {
                                 maximumValueLabel: { Text("\(computeSliderHigh(), specifier: "%.0f")%") }
                                 onEditingChanged: { editing in
                                     isEditing = editing }
-
-                                Text("\(state.percentage.formatted(.number)) %")
-                                    .foregroundColor(isEditing ? .orange : .blue)
-                                    .font(.title)
                                 Divider()
                                 HStack {
                                     Text(
