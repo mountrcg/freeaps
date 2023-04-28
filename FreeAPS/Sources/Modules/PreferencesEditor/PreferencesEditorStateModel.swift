@@ -221,7 +221,7 @@ extension PreferencesEditor {
                     displayName: "Enable DuraISF effect with COB",
                     type: .boolean(keypath: \.enableautoISFwithCOB),
                     infoText: NSLocalizedString(
-                        "Enable DuraISF even if COB is present not just for UAM."
+                        "Enable DuraISF even if COB is present not just for UAM.",
                         comment: "Enable autoISF with COB"
                     ),
                     settable: self
