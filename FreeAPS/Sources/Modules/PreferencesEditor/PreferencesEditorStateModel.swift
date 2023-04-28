@@ -209,19 +209,19 @@ extension PreferencesEditor {
             ]
             let xpmDuraISF = [
                 Field(
-                    displayName: "autoISF HourlyMaxChange",
+                    displayName: "DuraISF weight",
                     type: .decimal(keypath: \.autoISFhourlyChange),
                     infoText: NSLocalizedString(
-                        "Defaults to false. Rate at which autoISF grows per hour assuming bg is twice target. When value = 1.0, ISF is reduced to 50% after 1 hour of BG at 2x target.",
+                        "Rate at which ISF is reduced per hour assuming BG leveel remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.",
                         comment: "autoISF HourlyMaxChange"
                     ),
                     settable: self
                 ),
                 Field(
-                    displayName: "Enable autoISF with COB",
+                    displayName: "Enable DuraISF effect with COB",
                     type: .boolean(keypath: \.enableautoISFwithCOB),
                     infoText: NSLocalizedString(
-                        "Enables autoISF not just for UAM, but also with COB\n\nRead up on:\nhttps://github.com/ga-zelle/autoISF/tree/2.8.2_dev_parabola",
+                        "Enable DuraISF even if COB is present not just for UAM."
                         comment: "Enable autoISF with COB"
                     ),
                     settable: self
